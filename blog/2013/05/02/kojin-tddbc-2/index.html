@@ -1,0 +1,204 @@
+<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta content="keyword 1,keyword 2,keyword 3" name=keywords><meta content="Yudai Suzuki" name=author><meta property="og:title" content="個人TDDBCを開いてもらった その2 - onigra.github.io"><meta property="og:url" content="https://onigra.github.io/blog/2013/05/02/kojin-tddbc-2/"><meta property="og:description" content="Your description here"><meta property="og:type" content="website"><title>個人TDDBCを開いてもらった その2 | onigra.github.io</title><script type=text/x-mathjax-config>
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script><link rel=stylesheet href=https://onigra.github.io/css/style.css><link rel="shortcut icon" href=https://onigra.github.io/favicon.ico><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin=anonymous><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css></head><section class=section><div class=container><nav class=nav><div class=nav-left><a class=nav-item href=https://onigra.github.io><h1 class="title is-4">onigra.github.io</h1></a><nav class="nav-item level is-mobile"><a class=level-item href=/about/>About</a>
+<a class=level-item href=/post/>Archives</a></nav></div><div class=nav-right><nav class="nav-item level is-mobile"><a class=level-item href=https://github.com/onigra target=_blank><span class=icon><i class="fa fa-github"></i></span></a><a class=level-item href=https://twitter.com/onigra_ target=_blank><span class=icon><i class="fa fa-twitter"></i></span></a><a class=level-item href=/index.xml target=_blank><span class=icon><i class="fa fa-rss"></i></span></a></nav></div></nav></div></section><section class=section><div class=container><h1 class=title>個人TDDBCを開いてもらった その2</h1><h2 class="subtitle is-5">May 2, 2013 by Yudai Suzuki</h2><div class=content><p><a href=http://onigra.github.io/blog/2013/05/01/kojin-tddbc/>前回</a>の続きです。</p><h2 id=tddはテンポが重要>TDDはテンポが重要</h2><p>sunaotさん曰くTDDはテンポが重要で、これらの一連の流れがサクサクいくようになってくるとコーディングが楽しいとのこと。なので、bundle execでテンポが悪くなるのが好きじゃないらしいです。</p><h2 id=sunaotさんによるtddお手本>sunaotさんによるTDDお手本</h2><p>うまくノリを伝えられるか自信が無いですが、僕の中で非常に分かりやすかったので書き出してみます。渡した数を2倍にして返すという単純なメソッドを例にして説明してくださいました。</p><p>まずは、テストコードを書きます。</p><ul><li>foo_test.rb</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>require <span style=color:#e6db74>&#39;test/unit&#39;</span>
+
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TC_Foo</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>Test</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Unit</span><span style=color:#f92672>::</span><span style=color:#66d9ef>TestCase</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><p>テストを実行します。</p><pre><code>Run options: 
+
+# Running tests:
+
+
+
+Finished tests in 0.000401s, 0.0000 tests/s, 0.0000 assertions/s.
+
+0 tests, 0 assertions, 0 failures, 0 errors, 0 skips
+
+</code></pre><p>実装コードを書きます。まだ中身は空っぽです。</p><ul><li>foo.rb</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Foo</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><ul><li>foo_test.rb</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>require <span style=color:#e6db74>&#39;test/unit&#39;</span>
+require <span style=color:#e6db74>&#39;./foo&#39;</span>
+
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TC_Foo</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>Test</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Unit</span><span style=color:#f92672>::</span><span style=color:#66d9ef>TestCase</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><p>テストを実行します。</p><pre><code>Run options: 
+
+# Running tests:
+
+
+
+Finished tests in 0.000363s, 0.0000 tests/s, 0.0000 assertions/s.
+
+0 tests, 0 assertions, 0 failures, 0 errors, 0 skips
+
+</code></pre><p>テストを書いていきます。12を渡してdoubleというメソッドを呼ぶと24が返ってくるというテストです。</p><ul><li>foo_test.rb</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>require <span style=color:#e6db74>&#39;test/unit&#39;</span>
+require <span style=color:#e6db74>&#39;./foo&#39;</span>
+
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TC_Foo</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>Test</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Unit</span><span style=color:#f92672>::</span><span style=color:#66d9ef>TestCase</span>
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>setup</span>
+    @foo <span style=color:#f92672>=</span> <span style=color:#66d9ef>Foo</span><span style=color:#f92672>.</span>new(<span style=color:#ae81ff>12</span>)
+  <span style=color:#66d9ef>end</span>
+
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>test_double</span>
+    assert_equal(<span style=color:#ae81ff>24</span>, @foo<span style=color:#f92672>.</span>double)
+  <span style=color:#66d9ef>end</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><p>テストを実行します。</p><pre><code>Run options: 
+
+# Running tests:
+
+E
+
+Finished tests in 0.000519s, 1926.7823 tests/s, 0.0000 assertions/s.
+
+  1) Error:
+test_double(TC_Foo):
+ArgumentError: wrong number of arguments(1 for 0)
+    /Users/nekogeruge/tdd/foo_test.rb:6:in `initialize'
+    /Users/nekogeruge/tdd/foo_test.rb:6:in `new'
+    /Users/nekogeruge/tdd/foo_test.rb:6:in `setup'
+
+1 tests, 0 assertions, 0 failures, 1 errors, 0 skips
+
+</code></pre><p>引数が不正だと怒られました。コンストラクタを作成します。</p><ul><li>foo.rb</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Foo</span>
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>initialize</span>(int)
+    @int <span style=color:#f92672>=</span> int
+  <span style=color:#66d9ef>end</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><p>テストを実行します。</p><pre><code>Run options: 
+
+# Running tests:
+
+E
+
+Finished tests in 0.000515s, 1941.7476 tests/s, 0.0000 assertions/s.
+
+  1) Error:
+test_double(TC_Foo):
+NoMethodError: undefined method `double' for #&lt;Foo:0x007fc983890fe0 @int=12&gt;
+    /Users/nekogeruge/tdd/foo_test.rb:10:in `test_double'
+
+1 tests, 0 assertions, 0 failures, 1 errors, 0 skips
+
+</code></pre><p>doubleというメソッドが無いよと怒られました。はい、作ります。</p><ul><li>foo.rb</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Foo</span>
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>initialize</span>(int)
+    @int <span style=color:#f92672>=</span> int
+  <span style=color:#66d9ef>end</span>
+
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>double</span>
+  <span style=color:#66d9ef>end</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><p>テストを実行します。</p><pre><code>Run options: 
+
+# Running tests:
+
+F
+
+Finished tests in 0.000665s, 1503.7594 tests/s, 1503.7594 assertions/s.
+
+  1) Failure:
+test_double(TC_Foo) [/Users/nekogeruge/tdd/foo_test.rb:10]:
+&lt;24&gt; expected but was
+&lt;nil&gt;.
+
+1 tests, 1 assertions, 1 failures, 0 errors, 0 skips
+
+</code></pre><p>doubleの返してくるものがnilなので怒られました。このテストを通す為の一番簡単な実装をしてみます。</p><ul><li>foo.rb</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Foo</span>
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>initialize</span>(int)
+    @int <span style=color:#f92672>=</span> int
+  <span style=color:#66d9ef>end</span>
+
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>double</span>
+    <span style=color:#ae81ff>24</span>
+  <span style=color:#66d9ef>end</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><p>テストを実行します。</p><pre><code>Run options: 
+
+# Running tests:
+
+.
+
+Finished tests in 0.000464s, 2155.1724 tests/s, 2155.1724 assertions/s.
+
+1 tests, 1 assertions, 0 failures, 0 errors, 0 skips
+
+</code></pre><p>通りました。次に、別のデータを使ったパターンのテストを書きます。</p><ul><li>foo_test.rb</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>require <span style=color:#e6db74>&#39;test/unit&#39;</span>
+require <span style=color:#e6db74>&#39;./foo&#39;</span>
+
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TC_Foo</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>Test</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Unit</span><span style=color:#f92672>::</span><span style=color:#66d9ef>TestCase</span>
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>setup</span>
+    @foo <span style=color:#f92672>=</span> <span style=color:#66d9ef>Foo</span><span style=color:#f92672>.</span>new(<span style=color:#ae81ff>12</span>)
+    @moo <span style=color:#f92672>=</span> <span style=color:#66d9ef>Foo</span><span style=color:#f92672>.</span>new(<span style=color:#ae81ff>15</span>)
+  <span style=color:#66d9ef>end</span>
+
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>test_double</span>
+    assert_equal(<span style=color:#ae81ff>24</span>, @foo<span style=color:#f92672>.</span>double)
+  <span style=color:#66d9ef>end</span>
+
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>test_another</span>
+    assert_equal(<span style=color:#ae81ff>30</span>, @moo<span style=color:#f92672>.</span>double)
+  <span style=color:#66d9ef>end</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><p>テストを実行します。</p><pre><code>Run options: 
+
+# Running tests:
+
+F.
+
+Finished tests in 0.000714s, 2801.1204 tests/s, 2801.1204 assertions/s.
+
+  1) Failure:
+test_another(TC_Foo) [/Users/nekogeruge/tdd/foo_test.rb:15]:
+&lt;30&gt; expected but was
+&lt;24&gt;.
+
+2 tests, 2 assertions, 1 failures, 0 errors, 0 skips
+
+</code></pre><p>当然コケます。なので、本格的な実装に入ります。</p><ul><li>foo.rb</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Foo</span>
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>initialize</span>(int)
+    @int <span style=color:#f92672>=</span> int
+  <span style=color:#66d9ef>end</span>
+
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>double</span>
+    @int <span style=color:#f92672>*</span> <span style=color:#ae81ff>2</span>
+  <span style=color:#66d9ef>end</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><p>テストを実行します。</p><pre><code>Run options: 
+
+# Running tests:
+
+..
+
+Finished tests in 0.000537s, 3724.3948 tests/s, 3724.3948 assertions/s.
+
+2 tests, 2 assertions, 0 failures, 0 errors, 0 skips
+
+</code></pre><p>通りました。2つ目のテストは考えを整理する為に書いたもので不要なので消します。残したければ残しておいても問題ありません。</p><ul><li>foo_test.rb</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby>require <span style=color:#e6db74>&#39;test/unit&#39;</span>
+require <span style=color:#e6db74>&#39;./foo&#39;</span>
+
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>TC_Foo</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>Test</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Unit</span><span style=color:#f92672>::</span><span style=color:#66d9ef>TestCase</span>
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>setup</span>
+    @foo <span style=color:#f92672>=</span> <span style=color:#66d9ef>Foo</span><span style=color:#f92672>.</span>new(<span style=color:#ae81ff>12</span>)
+  <span style=color:#66d9ef>end</span>
+
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>test_double</span>
+    assert_equal(<span style=color:#ae81ff>24</span>, @foo<span style=color:#f92672>.</span>double)
+  <span style=color:#66d9ef>end</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><p>念のためテストを実行します。</p><pre><code>Run options: 
+
+# Running tests:
+
+.
+
+Finished tests in 0.000450s, 2222.2222 tests/s, 2222.2222 assertions/s.
+
+1 tests, 1 assertions, 0 failures, 0 errors, 0 skips
+
+</code></pre><p>これで実装完了です。<br>こうして書き出してみると、<a href=http://d.hatena.ne.jp/t-wada/20100228>t_wadaさんの記事</a>とプロセスは全く一緒ですね。やはりお手本を見せてもらうのは分かりやすかったです。</p></div><div class=nav-left><a class=nav-item href="https://twitter.com/home?status=%e5%80%8b%e4%ba%baTDDBC%e3%82%92%e9%96%8b%e3%81%84%e3%81%a6%e3%82%82%e3%82%89%e3%81%a3%e3%81%9f%20%e3%81%9d%e3%81%ae2 - https%3a%2f%2fonigra.github.io%2fblog%2f2013%2f05%2f02%2fkojin-tddbc-2%2f" title="Tweet this" target=_blank><span class="fa fa-twitter fa-2x"></span></a></div></div></section><section class=section><div class="container has-text-centered"><p>&copy; 2017 | <a href=https://twitter.com/onigra_ target=_blank>Onigra</a> | Powerd by <a href=https://github.com/mgjohansen/hucore target=_blank>Hucore theme</a> & <a href=http://gohugo.io target=_blank>Hugo</a></p></div></section><script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin=anonymous></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script><script>hljs.initHighlightingOnLoad();</script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','trackingcode','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script>

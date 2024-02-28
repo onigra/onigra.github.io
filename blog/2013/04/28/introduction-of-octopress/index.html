@@ -1,0 +1,43 @@
+<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta content="keyword 1,keyword 2,keyword 3" name=keywords><meta content="Yudai Suzuki" name=author><meta property="og:title" content="【何番煎じ】OctopressとGitHub Pagesを使用したブログの構築手順 - onigra.github.io"><meta property="og:url" content="https://onigra.github.io/blog/2013/04/28/introduction-of-octopress/"><meta property="og:description" content="Your description here"><meta property="og:type" content="website"><title>【何番煎じ】OctopressとGitHub Pagesを使用したブログの構築手順 | onigra.github.io</title><script type=text/x-mathjax-config>
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script><link rel=stylesheet href=https://onigra.github.io/css/style.css><link rel="shortcut icon" href=https://onigra.github.io/favicon.ico><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin=anonymous><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css></head><section class=section><div class=container><nav class=nav><div class=nav-left><a class=nav-item href=https://onigra.github.io><h1 class="title is-4">onigra.github.io</h1></a><nav class="nav-item level is-mobile"><a class=level-item href=/about/>About</a>
+<a class=level-item href=/post/>Archives</a></nav></div><div class=nav-right><nav class="nav-item level is-mobile"><a class=level-item href=https://github.com/onigra target=_blank><span class=icon><i class="fa fa-github"></i></span></a><a class=level-item href=https://twitter.com/onigra_ target=_blank><span class=icon><i class="fa fa-twitter"></i></span></a><a class=level-item href=/index.xml target=_blank><span class=icon><i class="fa fa-rss"></i></span></a></nav></div></nav></div></section><section class=section><div class=container><h1 class=title>【何番煎じ】OctopressとGitHub Pagesを使用したブログの構築手順</h1><h2 class="subtitle is-5">April 28, 2013 by Yudai Suzuki</h2><div class=content><p><a href=http://ut-gym.jp/>UT Startup Gym</a>の第3期成果発表会も終わった事ですし、<br>前からやろうと思ってた技術ブログを立ち上げました。</p><p>日本のエンジニアのブログといえば<a href=http://hatenablog.com/>はてなブログ</a>が多い印象ですが、<br>最近は<a href=http://octopress.org/>Octopress</a>と<a href=http://pages.github.com/>GitHub Pages</a>を使った運用がナウいらしいので<br>流行に乗っかってみます。</p><h4 id=参考というかほぼ同じ内容>参考（というか、ほぼ同じ内容）</h4><p><a href=http://blog.glidenote.com/blog/2011/11/07/install-octopress-on-github/>GithubとOctopressでモダンな技術系ブログを作ってみる</a></p><h2 id=環境>環境</h2><p>前提として、gitとrubyがインストールされてる必要があります。</p><ul><li>OS X Lion</li><li>ruby 1.9.3p392(rbenv)</li><li>git 1.8.2.1</li></ul><h2 id=導入>導入</h2><p>Octopressのリポジトリをクローン</p><pre><code>cd ~
+git clone git://github.com/imathis/octopress.git octopress
+cd octopress
+</code></pre><p>bundle install</p><pre><code>bundle install --path vendor/bundle
+rbenv: version `1.9.3-p194' is not installed
+</code></pre><p>うん？rubyのバージョンがこれじゃないとインストールできないの？<br>いやいやそんなことはないでしょう。と思い、ファイル一覧を見てみると<br><code>.rbenv-version</code>というファイルがあることに気付きました。</p><p>中を見ると、1.9.3-p194とだけ書いてあります。<br>これを1.9.3-p392に修正すると動くかな？</p><pre><code>bundle install --path vendor/bundle
+Fetching gem metadata from http://rubygems.org/.......
+</code></pre><p>お、いった。大した問題じゃなくてよかった。<br>gemがインストールできたら、テーマをインストールします。<br>インストールすると、プレビューできるようになります。</p><pre><code>bundle exec rake install
+bundle exec rake preview
+</code></pre><p>でもデフォルトは嫌なので<a href=https://github.com/imathis/octopress/wiki/3rd-Party-Octopress-Themes>サードパーティー制のテーマを導入します。</a><br>今回は、<a href=https://github.com/lucaslew/whitespace>Whitespace</a>というのを導入しました。<br>インストールの際に、既にインストールしたファイルを上書くか聞かれるのでyを入力します。</p><p>zshを使ってて<code>zsh: no matches found</code>が出てしまう方は[をエスケープするか<br>.zshrcに<code>setopt nonomatch</code>を記述しておきましょう。</p><pre><code>git clone git://github.com/lucaslew/whitespace.git .themes/whitespace
+bundle exec rake install['whitespace']
+A theme is already installed, proceeding will overwrite existing files. Are you sure? [y/n]
+
+bundle exec rake preview
+</code></pre><p>ブログタイトルなどは_config.ymlの中で設定できます。<br>titleやauthor等を編集すると、ヘッダーやフッターが自動的に変わってくれます。<br>SNSのURLも設定できるようですが、Whitespaceはデフォルトだと何も出ません。<br>他のテーマだとリンクがアイコンで表示されたりするんでしょうね。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e># ----------------------- #</span>
+<span style=color:#75715e>#      Main Configs       #</span>
+<span style=color:#75715e># ----------------------- #</span>
+
+
+<span style=color:#f92672>title</span>: <span style=color:#ae81ff>My Octopress Blog</span>
+<span style=color:#f92672>subtitle</span>: <span style=color:#ae81ff>A blogging framework for hackers.</span>
+<span style=color:#f92672>author</span>: <span style=color:#ae81ff>Your Name</span>
+<span style=color:#f92672>simple_search</span>: <span style=color:#ae81ff>http://google.com/search</span>
+<span style=color:#f92672>description</span>:
+
+...
+
+</code></pre></div><h2 id=github-pagesの設定>GitHub Pagesの設定</h2><p>Githubにusername.github.comというリポジトリを作成します。
+例えば僕の場合、<a href=https://github.com/onigra>onigraというusername</a>なので<a href=https://github.com/onigra/onigra.github.com>onigra.github.com</a>となります。</p><h2 id=デプロイ>デプロイ</h2><p>OctopressをGithub Pagesにデプロイするための設定をします。</p><pre><code>bundle exec rake setup_github_pages
+</code></pre><p>コマンドを叩くと、Github PagesのリポジトリのURLを入力しろと出ますので、<br>先程作ったリポジトリのURLを入力しましょう。</p><pre><code>Enter the read/write url for your repository:
+git@github.com:onigra/onigra.github.com.git
+</code></pre><p>入力したら、下記コマンドを入力するとデプロイできます。<br>しばらくすると、<a href=http://onigra.github.io/>http://onigra.github.io/</a>にブログができあがります。</p><pre><code>bundle exec rake generate
+bundle exec rake deploy
+</code></pre><h2 id=自己紹介の追加>自己紹介の追加</h2><p>自己紹介ページが無い事に気付いたので、追加してみます。<br>rakeタスクを確認すると、new_pageというタスクがあるのでこれを使います。</p><p>自己紹介のページは、aboutという名前にします。</p><pre><code>bundle exec rake new_page['about']
+</code></pre><p>すると、<code>source/about/index.markdown</code>というディレクトリができるので<br>これを編集します。編集したら、ナビゲーションにリンクを追記します。<br>Whitespaceの場合は、 <code>source/_includes/custom/navigation.html</code>を編集すればOKでした。</p><h2 id=感想>感想</h2><p>簡単でした。rubyで何か作ったことある人でしたら1時間もあれば立てれるでしょう。markdownで書けるのも楽で良いです。<br>よくわからない管理ツール使わずに、コマンドラインで全部完結するのもいいですね。エンジニアっぽくて。</p></div><div class=nav-left><a class=nav-item href="https://twitter.com/home?status=%e3%80%90%e4%bd%95%e7%95%aa%e7%85%8e%e3%81%98%e3%80%91Octopress%e3%81%a8GitHub%20Pages%e3%82%92%e4%bd%bf%e7%94%a8%e3%81%97%e3%81%9f%e3%83%96%e3%83%ad%e3%82%b0%e3%81%ae%e6%a7%8b%e7%af%89%e6%89%8b%e9%a0%86 - https%3a%2f%2fonigra.github.io%2fblog%2f2013%2f04%2f28%2fintroduction-of-octopress%2f" title="Tweet this" target=_blank><span class="fa fa-twitter fa-2x"></span></a></div></div></section><section class=section><div class="container has-text-centered"><p>&copy; 2017 | <a href=https://twitter.com/onigra_ target=_blank>Onigra</a> | Powerd by <a href=https://github.com/mgjohansen/hucore target=_blank>Hucore theme</a> & <a href=http://gohugo.io target=_blank>Hugo</a></p></div></section><script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin=anonymous></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script><script>hljs.initHighlightingOnLoad();</script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','trackingcode','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script>

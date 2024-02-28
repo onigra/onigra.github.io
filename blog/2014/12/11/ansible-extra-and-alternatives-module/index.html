@@ -1,0 +1,186 @@
+<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta content="keyword 1,keyword 2,keyword 3" name=keywords><meta content="Yudai Suzuki" name=author><meta property="og:title" content="Ansible Extraとalternativesモジュールの話 | Ansible Advent Calendar2014 - onigra.github.io"><meta property="og:url" content="https://onigra.github.io/blog/2014/12/11/ansible-extra-and-alternatives-module/"><meta property="og:description" content="Your description here"><meta property="og:type" content="website"><title>Ansible Extraとalternativesモジュールの話 | Ansible Advent Calendar2014 | onigra.github.io</title><script type=text/x-mathjax-config>
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script><link rel=stylesheet href=https://onigra.github.io/css/style.css><link rel="shortcut icon" href=https://onigra.github.io/favicon.ico><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin=anonymous><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css></head><section class=section><div class=container><nav class=nav><div class=nav-left><a class=nav-item href=https://onigra.github.io><h1 class="title is-4">onigra.github.io</h1></a><nav class="nav-item level is-mobile"><a class=level-item href=/about/>About</a>
+<a class=level-item href=/post/>Archives</a></nav></div><div class=nav-right><nav class="nav-item level is-mobile"><a class=level-item href=https://github.com/onigra target=_blank><span class=icon><i class="fa fa-github"></i></span></a><a class=level-item href=https://twitter.com/onigra_ target=_blank><span class=icon><i class="fa fa-twitter"></i></span></a><a class=level-item href=/index.xml target=_blank><span class=icon><i class="fa fa-rss"></i></span></a></nav></div></nav></div></section><section class=section><div class=container><h1 class=title>Ansible Extraとalternativesモジュールの話 | Ansible Advent Calendar2014</h1><h2 class="subtitle is-5">December 11, 2014 by Yudai Suzuki</h2><div class=content><p>この記事は<a href=http://qiita.com/advent-calendar/2014/ansible>Ansible Advent Calendar 2014</a> 16日目の記事です。
+前日は、<a href=https://twitter.com/pioho07>piohoさん</a>の<a href=http://qiita.com/pioho07/items/683323611d4669ca368c>Ansible Galaxy にロールを登録してバージョン管理してみる(Aerospike構築Roleで)</a>でした。</p><p>本エントリーでは、先日Ansible Extraの<code>alternatives</code>モジュールを使おうとして、最終的にやめた話について書きます。</p><h1 id=ansible-extraとは>Ansible Extraとは？</h1><blockquote><p>This repo contains a subset of ansible-modules with slightly lower use or priority than &ldquo;core&rdquo; modules.</p><p>All new modules should be submitted here, and have a chance to be promoted to core over time.</p></blockquote><p><a href=https://github.com/ansible/ansible-modules-extras>ansible/ansible-modules-extras</a>リポジトリのREADMEより引用</p><blockquote><p>v1.8でCoreとExtraに分割されました。
+Coreが優先的にメンテナンスされます。
+新しいモジュールはExtraにまず登録され、使用頻度・必要性などによりCoreに昇格されます。</p></blockquote><p>AdventCalendar1日目、<a href=https://twitter.com/volanja>volanjaさん</a>の<a href=http://qiita.com/volanja/items/2ffa1599fc9a1fae39a1>今年1年間でAnsible界隈ではどのような変化が起こったのか。</a>より引用。</p><p>Ansible Extraとは、Ansible Coreに登録されているモジュールよりも利用頻度、優先度が低いと判断されているモジュール群です。
+新しく作成されたモジュールはまずこのリポジトリにプルリクをし、おそらくコミッタの判断を経て最終的にCoreに昇格されるのでしょう。
+分かりやすく言うと2軍ですね。</p><p>ExtraはAnsibleバージョン1.7まではCoreのリポジトリで一緒に管理されていましたが、1.8からは別々のリポジトリに分かれ、submoduleとしてAnsible本体のリポジトリで管理されています。</p><ul><li><a href=https://github.com/ansible/ansible-modules-core>ansible/ansible-module-core</a></li><li><a href=https://github.com/ansible/ansible-modules-extras>ansible/ansible-module-extras</a></li></ul><h1 id=alternativesモジュールについて>alternativesモジュールについて</h1><p>注意: 筆者はpythonを書いたことがないので、言ってることが間違ってる可能性があります。間違いがありましたら<a href=https://twitter.com/nekogeruge_987>@nekogeruge_987</a>までお手数ですがご指摘お願いします。</p><p>ここから本題なのですが、<code>alternatives</code>を使いたい状況があったのでモジュールを探してみた所下記のドキュメントに辿り着きました。</p><p><a href=http://docs.ansible.com/alternatives_module.html>alternatives - Manages alternative programs for common commands</a></p><p>使ってみたらエラー吐きました。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>$ ansible-playbook -i dev_hosts provisioning_test.yml
+ 
+PLAY <span style=color:#f92672>[</span>test<span style=color:#f92672>]</span> *******************************************************************
+ 
+GATHERING FACTS ***************************************************************
+ok: <span style=color:#f92672>[</span>pro_test<span style=color:#f92672>]</span>
+ 
+TASK: <span style=color:#f92672>[</span>agent/postfix | MTA change to postfix<span style=color:#f92672>]</span> *********************************
+fatal: <span style=color:#f92672>[</span>pro_test<span style=color:#f92672>]</span> <span style=color:#f92672>=</span>&gt; failed to parse: SUDO-SUCCESS-grtqdpoqwzskgcjfiecurouhaywxelgq
+Traceback <span style=color:#f92672>(</span>most recent call last<span style=color:#f92672>)</span>:
+  File <span style=color:#e6db74>&#34;/home/ec2-user/.ansible/tmp/ansible-tmp-1415702504.53-4900359849119/alternatives&#34;</span>, line 1486, in &lt;module&gt;
+    main<span style=color:#f92672>()</span>
+  File <span style=color:#e6db74>&#34;/home/ec2-user/.ansible/tmp/ansible-tmp-1415702504.53-4900359849119/alternatives&#34;</span>, line 122, in main
+    check_rc<span style=color:#f92672>=</span>True
+  File <span style=color:#e6db74>&#34;/home/ec2-user/.ansible/tmp/ansible-tmp-1415702504.53-4900359849119/alternatives&#34;</span>, line 1339, in run_command
+    args <span style=color:#f92672>=</span> <span style=color:#f92672>[</span> os.path.expandvars<span style=color:#f92672>(</span>os.path.expanduser<span style=color:#f92672>(</span>x<span style=color:#f92672>))</span> <span style=color:#66d9ef>for</span> x in args <span style=color:#f92672>]</span>
+  File <span style=color:#e6db74>&#34;/usr/lib64/python2.6/posixpath.py&#34;</span>, line 251, in expanduser
+    <span style=color:#66d9ef>if</span> not path.startswith<span style=color:#f92672>(</span><span style=color:#e6db74>&#39;~&#39;</span><span style=color:#f92672>)</span>:
+AttributeError: <span style=color:#e6db74>&#39;NoneType&#39;</span> object has no attribute <span style=color:#e6db74>&#39;startswith&#39;</span>
+ 
+ 
+FATAL: all hosts have already failed -- aborting
+ 
+PLAY RECAP ********************************************************************
+           to retry, use: --limit @/Users/yudai/provisioning_test.retry
+ 
+pro_test                   : ok<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>    changed<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>    unreachable<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>    failed<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>
+</code></pre></div><p>発生当時の環境。</p><ul><li>OSX 10.9.4</li><li>Ansible 1.7.2 (Homebrewでインストール)</li><li>Python 2.7.5 (OSXにデフォルトで入っているPythonを使用)</li><li>Ansible実行対象OS: AmazonLinux</li></ul><p>playbookはこんな感じ。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yml data-lang=yml>---
+- <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MTA change to postfix</span>
+  <span style=color:#f92672>alternatives</span>: <span style=color:#ae81ff>name=mta path=/usr/sbin/sendmail.postfix</span>
+</code></pre></div><h1 id=調査>調査</h1><h2 id=結論から言うと>結論から言うと</h2><p><code>link</code>オプションを指定すれば使えます。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yml data-lang=yml>---
+- <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MTA change to postfix</span>
+  <span style=color:#f92672>alternatives</span>: <span style=color:#ae81ff>name=mta path=/usr/sbin/sendmail.postfix link=/usr/sbin/sendmail</span>
+</code></pre></div><p>shellモジュールでやるとこんな感じ</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yml data-lang=yml>- <span style=color:#f92672>name</span>: <span style=color:#ae81ff>MTA change to postfix</span>
+  <span style=color:#f92672>shell</span>: <span style=color:#ae81ff>alternatives --set mta /usr/sbin/sendmail.postfix</span>
+</code></pre></div><h2 id=ググる>ググる</h2><p>同様の問題が発生しているissuesがありました。</p><ul><li><p>CentOSで発生している模様
+<a href=https://github.com/ansible/ansible-modules-extras/issues/46>https://github.com/ansible/ansible-modules-extras/issues/46</a>
+この中で<code>link</code>オプションを指定すればいけるというレスがあります。</p></li><li><p>こちらはScientific Linux
+<a href=https://github.com/ansible/ansible/issues/7414>https://github.com/ansible/ansible/issues/7414</a></p></li></ul><h1 id=ソースを読んでみる>ソースを読んでみる</h1><ul><li>moduleのソースはこれ(発生して調べてた当時は1.7.2)
+<a href=https://github.com/ansible/ansible/blob/release1.7.2/library/system/alternatives>https://github.com/ansible/ansible/blob/release1.7.2/library/system/alternatives</a></li></ul><p><a href=https://github.com/ansible/ansible/blob/release1.7.2/library/system/alternatives#L29>この部分</a></p><blockquote><p>Manages symbolic links using the &lsquo;update-alternatives&rsquo; tool provided on debian-like systems.</p></blockquote><p>なるほど、そもそもdebianしか想定してないってことですね。</p><p><code>path</code>で指定したコマンドがalternativesに無い場合、インストールしてます。その際、<code>link</code>オプションの指定が必要になるわけですね。<br>でも無いから落ちてて、<code>link</code>オプションがあるとちゃんとインストールされるからうまくいくってことかな。</p><h1 id=18になってredhat系osも対応された模様>1.8になってRedHat系OSも対応された模様</h1><p><a href=https://github.com/ansible/ansible-modules-extras/blob/devel/system/alternatives.py>https://github.com/ansible/ansible-modules-extras/blob/devel/system/alternatives.py</a></p><p>あれ、<code>--list</code>オプションってRedHat系のOSの<code>update-alternatives</code>で使えましたっけ&mldr;ちょっとVagrant使って調べてみます。</p><ul><li>CentOS6.5</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=color:#f92672>[</span>vagrant@vagrant-centos65 ~<span style=color:#f92672>]</span>$ update-alternatives --version
+alternatives version 1.3.49.3
+<span style=color:#f92672>[</span>vagrant@vagrant-centos65 ~<span style=color:#f92672>]</span>$ update-alternatives
+alternatives version 1.3.49.3 - Copyright <span style=color:#f92672>(</span>C<span style=color:#f92672>)</span> <span style=color:#ae81ff>2001</span> Red Hat, Inc.
+This may be freely redistributed under the terms of the GNU Public License.
+
+usage: alternatives --install &lt;link&gt; &lt;name&gt; &lt;path&gt; &lt;priority&gt;
+                    <span style=color:#f92672>[</span>--initscript &lt;service&gt;<span style=color:#f92672>]</span>
+                    <span style=color:#f92672>[</span>--slave &lt;link&gt; &lt;name&gt; &lt;path&gt;<span style=color:#f92672>]</span>*
+       alternatives --remove &lt;name&gt; &lt;path&gt;
+       alternatives --auto &lt;name&gt;
+       alternatives --config &lt;name&gt;
+       alternatives --display &lt;name&gt;
+       alternatives --set &lt;name&gt; &lt;path&gt;
+
+common options: --verbose --test --help --usage --version
+                --altdir &lt;directory&gt; --admindir &lt;directory&gt;
+</code></pre></div><ul><li>AmazonLinux release 2014.09</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=color:#f92672>[</span>ec2-user@ip-10-1-1-31 ~<span style=color:#f92672>]</span>$ update-alternatives --version
+alternatives バージョン 1.3.49.3
+<span style=color:#f92672>[</span>ec2-user@ip-10-1-1-31 ~<span style=color:#f92672>]</span>$ update-alternatives
+alternatives バージョン 1.3.49.3 - Copyright <span style=color:#f92672>(</span>C<span style=color:#f92672>)</span> <span style=color:#ae81ff>2001</span> Red Hat, Inc.
+これは GNU 一般公有使用許諾書の規定の元で自由に再配布することができます。
+
+使用法: alternatives --install &lt;リンク&gt; &lt;名前&gt; &lt;パス&gt; &lt;優先度&gt;
+                    <span style=color:#f92672>[</span>--initscript &lt;サービス&gt;<span style=color:#f92672>]</span>
+
+                    <span style=color:#f92672>[</span>--slave &lt;リンク&gt; &lt;名前&gt; &lt;パス&gt;<span style=color:#f92672>]</span>*
+       alternatives --remove &lt;名前&gt; &lt;パス&gt;
+       alternatives --auto &lt;名前&gt;
+       alternatives --config &lt;名前&gt;
+       alternatives --display &lt;名前&gt;
+       alternatives --set &lt;名前&gt; &lt;パス&gt;
+
+共通のオプション: --verbose --test --help --usage --version
+                --altdir &lt;ディレクトリ&gt; --admindir &lt;ディレクトリ&gt;
+</code></pre></div><ul><li>CentOS7</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=color:#f92672>[</span>vagrant@localhost ~<span style=color:#f92672>]</span>$ update-alternatives --version
+alternatives バージョン 1.3.61
+<span style=color:#f92672>[</span>vagrant@localhost ~<span style=color:#f92672>]</span>$ update-alternatives
+alternatives バージョン 1.3.61 - Copyright <span style=color:#f92672>(</span>C<span style=color:#f92672>)</span> <span style=color:#ae81ff>2001</span> Red Hat, Inc.
+これは GNU 一般公有使用許諾書の規定の元で自由に再配布することができます。
+
+使用法: alternatives --install &lt;リンク&gt; &lt;名前&gt; &lt;パス&gt; &lt;優先度&gt;
+                    <span style=color:#f92672>[</span>--initscript &lt;サービス&gt;<span style=color:#f92672>]</span>
+
+                    <span style=color:#f92672>[</span>--slave &lt;リンク&gt; &lt;名前&gt; &lt;パス&gt;<span style=color:#f92672>]</span>*
+       alternatives --remove &lt;名前&gt; &lt;パス&gt;
+       alternatives --auto &lt;名前&gt;
+       alternatives --config &lt;名前&gt;
+       alternatives --display &lt;名前&gt;
+       alternatives --set &lt;名前&gt; &lt;パス&gt;
+       alternatives --list
+
+共通のオプション: --verbose --test --help --usage --version
+                --altdir &lt;ディレクトリ&gt; --admindir &lt;ディレクトリ&gt;
+</code></pre></div><ul><li>Fedora20</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=color:#f92672>[</span>vagrant@vagrant-fedora20 ~<span style=color:#f92672>]</span>$ update-alternatives --version
+alternatives バージョン 1.3.60
+<span style=color:#f92672>[</span>vagrant@vagrant-fedora20 ~<span style=color:#f92672>]</span>$ update-alternatives
+alternatives バージョン 1.3.60 - Copyright <span style=color:#f92672>(</span>C<span style=color:#f92672>)</span> <span style=color:#ae81ff>2001</span> Red Hat, Inc.
+これは GNU 一般公有使用許諾書の規定の元で自由に再配布することができます。
+
+使用法: alternatives --install &lt;リンク&gt; &lt;名前&gt; &lt;パス&gt; &lt;優先度&gt;
+                    <span style=color:#f92672>[</span>--initscript &lt;サービス&gt;<span style=color:#f92672>]</span>
+
+                    <span style=color:#f92672>[</span>--slave &lt;リンク&gt; &lt;名前&gt; &lt;パス&gt;<span style=color:#f92672>]</span>*
+       alternatives --remove &lt;名前&gt; &lt;パス&gt;
+       alternatives --auto &lt;名前&gt;
+       alternatives --config &lt;名前&gt;
+       alternatives --display &lt;名前&gt;
+       alternatives --set &lt;名前&gt; &lt;パス&gt;
+       alternatives --list
+
+共通のオプション: --verbose --test --help --usage --version
+                --altdir &lt;ディレクトリ&gt; --admindir &lt;ディレクトリ&gt;
+</code></pre></div><ul><li>Ubuntu14.04</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>vagrant@vagrant-ubuntu-trusty-64:~$ update-alternatives --version
+Debian update-alternatives version 1.17.5.
+
+This is free software; see the GNU General Public License version <span style=color:#ae81ff>2</span> or
+later <span style=color:#66d9ef>for</span> copying conditions. There is NO warranty.
+vagrant@vagrant-ubuntu-trusty-64:~$ update-alternatives
+update-alternatives: need --display, --query, --list, --get-selections, --config, --set, --set-selections, --install, --remove, --all, --remove-all or --auto
+
+Use <span style=color:#e6db74>&#39;update-alternatives --help&#39;</span> <span style=color:#66d9ef>for</span> program usage information.
+</code></pre></div><ul><li>Debian7.4</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>vagrant@vagrant-debian-wheezy:~$ update-alternatives --version
+Debian update-alternatives version 1.16.12.
+
+This is free software; see the GNU General Public License version <span style=color:#ae81ff>2</span> or
+later <span style=color:#66d9ef>for</span> copying conditions. There is NO warranty.
+vagrant@vagrant-debian-wheezy:~$ update-alternatives
+update-alternatives: need --display, --query, --list, --get-selections, --config, --set, --set-selections, --install, --remove, --all, --remove-all or --auto
+
+Usage: update-alternatives <span style=color:#f92672>[</span>&lt;option&gt; ...<span style=color:#f92672>]</span> &lt;command&gt;
+
+Commands:
+  --install &lt;link&gt; &lt;name&gt; &lt;path&gt; &lt;priority&gt;
+    <span style=color:#f92672>[</span>--slave &lt;link&gt; &lt;name&gt; &lt;path&gt;<span style=color:#f92672>]</span> ...
+                           add a group of alternatives to the system.
+  --remove &lt;name&gt; &lt;path&gt;   remove &lt;path&gt; from the &lt;name&gt; group alternative.
+  --remove-all &lt;name&gt;      remove &lt;name&gt; group from the alternatives system.
+  --auto &lt;name&gt;            switch the master link &lt;name&gt; to automatic mode.
+  --display &lt;name&gt;         display information about the &lt;name&gt; group.
+  --query &lt;name&gt;           machine parseable version of --display &lt;name&gt;.
+  --list &lt;name&gt;            display all targets of the &lt;name&gt; group.
+  --get-selections         list master alternative names and their status.
+  --set-selections         read alternative status from standard input.
+  --config &lt;name&gt;          show alternatives <span style=color:#66d9ef>for</span> the &lt;name&gt; group and ask the
+                           user to <span style=color:#66d9ef>select</span> which one to use.
+  --set &lt;name&gt; &lt;path&gt;      set &lt;path&gt; as alternative <span style=color:#66d9ef>for</span> &lt;name&gt;.
+  --all                    call --config on all alternatives.
+
+&lt;link&gt; is the symlink pointing to /etc/alternatives/&lt;name&gt;.
+  <span style=color:#f92672>(</span>e.g. /usr/bin/pager<span style=color:#f92672>)</span>
+&lt;name&gt; is the master name <span style=color:#66d9ef>for</span> this link group.
+  <span style=color:#f92672>(</span>e.g. pager<span style=color:#f92672>)</span>
+&lt;path&gt; is the location of one of the alternative target files.
+  <span style=color:#f92672>(</span>e.g. /usr/bin/less<span style=color:#f92672>)</span>
+&lt;priority&gt; is an integer; options with higher numbers have higher priority in
+  automatic mode.
+
+Options:
+  --altdir &lt;directory&gt;     change the alternatives directory.
+  --admindir &lt;directory&gt;   change the administrative directory.
+  --log &lt;file&gt;             change the log file.
+  --force                  allow replacing files with alternative links.
+  --skip-auto              skip prompt <span style=color:#66d9ef>for</span> alternatives correctly configured
+                           in automatic mode <span style=color:#f92672>(</span>relevant <span style=color:#66d9ef>for</span> --config only<span style=color:#f92672>)</span>
+  --verbose                verbose operation, more output.
+  --quiet                  quiet operation, minimal output.
+  --help                   show this help message.
+  --version                show the version.
+</code></pre></div><p>あー、alternativesのバージョンが古いと<code>--list</code>オプション使えないですね。CentOS6系とAmazonLinuxは注意が必要です。<br>そして<code>--list</code>オプションってDebianとRedHatのものだと全然動きが違うんですね。<code>name</code>ついてないよってプルリク送る所でした。</p><p>個人的に、ディストリビューション判定の部分が気になります。<code>update-alternatives</code>を叩いてReturn Code見てDebianかRedHatかの判定してます。
+<code>ansible_os_family</code>とか呼べないんですかね？この辺各モジュールごとの独自実装になっちゃったら大変な気がするんですが。</p><p>なおせるかなと思って<code>ansible_os_family</code>呼べるモジュールなりメソッドなりをCoreの方で探してみたんですが、ちょっと見つけられませんでした。<br>または、上記ディストリビューションでコマンド叩いて思ったのですが、<code>update-alternatives</code>はDebian製とRedHat製のものしか無いとか？だとしたらこれでもまあいいのかな。</p><p>あとちょっと思ったのは、モジュールの方でディストリビューション判別してくれるのは助かるんですけど、例えばansibleって<code>yum</code>と<code>apt</code>でモジュールが異なっているので、こういう場合はモジュールをディストリビューション毎に分けて、playbook書く側が分けて使うほうがansibleの設計思想にあってるんじゃないかなと思ったりしました。</p><p>まあでもこれはコマンド一緒だし、物によるか。識者からご意見いただけると幸いです。</p><h1 id=何が言いたいか>何が言いたいか</h1><p>こんな感じで、Extraモジュールを使う際には(当たり前ですが)注意が必要です。
+筆者は知らずに使ってしまったのでちょっと嵌りました。<code>alternatives</code>モジュールに関しては、まだshellで対応する方がいい気がします。</p><p>Ansible Extraに関してはまだ日本語記事が少なかったので今回の記事を書いてみました。
+逆に言えば、Contributeのチャンスがありそうということですね。</p><h1 id=僕はこう思ったっス>僕はこう思ったっス</h1><p>ちゃんと読まなかった自分が悪いんですが、<a href=http://docs.ansible.com/alternatives_module.html>このページ</a>は少しわかりづらいかなと思いました。
+<em>This is an Extras Module</em> のくだりは上の方にあってもいいんじゃないっすかね。</p><p>明日は<a href=https://twitter.com/tnayuki>tnayuki</a>さんです。</p></div><div class=nav-left><a class=nav-item href="https://twitter.com/home?status=Ansible%20Extra%e3%81%a8alternatives%e3%83%a2%e3%82%b8%e3%83%a5%e3%83%bc%e3%83%ab%e3%81%ae%e8%a9%b1%20%7c%20Ansible%20Advent%20Calendar2014 - https%3a%2f%2fonigra.github.io%2fblog%2f2014%2f12%2f11%2fansible-extra-and-alternatives-module%2f" title="Tweet this" target=_blank><span class="fa fa-twitter fa-2x"></span></a></div></div></section><section class=section><div class="container has-text-centered"><p>&copy; 2017 | <a href=https://twitter.com/onigra_ target=_blank>Onigra</a> | Powerd by <a href=https://github.com/mgjohansen/hucore target=_blank>Hucore theme</a> & <a href=http://gohugo.io target=_blank>Hugo</a></p></div></section><script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin=anonymous></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script><script>hljs.initHighlightingOnLoad();</script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','trackingcode','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script>
