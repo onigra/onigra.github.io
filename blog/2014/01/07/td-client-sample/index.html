@@ -1,0 +1,87 @@
+<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta content="keyword 1,keyword 2,keyword 3" name=keywords><meta content="Yudai Suzuki" name=author><meta property="og:title" content="td-client-rubyを使ってみたのでサンプルスクリプト晒す - onigra.github.io"><meta property="og:url" content="https://onigra.github.io/blog/2014/01/07/td-client-sample/"><meta property="og:description" content="Your description here"><meta property="og:type" content="website"><title>td-client-rubyを使ってみたのでサンプルスクリプト晒す | onigra.github.io</title><script type=text/x-mathjax-config>
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script><link rel=stylesheet href=https://onigra.github.io/css/style.css><link rel="shortcut icon" href=https://onigra.github.io/favicon.ico><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin=anonymous><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css></head><section class=section><div class=container><nav class=nav><div class=nav-left><a class=nav-item href=https://onigra.github.io><h1 class="title is-4">onigra.github.io</h1></a><nav class="nav-item level is-mobile"><a class=level-item href=/about/>About</a>
+<a class=level-item href=/post/>Archives</a></nav></div><div class=nav-right><nav class="nav-item level is-mobile"><a class=level-item href=https://github.com/onigra target=_blank><span class=icon><i class="fa fa-github"></i></span></a><a class=level-item href=https://twitter.com/onigra_ target=_blank><span class=icon><i class="fa fa-twitter"></i></span></a><a class=level-item href=/index.xml target=_blank><span class=icon><i class="fa fa-rss"></i></span></a></nav></div></nav></div></section><section class=section><div class=container><h1 class=title>td-client-rubyを使ってみたのでサンプルスクリプト晒す</h1><h2 class="subtitle is-5">January 7, 2014 by Yudai Suzuki</h2><div class=content><p>最近仕事でTreasureDataを扱うことが多く、td-client-rubyを使って色々やってみてる。<br>簡単に使い回せそうなスクリプト書いてみたけどもうちょっと汎用性持たせたい。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rb data-lang=rb><span style=color:#66d9ef>module</span> Hql
+  <span style=color:#66d9ef>class</span> <span style=color:#f92672>&lt;&lt;</span> self
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_access_log_by_timestamp</span>(from_date, to_date)
+      h <span style=color:#f92672>=</span> <span style=color:#e6db74>&lt;&lt;-EOS
+</span><span style=color:#e6db74></span>select
+  <span style=color:#f92672>*</span>
+from
+  www_access
+where
+  <span style=color:#66d9ef>TD_TIME_RANGE</span>(time, <span style=color:#e6db74>&#39;#{from_date}&#39;</span>, <span style=color:#e6db74>&#39;#{to_date}&#39;</span>, <span style=color:#e6db74>&#39;JST&#39;</span>)
+      <span style=color:#66d9ef>EOS</span>
+      h
+    <span style=color:#66d9ef>end</span>
+  <span style=color:#66d9ef>end</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-rb data-lang=rb>require <span style=color:#e6db74>&#39;td&#39;</span>
+require <span style=color:#e6db74>&#39;td-client&#39;</span>
+require <span style=color:#e6db74>&#39;optparse&#39;</span>
+require_relative <span style=color:#e6db74>&#39;hql&#39;</span>
+ 
+<span style=color:#75715e>###</span>
+<span style=color:#75715e>#</span>
+<span style=color:#75715e># option</span>
+<span style=color:#75715e>#</span>
+op <span style=color:#f92672>=</span> <span style=color:#66d9ef>OptionParser</span><span style=color:#f92672>.</span>new
+op<span style=color:#f92672>.</span>banner <span style=color:#f92672>=</span> <span style=color:#e6db74>&lt;&lt;EOS
+</span><span style=color:#e6db74></span><span style=color:#e6db74>usage</span>: <span style=color:#75715e>#{__FILE__} -f #{(Time.now - 24 * 60 * 60).strftime(&#39;%Y-%m-%d&#39;)} -t #{Time.now.strftime(&#39;%Y-%m-%d&#39;)}</span>
+ 
+<span style=color:#e6db74>options</span>:
+<span style=color:#66d9ef>EOS</span>
+ 
+from_date, to_date, prod <span style=color:#f92672>=</span> <span style=color:#66d9ef>nil</span>
+ 
+op<span style=color:#f92672>.</span>on(<span style=color:#e6db74>&#34;-f FROM_DATE&#34;</span>) <span style=color:#66d9ef>do</span> <span style=color:#f92672>|</span>s<span style=color:#f92672>|</span>
+  from_date <span style=color:#f92672>=</span> s
+<span style=color:#66d9ef>end</span>
+ 
+op<span style=color:#f92672>.</span>on(<span style=color:#e6db74>&#34;-t TO_DATE&#34;</span>) <span style=color:#66d9ef>do</span> <span style=color:#f92672>|</span>s<span style=color:#f92672>|</span>
+  to_date <span style=color:#f92672>=</span> s
+<span style=color:#66d9ef>end</span>
+ 
+op<span style=color:#f92672>.</span>on(<span style=color:#e6db74>&#34;--prod&#34;</span>) <span style=color:#66d9ef>do</span> <span style=color:#f92672>|</span>b<span style=color:#f92672>|</span>
+  prod <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span>
+<span style=color:#66d9ef>end</span>
+ 
+<span style=color:#75715e>###</span>
+<span style=color:#75715e>#</span>
+<span style=color:#75715e># methods</span>
+<span style=color:#75715e>#</span>
+(<span style=color:#66d9ef>class</span> <span style=color:#f92672>&lt;&lt;</span> self; self; <span style=color:#66d9ef>end</span>)<span style=color:#f92672>.</span>module_eval <span style=color:#66d9ef>do</span>
+  define_method <span style=color:#e6db74>:usage</span> <span style=color:#66d9ef>do</span>
+    puts op<span style=color:#f92672>.</span>to_s
+    puts <span style=color:#e6db74>&#34;&#34;</span>
+    exit <span style=color:#ae81ff>0</span>
+  <span style=color:#66d9ef>end</span>
+ 
+  define_method <span style=color:#e6db74>:run</span> <span style=color:#66d9ef>do</span>
+    api_key <span style=color:#f92672>=</span> <span style=color:#66d9ef>File</span><span style=color:#f92672>.</span>read <span style=color:#e6db74>&#34;api_key&#34;</span>
+    cln <span style=color:#f92672>=</span> <span style=color:#66d9ef>TreasureData</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Client</span><span style=color:#f92672>.</span>new api_key
+ 
+    job <span style=color:#f92672>=</span> cln<span style=color:#f92672>.</span>query(<span style=color:#e6db74>&#39;sample_db&#39;</span>, <span style=color:#e6db74>&#34;</span><span style=color:#e6db74>#{</span><span style=color:#66d9ef>Hql</span><span style=color:#f92672>.</span>get_access_log_by_timestamp from_date, to_date<span style=color:#e6db74>}</span><span style=color:#e6db74>&#34;</span>)
+    
+    <span style=color:#66d9ef>until</span> job<span style=color:#f92672>.</span>finished?
+      sleep <span style=color:#ae81ff>2</span>
+      job<span style=color:#f92672>.</span>update_progress!
+    <span style=color:#66d9ef>end</span>
+    
+    job<span style=color:#f92672>.</span>update_status!
+    job<span style=color:#f92672>.</span>result_each {<span style=color:#f92672>|</span>row<span style=color:#f92672>|</span> p row}
+  <span style=color:#66d9ef>end</span>
+<span style=color:#66d9ef>end</span>
+ 
+<span style=color:#75715e>###</span>
+<span style=color:#75715e>#</span>
+<span style=color:#75715e># main</span>
+<span style=color:#75715e>#</span>
+<span style=color:#66d9ef>ARGV</span><span style=color:#f92672>.</span>empty? ? usage : op<span style=color:#f92672>.</span>order!(<span style=color:#66d9ef>ARGV</span>)
+prod ? run : (puts <span style=color:#66d9ef>Hql</span><span style=color:#f92672>.</span>get_access_log_by_timestamp from_date, to_date)
+</code></pre></div></div><div class=nav-left><a class=nav-item href="https://twitter.com/home?status=td-client-ruby%e3%82%92%e4%bd%bf%e3%81%a3%e3%81%a6%e3%81%bf%e3%81%9f%e3%81%ae%e3%81%a7%e3%82%b5%e3%83%b3%e3%83%97%e3%83%ab%e3%82%b9%e3%82%af%e3%83%aa%e3%83%97%e3%83%88%e6%99%92%e3%81%99 - https%3a%2f%2fonigra.github.io%2fblog%2f2014%2f01%2f07%2ftd-client-sample%2f" title="Tweet this" target=_blank><span class="fa fa-twitter fa-2x"></span></a></div></div></section><section class=section><div class="container has-text-centered"><p>&copy; 2017 | <a href=https://twitter.com/onigra_ target=_blank>Onigra</a> | Powerd by <a href=https://github.com/mgjohansen/hucore target=_blank>Hucore theme</a> & <a href=http://gohugo.io target=_blank>Hugo</a></p></div></section><script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin=anonymous></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script><script>hljs.initHighlightingOnLoad();</script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','trackingcode','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script>

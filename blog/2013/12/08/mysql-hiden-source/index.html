@@ -1,0 +1,97 @@
+<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta content="keyword 1,keyword 2,keyword 3" name=keywords><meta content="Yudai Suzuki" name=author><meta property="og:title" content="俺のMySQL秘伝スクリプトが火を噴くぜ #mysqlcasual - onigra.github.io"><meta property="og:url" content="https://onigra.github.io/blog/2013/12/08/mysql-hiden-source/"><meta property="og:description" content="Your description here"><meta property="og:type" content="website"><title>俺のMySQL秘伝スクリプトが火を噴くぜ #mysqlcasual | onigra.github.io</title><script type=text/x-mathjax-config>
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script><link rel=stylesheet href=https://onigra.github.io/css/style.css><link rel="shortcut icon" href=https://onigra.github.io/favicon.ico><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin=anonymous><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css></head><section class=section><div class=container><nav class=nav><div class=nav-left><a class=nav-item href=https://onigra.github.io><h1 class="title is-4">onigra.github.io</h1></a><nav class="nav-item level is-mobile"><a class=level-item href=/about/>About</a>
+<a class=level-item href=/post/>Archives</a></nav></div><div class=nav-right><nav class="nav-item level is-mobile"><a class=level-item href=https://github.com/onigra target=_blank><span class=icon><i class="fa fa-github"></i></span></a><a class=level-item href=https://twitter.com/onigra_ target=_blank><span class=icon><i class="fa fa-twitter"></i></span></a><a class=level-item href=/index.xml target=_blank><span class=icon><i class="fa fa-rss"></i></span></a></nav></div></nav></div></section><section class=section><div class=container><h1 class=title>俺のMySQL秘伝スクリプトが火を噴くぜ #mysqlcasual</h1><h2 class="subtitle is-5">December 8, 2013 by Yudai Suzuki</h2><div class=content><p>このエントリーは<a href=http://www.zusaar.com/event/1847003>MySQL Casual Advent Calendar 2013</a> 8日目の記事です。</p><p>というわけで、僕が仕事で書いた秘伝のタレの一つを紹介します。</p><p>まず、秘伝のタレを作った背景というのが、先日mysqlcasualでLTした <a href=https://speakerdeck.com/onigra/dbyi-xing-wozhi-eruji-shu>IBM DB2からMySQLへの移行</a> の中で、唯一移行できなかったマーケティングの用途で使用されているDBにあります。</p><p>移行できなかった理由は、もういない人が残していった謎の集計用バッチが大量に動いており、何をしているのかわかる人もおらず、当然ドキュメントも残っていないため、動かすことができなかったからでした。</p><p>とはいえ、このままDB2を使い続けるわけにはいかなかったので、僕がブラックボックスに手を入れることになりました。<br>蓋を開けてみると、大量のBashスクリプトとSQLファイルが出てきました。</p><p>処理の内容はほぼ全てクエリの結果を外部ファイルにdumpし、テーブルを作り直してロードしなおすという、いわゆる洗い替えを行っていました。<br>とりあえずSQLの方言を直して、同様にシェルスクリプトで叩くようにすれば移行できるのですが、大きな問題が出てきます。クエリのパフォーマンスです。</p><p>SQLはオプティマイザの性能に頼りきった作りになっており、データが増え続けることやメンテナンス性を考慮している様子が見られず、数千万件を超えるテーブルをサブクエリのサブクエリのサブクエリの…のようなものばかりでした。こんなSQLでもジョブが破綻しないのはさすがDB2ですね。</p><p>当然チューニングを試みるのですが、エンジニアも分析担当者も、そもそも何を分析したいがためにこのデータを集めているのかが引き継がれておらず、クエリの目的がわからないため、どのような結果にすべきかがわからないという地獄のような現実を聞き、下手にクエリを書き換えられなくなってしまいました。</p><p>どうしようかと考えた結果、一つのアイディアが浮かびます。</p><pre><code>　 　　　　 |
+　 　＼　　__　　／
+　 　＿　（ｍ）　＿  ﾋﾟｺｰﾝ
+　 　　　　|ミ|
+　 　 ／ 　｀´　 ＼
+　　　　　('A`)    &lt; そうだ、SQLの実行ホストを分散させよう
+　　　　　ノヽノヽ
+　　　　　　　くく
+</code></pre><p>スレーブは複数台あったので、それらで負荷分散すればバッチ全体の終了時間を早めることができると考え、ShellScriptの分散バッチフレームワークというよくわからないものを作りました。<br>処理の流れは、</p><ul><li>各ホストでINTO OUTFILEのSQLを実行</li><li>INTO OUTFILEは実行ホストにしかファイルのエクスポートができないため、rsyncでmasterのホストにもってくる</li><li>masterにLOAD INFILEする</li><li>件数が多いと <a href=http://qiita.com/nekogeruge_987/items/2a274d9b93281346869d>このエラー</a> が出るので、自動でsplitするようにする</li></ul><p>できたものがこちらです。</p><p><a href=https://github.com/onigra/mysql_hiden_sauce>onigra/mysql_hiden_sauce</a></p><p><code>batch_example</code> がサンプルのバッチで、下記の構成になっています</p><pre><code>batch_example/
+├── data
+│   └── example_table
+└── sample
+    ├── drop_test_database
+    │   ├── execute.sh
+    │   ├── remote_execute.sh
+    │   └── sql
+    │       └── drop_test_database.sql
+    ├── export_data
+    │   ├── execute.sh
+    │   ├── remote_execute.sh
+    │   └── sql
+    │       └── export_members.sql
+    └── setup_database
+        ├── execute.sh
+        ├── remote_execute.sh
+        └── sql
+            ├── 1.create_test_table.sql
+            └── 2.insert_test_data.sql
+</code></pre><p><code>sample</code> はテーブル名で、配下にそのテーブルに対して行う処理ごとにディレクトリを作成し、さらにその配下に <code>sql</code> ディレクトリを作成し、その中にsqlファイルを置きます。<br>例えば、 <code>setup_database</code> ディレクトリにはテスト用のテーブルを作成するDDLとテストデータをinsertするDMLが置いてあり、この状態で <code>execute.sh</code> を実行するとlocalhostにあるMySQLに対して <code>sql</code> 配下に置いてあるSQLを実行します。</p><p>内部はこんな感じです。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=color:#75715e>###</span>
+<span style=color:#75715e># setting</span>
+<span style=color:#75715e>#</span>
+_APP_ROOT<span style=color:#f92672>=</span><span style=color:#e6db74>`</span>echo <span style=color:#66d9ef>$(</span>cd ../../.. <span style=color:#66d9ef>$(</span>dirname $0<span style=color:#66d9ef>)</span>; pwd<span style=color:#66d9ef>)</span><span style=color:#e6db74>`</span>
+. $_APP_ROOT/lib/job_framework/export.sh develop
+
+_SCRIPT_PATH<span style=color:#f92672>=</span><span style=color:#e6db74>`</span>echo <span style=color:#66d9ef>$(</span>cd <span style=color:#66d9ef>$(</span>dirname $0<span style=color:#66d9ef>)</span>; pwd<span style=color:#66d9ef>)</span><span style=color:#e6db74>`</span>
+sql_files<span style=color:#f92672>=(</span><span style=color:#e6db74>`</span>ls -dF $_SCRIPT_PATH/sql/*<span style=color:#e6db74>`</span><span style=color:#f92672>)</span>
+
+<span style=color:#75715e>###</span>
+<span style=color:#75715e># main</span>
+<span style=color:#75715e>#</span>
+<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> <span style=color:#e6db74>&#34;</span>$DRYRUN<span style=color:#e6db74>&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;TRUE&#34;</span> <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+  <span style=color:#66d9ef>for</span> <span style=color:#f92672>((</span> i <span style=color:#f92672>=</span> 0; i &lt; <span style=color:#e6db74>${#</span>sql_files[@]<span style=color:#e6db74>}</span>; i++ <span style=color:#f92672>))</span>
+  <span style=color:#66d9ef>do</span>
+    execute_sql -s <span style=color:#e6db74>${</span>sql_files[$i]<span style=color:#e6db74>}</span> -n
+  <span style=color:#66d9ef>done</span>
+<span style=color:#66d9ef>else</span>
+  <span style=color:#66d9ef>for</span> <span style=color:#f92672>((</span> i <span style=color:#f92672>=</span> 0; i &lt; <span style=color:#e6db74>${#</span>sql_files[@]<span style=color:#e6db74>}</span>; i++ <span style=color:#f92672>))</span>
+  <span style=color:#66d9ef>do</span>
+    execute_sql -s <span style=color:#e6db74>${</span>sql_files[$i]<span style=color:#e6db74>}</span>
+  <span style=color:#66d9ef>done</span>
+<span style=color:#66d9ef>fi</span>
+</code></pre></div><p><code>lib/job_framework/export.sh</code> には便利関数が書いてあり、 <code>lib/job_framework/export.sh mysqlのユーザー名</code> でsourceすると <code>execute_sql -s 外部sqlファイル</code> で<code> config/account.info</code> からログイン情報取得して外部ファイルに置いたsqlを実行してくれます。 <code>remote_execute.sh</code> の方を見てみると、</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=color:#75715e>###</span>
+<span style=color:#75715e># setting</span>
+<span style=color:#75715e>#</span>
+_APP_ROOT<span style=color:#f92672>=</span><span style=color:#e6db74>`</span>echo <span style=color:#66d9ef>$(</span>cd ../../.. <span style=color:#66d9ef>$(</span>dirname $0<span style=color:#66d9ef>)</span>; pwd<span style=color:#66d9ef>)</span><span style=color:#e6db74>`</span>
+. $_APP_ROOT/lib/job_framework/remote_export.sh 192.168.50.99 develop
+
+_SCRIPT_PATH<span style=color:#f92672>=</span><span style=color:#e6db74>`</span>echo <span style=color:#66d9ef>$(</span>cd <span style=color:#66d9ef>$(</span>dirname $0<span style=color:#66d9ef>)</span>; pwd<span style=color:#66d9ef>)</span><span style=color:#e6db74>`</span>
+sql_files<span style=color:#f92672>=(</span><span style=color:#e6db74>`</span>ls -dF $_SCRIPT_PATH/sql/*<span style=color:#e6db74>`</span><span style=color:#f92672>)</span>
+
+<span style=color:#75715e>###</span>
+<span style=color:#75715e># main</span>
+<span style=color:#75715e>#</span>
+<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> <span style=color:#e6db74>&#34;</span>$DRYRUN<span style=color:#e6db74>&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;TRUE&#34;</span> <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+  <span style=color:#66d9ef>for</span> <span style=color:#f92672>((</span> i <span style=color:#f92672>=</span> 0; i &lt; <span style=color:#e6db74>${#</span>sql_files[@]<span style=color:#e6db74>}</span>; i++ <span style=color:#f92672>))</span>
+  <span style=color:#66d9ef>do</span>
+    remote_execute_sql -s <span style=color:#e6db74>${</span>sql_files[$i]<span style=color:#e6db74>}</span> -n
+  <span style=color:#66d9ef>done</span>
+<span style=color:#66d9ef>else</span>
+  <span style=color:#66d9ef>for</span> <span style=color:#f92672>((</span> i <span style=color:#f92672>=</span> 0; i &lt; <span style=color:#e6db74>${#</span>sql_files[@]<span style=color:#e6db74>}</span>; i++ <span style=color:#f92672>))</span>
+  <span style=color:#66d9ef>do</span>
+    remote_execute_sql -s <span style=color:#e6db74>${</span>sql_files[$i]<span style=color:#e6db74>}</span>
+  <span style=color:#66d9ef>done</span>
+<span style=color:#66d9ef>fi</span>
+</code></pre></div><p>こちらはファイルや関数に <code>remote</code> がついています。これを <code>lib/job_framework/export.sh sqlを実行したいホストorIP mysqlのユーザー名</code> というようにsourceすると、 <code>sqlを実行したいホストorIP</code> で実行してくれます。（サンプルでは192.168.50.99になっています）</p><p>次に、実際にslaveのホストからファイルをエクスポートしてmasterにもってくる <code>export_data</code> 配下を見てみます。 <code>remote_execute.sh</code> のメイン処理部分を見てみると、こんな感じになってます。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=color:#75715e># 古いエクスポート済みのcsvファイルがあれば削除</span>
+remote_remove_exported_files -t example_table -j members
+
+<span style=color:#75715e># sql/配下のsqlファイルを取得して順に実行</span>
+<span style=color:#66d9ef>for</span> <span style=color:#f92672>((</span> i <span style=color:#f92672>=</span> 0; i &lt; <span style=color:#e6db74>${#</span>sql_files[@]<span style=color:#e6db74>}</span>; i++ <span style=color:#f92672>))</span>
+<span style=color:#66d9ef>do</span>
+  remote_execute_sql -s <span style=color:#e6db74>${</span>sql_files[$i]<span style=color:#e6db74>}</span>
+<span style=color:#66d9ef>done</span>
+
+<span style=color:#75715e># エクスポートしたcsvが行数、バイト数の閾値を超えていればsplit</span>
+remote_split_big_file  -t example_table -j members -l <span style=color:#ae81ff>5</span> -b <span style=color:#ae81ff>50</span>
+
+<span style=color:#75715e># masterのホストにrsyncで転送する</span>
+remote_transport_csv_files -t example_table -j members
+</code></pre></div><p>これを叩くと、 <code>sql</code> ディレクトリに置いた <code>INTO OUTFILE</code> のsqlを実行し、 <code>batch_example/data/example_table</code> 配下にエクスポートされたcsvを転送してくれ、ファイルサイズが大きければsplitしてくれます。これをまたmasterのテーブルにloadするジョブを追加して書けばいいわけですね。</p><p>※注意点で、リモートホストにもファイルエクスポート用に <code>batch_example/data/example_table</code> と同じディレクトリ構成を作り、 <code>data</code> 配下のパーミッションを777にしておく必要があります（INTO OUTFILEはmysqlユーザーで行われるため）</p><p>これらのジョブ複数作成し、<a href=https://wiki.jenkins-ci.org/display/JENKINS/Build+Flow+Plugin>Jenkins Build Flow Plugin</a>を使ってパラレルで実行してみたところ、全体で3時間ほど短縮することに成功しました。しかし、根本解決にはなってないのでクエリの分析とチューニングは引き続き行っています…</p><p>ここまでバッチジョブのフレームワークについて紹介しましたが、秘伝のタレには他にもCSV EXPORT/LOADのラッパースクリプト、上記のconfigファイルに書いたログイン情報を取得して外部SQLファイルを実行する関数と、sqlを直接書いて実行できる関数を単体で切り出したもの、レプリケーション設定スクリプト等あったりするのですが、これはまたおいおい書いて行きます。（需要があるかわかりませんが）</p><p>また、 <code>test</code> 配下にテストコードもあるのですが、リモートホストに立てたmysqlが必要なものもあるので、環境構築用のVagrantfileも追ってpushしようかと思います。（準備が間に合いませんでした）</p><p>なんか発表資料見るとShellScriptばっか書いてる気がしますが、仕事ではRubyも書いてます。。。</p><p>明日は <a href=https://twitter.com/chobi_e>@chobi_e</a> さんです！</p></div><div class=nav-left><a class=nav-item href="https://twitter.com/home?status=%e4%bf%ba%e3%81%aeMySQL%e7%a7%98%e4%bc%9d%e3%82%b9%e3%82%af%e3%83%aa%e3%83%97%e3%83%88%e3%81%8c%e7%81%ab%e3%82%92%e5%99%b4%e3%81%8f%e3%81%9c%20%23mysqlcasual - https%3a%2f%2fonigra.github.io%2fblog%2f2013%2f12%2f08%2fmysql-hiden-source%2f" title="Tweet this" target=_blank><span class="fa fa-twitter fa-2x"></span></a></div></div></section><section class=section><div class="container has-text-centered"><p>&copy; 2017 | <a href=https://twitter.com/onigra_ target=_blank>Onigra</a> | Powerd by <a href=https://github.com/mgjohansen/hucore target=_blank>Hucore theme</a> & <a href=http://gohugo.io target=_blank>Hugo</a></p></div></section><script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin=anonymous></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script><script>hljs.initHighlightingOnLoad();</script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','trackingcode','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script>

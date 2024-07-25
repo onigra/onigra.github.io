@@ -1,0 +1,49 @@
+<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta content="keyword 1,keyword 2,keyword 3" name=keywords><meta content="Yudai Suzuki" name=author><meta property="og:title" content="コーポレートサイトのNginxの設定をチューニングも兼ねていじった - onigra.github.io"><meta property="og:url" content="https://onigra.github.io/blog/2015/01/07/corporate-site-tuning-with-nginx/"><meta property="og:description" content="Your description here"><meta property="og:type" content="website"><title>コーポレートサイトのNginxの設定をチューニングも兼ねていじった | onigra.github.io</title><script type=text/x-mathjax-config>
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script><link rel=stylesheet href=https://onigra.github.io/css/style.css><link rel="shortcut icon" href=https://onigra.github.io/favicon.ico><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin=anonymous><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css></head><section class=section><div class=container><nav class=nav><div class=nav-left><a class=nav-item href=https://onigra.github.io><h1 class="title is-4">onigra.github.io</h1></a><nav class="nav-item level is-mobile"><a class=level-item href=/about/>About</a>
+<a class=level-item href=/post/>Archives</a></nav></div><div class=nav-right><nav class="nav-item level is-mobile"><a class=level-item href=https://github.com/onigra target=_blank><span class=icon><i class="fa fa-github"></i></span></a><a class=level-item href=https://twitter.com/onigra_ target=_blank><span class=icon><i class="fa fa-twitter"></i></span></a><a class=level-item href=/index.xml target=_blank><span class=icon><i class="fa fa-rss"></i></span></a></nav></div></nav></div></section><section class=section><div class=container><h1 class=title>コーポレートサイトのNginxの設定をチューニングも兼ねていじった</h1><h2 class="subtitle is-5">January 7, 2015 by Yudai Suzuki</h2><div class=content><p>年末にリニューアルしたコーポレートサイトのNginxの設定をチューニングも兼ねていじった。</p><p><a href=http://onigra.github.io/blog/2015/01/03/the-year-end-hackathon/>年末ハッカソンしてコーポレートサイトをAWS + Nginx + Unicorn + Sinatra構成でリニューアルした</a></p><h1 id=構成>構成</h1><ul><li>Amazon EC2 t2.small 1台<ul><li>Amazon Linux</li><li>ELB無し</li><li>Public Subnetのみ</li><li>EC2インスタンスにEIP割り当てて、DNSのAレコード設定してるだけ</li></ul></li><li>Nginx 1.7.7</li><li>Ruby 2.2.0<ul><li>Sinatra<ul><li>基本的に分割したhtmlをpartialでマージしてindex.htmlを返してるだけ</li></ul></li><li>Unicorn<ul><li>worker 4</li></ul></li></ul></li></ul><h3 id=最終的なnginxconfとビルド時のコマンド>最終的なnginx.confとビルド時のコマンド</h3><p><a href=https://gist.github.com/onigra/ff92467d1107a5b868e1>https://gist.github.com/onigra/ff92467d1107a5b868e1</a></p><h1 id=やったこと>やったこと</h1><p>httpサーバの設定を本格的にいじったのが初めてなので、インフラ専門の人から見て特に目新しいことはしてないと思う。</p><ul><li>チューニング<ul><li>worker_processesをautoにする</li><li>worker_rlimit_nofileとworker_connectionsの数値をいじる</li><li>use epoll</li><li>静的コンテンツをgzipで返す設定</li><li>proxy cacheを使う</li><li>静的コンテンツはNginxに返させる</li></ul></li><li>セキュリティ<ul><li>server_tokens off</li><li>DDos対策</li></ul></li><li>趣味<ul><li>GeoIPの情報をログに出す</li></ul></li></ul><h1 id=チューニング>チューニング</h1><p>厳密な検証はしてないけど、プロキシキャッシュを有効にしたこと以外は大して差が出なかった印象。
+まあこれはサイトの特性もあるだろうけど。</p><p>一応、Vagrantに対してApache Benchを叩いた結果をGistに残してある。</p><p><a href=https://gist.github.com/onigra/85cd9b282dc7b2db5405>https://gist.github.com/onigra/85cd9b282dc7b2db5405</a></p><p>productionはこっち</p><p><a href=https://gist.github.com/onigra/32548e563877c1c5b00c>https://gist.github.com/onigra/32548e563877c1c5b00c</a></p><h2 id=外部サイトの診断結果>外部サイトの診断結果</h2><ul><li><a href="https://developers.google.com/speed/pagespeed/insights/?url=www.exvisionz.jp">Google PageSpeed Insights</a></li><li><a href=http://tools.pingdom.com/fpt/#!/elTyp5/http://exvisionz.jp/>Website Speed Test</a></li><li><a href=https://loadimpact.com/load-test/exvisionz.jp-afcf26a91d5e700383be82fd8a02587d>Load Impact</a></li></ul><p>まあ、t2.small1台なら十分だと思うんですがいかがでしょうか。</p><h1 id=ddos対策>DDos対策</h1><p>Nginxのデフォルトモジュールで<a href=http://nginx.org/en/docs/http/ngx_http_limit_conn_module.html>ngx_http_limit_conn_module</a>と<a href=http://nginx.org/en/docs/http/ngx_http_limit_req_module.html>ngx_http_limit_req_module</a>っていうのがあったので、それを使う。</p><pre><code>http {
+
+    ...
+
+    # 同時接続数制限を行う際のメモリ領域を10MB確保
+    limit_conn_zone $binary_remote_addr zone=limit_conn_zone1:10m;
+
+    # 1秒あたり50リクエストを超えるペースだと503を返す
+    limit_req_zone $binary_remote_addr zone=limit_rec_zone1:10m rate=50r/s;
+
+    server {
+
+        ...
+
+        location / {
+            # 1つのIPからの同時接続数が100を超えると503が返る
+            limit_conn limit_conn_zone1 100;
+
+            # 1秒あたり50リクエストを超えた場合、100リクエスト超えるまで待ってから503を返す
+            limit_req zone=limit_rec_zone1 burst=100;
+        }
+    }
+}
+</code></pre><h1 id=ログに国籍と都市情報を出す>ログに国籍と都市情報を出す</h1><p>なんとなく面白そうなのと、後で解析する時に遊べそうかなと思って<a href=http://nginx.org/en/docs/http/ngx_http_geoip_module.html>ngx_http_geoip_module</a>を入れた。
+ビルドの際に<code>GeoIP-devel</code>が必要。</p><p>confの<code>geoip_country</code>に<code>GeoIP.dat</code>、<code>geoip_city</code>に<code>GeoLiteCity.dat</code>のパスを書くと、GeoIP関連の変数が使えるようになる。</p><p>ちゃんと調べてないんだけど、CentOS6.5だとGeoIP系のファイルが最初から入ってたか、<code>GeoIP-devel</code>が入れたのか揃ってたけど、AmazonLinuxは<code>GeoLiteCity.dat</code>が無かったので取ってくるようにしてる。</p><pre><code>http {
+
+    ...
+
+    geoip_country /usr/share/GeoIP/GeoIP.dat;
+    geoip_city /usr/share/GeoIP/GeoLiteCity.dat;
+
+    log_format ltsv &quot;geoip_country_name:$geoip_city_country_name\t&quot;
+                    &quot;geoip_country_code3:$geoip_city_country_code3\t&quot;
+                    &quot;geoip_city:$geoip_city&quot;;
+
+    access_log /var/log/nginx/access.log ltsv;
+
+    ...
+}
+</code></pre><h1 id=あとできそうなこと>あとできそうなこと</h1><ul><li>静的コンテンツを予めまとめてminifyしてgzipしておく</li></ul><p>ダルい。</p><ul><li>SPDY対応</li></ul><p>これはそのうちやると思う。なってるとカッコいいし。冗長化も含めて<a href=http://dev.classmethod.jp/cloud/aws/aws-elb-ssh/>この構成</a>がよさそう。</p><h1 id=まとめ>まとめ</h1></div><div class=nav-left><a class=nav-item href="https://twitter.com/home?status=%e3%82%b3%e3%83%bc%e3%83%9d%e3%83%ac%e3%83%bc%e3%83%88%e3%82%b5%e3%82%a4%e3%83%88%e3%81%aeNginx%e3%81%ae%e8%a8%ad%e5%ae%9a%e3%82%92%e3%83%81%e3%83%a5%e3%83%bc%e3%83%8b%e3%83%b3%e3%82%b0%e3%82%82%e5%85%bc%e3%81%ad%e3%81%a6%e3%81%84%e3%81%98%e3%81%a3%e3%81%9f - https%3a%2f%2fonigra.github.io%2fblog%2f2015%2f01%2f07%2fcorporate-site-tuning-with-nginx%2f" title="Tweet this" target=_blank><span class="fa fa-twitter fa-2x"></span></a></div></div></section><section class=section><div class="container has-text-centered"><p>&copy; 2017 | <a href=https://twitter.com/onigra_ target=_blank>Onigra</a> | Powerd by <a href=https://github.com/mgjohansen/hucore target=_blank>Hucore theme</a> & <a href=http://gohugo.io target=_blank>Hugo</a></p></div></section><script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin=anonymous></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script><script>hljs.initHighlightingOnLoad();</script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','trackingcode','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script>

@@ -1,0 +1,88 @@
+<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta content="keyword 1,keyword 2,keyword 3" name=keywords><meta content="Yudai Suzuki" name=author><meta property="og:title" content="個人TDDBCを開いてもらった その1 - onigra.github.io"><meta property="og:url" content="https://onigra.github.io/blog/2013/05/01/kojin-tddbc/"><meta property="og:description" content="Your description here"><meta property="og:type" content="website"><title>個人TDDBCを開いてもらった その1 | onigra.github.io</title><script type=text/x-mathjax-config>
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script><link rel=stylesheet href=https://onigra.github.io/css/style.css><link rel="shortcut icon" href=https://onigra.github.io/favicon.ico><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin=anonymous><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css></head><section class=section><div class=container><nav class=nav><div class=nav-left><a class=nav-item href=https://onigra.github.io><h1 class="title is-4">onigra.github.io</h1></a><nav class="nav-item level is-mobile"><a class=level-item href=/about/>About</a>
+<a class=level-item href=/post/>Archives</a></nav></div><div class=nav-right><nav class="nav-item level is-mobile"><a class=level-item href=https://github.com/onigra target=_blank><span class=icon><i class="fa fa-github"></i></span></a><a class=level-item href=https://twitter.com/onigra_ target=_blank><span class=icon><i class="fa fa-twitter"></i></span></a><a class=level-item href=/index.xml target=_blank><span class=icon><i class="fa fa-rss"></i></span></a></nav></div></nav></div></section><section class=section><div class=container><h1 class=title>個人TDDBCを開いてもらった その1</h1><h2 class="subtitle is-5">May 1, 2013 by Yudai Suzuki</h2><div class=content><p>以前に<a href=https://twitter.com/t_wada>t_wadaさん</a>の<a href=http://d.hatena.ne.jp/t-wada/20100228>RSpec入門記事</a>を写経し、なんとなくユニットテストの書き方とTDDのプロセスは理解したものの、より深くテストについて理解したかったため<a href=https://twitter.com/sunaot>sunaotさん</a>に個人TDDBCをやってもらいました。</p><p>ネタはこんな感じです。</p><ul><li>自分が作ってるrailsアプリを元にテストコードを書いてみつつリファクタリング</li><li>sunaotさんによるTDDお手本</li></ul><h2 id=自分が作ってるアプリのテストを書いてみる>自分が作ってるアプリのテストを書いてみる</h2><p>今回やってみたのは、下記のメソッドです。<br>リファクタリング前のコードを載せるのはかなり抵抗ありますね。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=color:#66d9ef>module</span> UsersHelper
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>name_check_of_uniquness</span>(update_name, target_user_id)
+    check_name <span style=color:#f92672>=</span> <span style=color:#66d9ef>User</span><span style=color:#f92672>.</span>find_by_name(update_name)
+    <span style=color:#66d9ef>if</span> check_name<span style=color:#f92672>.</span>blank? <span style=color:#f92672>||</span> check_name<span style=color:#f92672>.</span>id <span style=color:#f92672>==</span> target_user_id
+      <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>true</span>
+    <span style=color:#66d9ef>else</span>
+      <span style=color:#66d9ef>return</span> <span style=color:#66d9ef>false</span>
+    <span style=color:#66d9ef>end</span>
+  <span style=color:#66d9ef>end</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><p>やりたいことはこんな感じです。</p><ul><li>usersのnameはユニークであってほしいが、退会を<a href=https://github.com/goncalossilva/rails3_acts_as_paranoid>acts_as_paranoid</a>で管理しているため、nameに一意制約はつけられない</li><li>usersを更新する際、更新しようとしているusers.nameが退会していない全ユーザーとかぶらなければ更新OK</li><li>又は、更新しようとしているusers.nameがtarget_user_idと一致していれば更新OK。users.nameは変更せず、usersの他の項目のみ更新する場合があるため</li><li>もともとはhelperに書いてあったものをmodelに移す</li></ul><p>まず、失敗するテストを書きます。<br>(RSpecは使いませんでした)</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=color:#75715e># coding: utf-8</span>
+require <span style=color:#e6db74>&#39;test_helper&#39;</span>
+
+<span style=color:#75715e># no method errorで失敗する</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>UserTest</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ActiveSupport</span><span style=color:#f92672>::</span><span style=color:#66d9ef>TestCase</span>
+  test <span style=color:#e6db74>&#34;#usersを更新する際、更新しようとしているusers.nameが退会していない全ユーザーとかぶらなければ更新OK&#34;</span> <span style=color:#66d9ef>do</span>
+    assert <span style=color:#66d9ef>User</span><span style=color:#f92672>.</span>name_check_of_uniquness
+  <span style=color:#66d9ef>end</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><p>テストを実行します。</p><pre><code>bundle exec ruby -I test test/unit/user_test.rb
+</code></pre><p>次に、何も実装していないメソッドを書きます。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>User</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ActiveRecord</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Base</span>
+  acts_as_paranoid
+
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>self</span><span style=color:#f92672>.</span><span style=color:#a6e22e>name_check_of_uniquness</span>
+  <span style=color:#66d9ef>end</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><p>テストを実行し、通ったら実装部分を書いていきます。まずは、下記の実装を行います。</p><ul><li>usersを更新する際、更新しようとしているusers.nameが退会していない全ユーザーとかぶらなければ更新OK</li></ul><p>(ついでに、冗長な記述をリファクタリングします)</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>User</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ActiveRecord</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Base</span>
+  acts_as_paranoid
+
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>self</span><span style=color:#f92672>.</span><span style=color:#a6e22e>name_check_of_uniquness</span>(update_name)
+    check_name <span style=color:#f92672>=</span> <span style=color:#66d9ef>User</span><span style=color:#f92672>.</span>find_by_name(update_name)
+    check_name<span style=color:#f92672>.</span>blank?
+  <span style=color:#66d9ef>end</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><p>ここで一度テストを実行。引数エラーで失敗します。<br>そして、テストを修正します。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=color:#75715e># coding: utf-8</span>
+require <span style=color:#e6db74>&#39;test_helper&#39;</span>
+
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>UserTest</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ActiveSupport</span><span style=color:#f92672>::</span><span style=color:#66d9ef>TestCase</span>
+  test <span style=color:#e6db74>&#34;#usersを更新する際、更新しようとしているusers.nameが退会していない全ユーザーとかぶらなければ更新OK&#34;</span> <span style=color:#66d9ef>do</span>
+    assert <span style=color:#66d9ef>User</span><span style=color:#f92672>.</span>name_check_of_uniquness(<span style=color:#e6db74>&#39;new_user_name&#39;</span>)
+  <span style=color:#66d9ef>end</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><p>これでテストが通ります。次に、下記の実装を行います。</p><ul><li>又は、更新しようとしているusers.nameがtarget_user_idと一致していれば更新OK。users.nameは変更せず、usersの他の項目のみ更新する場合があるため</li></ul><p>そしてこの実装は、users.nameの更新は無いがusersの他の項目は更新がある場合のケースのテストを行いたいため、テストケースを追加します。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=color:#75715e># coding: utf-8</span>
+require <span style=color:#e6db74>&#39;test_helper&#39;</span>
+
+<span style=color:#75715e># users.id = 1は退会していないアクティブなユーザーのテストデータ</span>
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>UserTest</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ActiveSupport</span><span style=color:#f92672>::</span><span style=color:#66d9ef>TestCase</span>
+  test <span style=color:#e6db74>&#34;#usersを更新する際、更新しようとしているusers.nameが退会していない全ユーザーとかぶらなければ更新OK&#34;</span> <span style=color:#66d9ef>do</span>
+    assert <span style=color:#66d9ef>User</span><span style=color:#f92672>.</span>name_check_of_uniquness(<span style=color:#e6db74>&#39;new_user_name&#39;</span>) 
+  <span style=color:#66d9ef>end</span>
+
+  test <span style=color:#e6db74>&#34;#更新しようとしているusers.nameがtarget_user_idと一致していれば更新OK&#34;</span> <span style=color:#66d9ef>do</span>
+    assert <span style=color:#66d9ef>User</span><span style=color:#f92672>.</span>name_check_of_uniquness(<span style=color:#e6db74>&#39;active_user_name&#39;</span>) 
+  <span style=color:#66d9ef>end</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><p>ここでテストを実行。<code>active_user_name</code>はfixtureで作成しているユーザーなので、falseが返ってきて失敗します。<br>実装に入ります。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>User</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ActiveRecord</span><span style=color:#f92672>::</span><span style=color:#66d9ef>Base</span>
+  acts_as_paranoid
+
+  <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>self</span><span style=color:#f92672>.</span><span style=color:#a6e22e>name_check_of_uniquness</span>(update_name, target_user_id)
+    check_name <span style=color:#f92672>=</span> <span style=color:#66d9ef>User</span><span style=color:#f92672>.</span>find_by_name(update_name)
+    check_name<span style=color:#f92672>.</span>blank? <span style=color:#f92672>||</span> check_name<span style=color:#f92672>.</span>id <span style=color:#f92672>==</span> target_user_id
+  <span style=color:#66d9ef>end</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><p>テストが通りました。さらに、falseを返すパターンもテストケースに追加したいため下記テストを追加します。</p><ul><li>ユーザー名は一致しているが、パラメータで渡されたtarget_user_idが一致していなかったらエラーを返す</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-ruby data-lang=ruby><span style=color:#75715e># coding: utf-8</span>
+require <span style=color:#e6db74>&#39;test_helper&#39;</span>
+
+<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>UserTest</span> <span style=color:#f92672>&lt;</span> <span style=color:#66d9ef>ActiveSupport</span><span style=color:#f92672>::</span><span style=color:#66d9ef>TestCase</span>
+  test <span style=color:#e6db74>&#34;#usersを更新する際、更新しようとしているusers.nameが退会していない全ユーザーとかぶらなければ更新OK&#34;</span> <span style=color:#66d9ef>do</span>
+    assert <span style=color:#66d9ef>User</span><span style=color:#f92672>.</span>name_check_of_uniquness(<span style=color:#e6db74>&#39;new_user_name&#39;</span>, <span style=color:#ae81ff>1</span>) 
+  <span style=color:#66d9ef>end</span>
+
+  test <span style=color:#e6db74>&#34;#更新しようとしているusers.nameがtarget_user_idと一致していれば更新OK&#34;</span> <span style=color:#66d9ef>do</span>
+    assert <span style=color:#66d9ef>User</span><span style=color:#f92672>.</span>name_check_of_uniquness(<span style=color:#e6db74>&#39;active_user_name&#39;</span>, <span style=color:#ae81ff>1</span>) 
+  <span style=color:#66d9ef>end</span>
+
+  test <span style=color:#e6db74>&#39;#ユーザー名は一致しているが、パラメータで渡されたユーザーIDと一致していないとエラー&#39;</span> <span style=color:#66d9ef>do</span>
+    assert <span style=color:#f92672>!</span><span style=color:#66d9ef>User</span><span style=color:#f92672>.</span>name_check_of_uniquness(<span style=color:#e6db74>&#39;active_user_name&#39;</span>, <span style=color:#ae81ff>3</span>) 
+  <span style=color:#66d9ef>end</span>
+<span style=color:#66d9ef>end</span>
+</code></pre></div><p>こんな感じでユニットテストを書きました。<br>コードへの突っ込みはあると思いますが、ユニットテストを考えるプロセスと書くプロセスについては理解を深めることができました。</p><p>ちょっと長くなったので、TDDお手本は次回に回します。</p></div><div class=nav-left><a class=nav-item href="https://twitter.com/home?status=%e5%80%8b%e4%ba%baTDDBC%e3%82%92%e9%96%8b%e3%81%84%e3%81%a6%e3%82%82%e3%82%89%e3%81%a3%e3%81%9f%20%e3%81%9d%e3%81%ae1 - https%3a%2f%2fonigra.github.io%2fblog%2f2013%2f05%2f01%2fkojin-tddbc%2f" title="Tweet this" target=_blank><span class="fa fa-twitter fa-2x"></span></a></div></div></section><section class=section><div class="container has-text-centered"><p>&copy; 2017 | <a href=https://twitter.com/onigra_ target=_blank>Onigra</a> | Powerd by <a href=https://github.com/mgjohansen/hucore target=_blank>Hucore theme</a> & <a href=http://gohugo.io target=_blank>Hugo</a></p></div></section><script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin=anonymous></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script><script>hljs.initHighlightingOnLoad();</script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','trackingcode','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script>

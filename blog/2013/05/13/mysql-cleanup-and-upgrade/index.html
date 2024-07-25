@@ -1,0 +1,31 @@
+<!doctype html><html lang=ja><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta content="keyword 1,keyword 2,keyword 3" name=keywords><meta content="Yudai Suzuki" name=author><meta property="og:title" content="MacのMySQLがなんかおかしかったので環境整理するついでに5.6にした - onigra.github.io"><meta property="og:url" content="https://onigra.github.io/blog/2013/05/13/mysql-cleanup-and-upgrade/"><meta property="og:description" content="Your description here"><meta property="og:type" content="website"><title>MacのMySQLがなんかおかしかったので環境整理するついでに5.6にした | onigra.github.io</title><script type=text/x-mathjax-config>
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script><link rel=stylesheet href=https://onigra.github.io/css/style.css><link rel="shortcut icon" href=https://onigra.github.io/favicon.ico><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin=anonymous><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css></head><section class=section><div class=container><nav class=nav><div class=nav-left><a class=nav-item href=https://onigra.github.io><h1 class="title is-4">onigra.github.io</h1></a><nav class="nav-item level is-mobile"><a class=level-item href=/about/>About</a>
+<a class=level-item href=/post/>Archives</a></nav></div><div class=nav-right><nav class="nav-item level is-mobile"><a class=level-item href=https://github.com/onigra target=_blank><span class=icon><i class="fa fa-github"></i></span></a><a class=level-item href=https://twitter.com/onigra_ target=_blank><span class=icon><i class="fa fa-twitter"></i></span></a><a class=level-item href=/index.xml target=_blank><span class=icon><i class="fa fa-rss"></i></span></a></nav></div></nav></div></section><section class=section><div class=container><h1 class=title>MacのMySQLがなんかおかしかったので環境整理するついでに5.6にした</h1><h2 class="subtitle is-5">May 13, 2013 by Yudai Suzuki</h2><div class=content><p>MySQLのログを<a href=https://github.com/treasure-data/td-agent>td-agent</a>で集めて<a href=http://basho.com/riak/>riak</a>に突っ込んで遊ぼうかなーと思って私物のMacに環境構築してたら、
+どうもMySQLの構成ファイルの位置がおかしい。<br>調べてみると、Mac買ってよくわかってない頃にMySQLをOSX用のインストーラーでインスコしてて、その後Homebrewでもインスコしてたのでなんかおかしくなってたらしい。備忘を兼ねて手順を晒します。</p><p>とりあえずインストーラー版もHomebrew版も両方アンインストールして、<a href=http://dic.nicovideo.jp/a/%E3%81%9B%E3%81%A3%E3%81%8B%E3%81%8F%E3%81%A0%E3%81%8B%E3%82%89>せっかくだから</a>バージョン5.6を選んでみます。</p><p>Homebrew版MySQLのアンインストール</p><pre><code>brew uninstall mysql 
+</code></pre><p>そして、Homebrewでは5.5.29をインスコしてるはずなのに、なぜか5.5.24というファイルが存在する…</p><pre><code>cd /usr/local
+
+# ファイルの削除
+sudo rm -rf mysql-5.5.24-osx10.6-x86_64
+
+# シンボリックリンクの削除
+sudo rm -rf mysql
+</code></pre><p>余計なファイルの削除</p><pre><code>cd /Library/Caches/Homebrew/
+rm -rf mysql*
+</code></pre><p><code>brew install</code>の前にupdate & upgrade</p><pre><code>brew update &amp;&amp; brew upgrade
+</code></pre><p>HomebrewでMySQLのインストール手順はググれば腐るほど<a href=http://www.karakaram.com/install-mysql56-homebrew>出るので</a>割愛。<br>さて、無事MySQLがインストールできたのでrailアプリを動かしてみる。</p><pre><code>bundle exec rails s
+
+Incorrect MySQL client library version! This gem was compiled for 5.5.29 but the client library is 5.6.10
+</code></pre><p>怒られました。ググってみると、<a href=http://klalex.com/2013/02/upgrading-mysql-to-5-6-10-on-mac-os-and-fixing-mysql2-gem/>mysql2をインストールしなおせばOKっぽい</a>ですね。でもbundlerで管理してるgemを単体でアンインストールして入れ直す手順がよくわからなかったので、ダサいですが全部インストールしなおしました。</p><pre><code>rm -rf .bundle
+rm -rf vendor/bundle
+
+bundle install --path vendor/bundle
+bundle exec rake db:create
+bundle exec rake db:migrate
+bundle exec rails s
+</code></pre><p>動きました。これでキレイになりました。</p></div><div class=nav-left><a class=nav-item href="https://twitter.com/home?status=Mac%e3%81%aeMySQL%e3%81%8c%e3%81%aa%e3%82%93%e3%81%8b%e3%81%8a%e3%81%8b%e3%81%97%e3%81%8b%e3%81%a3%e3%81%9f%e3%81%ae%e3%81%a7%e7%92%b0%e5%a2%83%e6%95%b4%e7%90%86%e3%81%99%e3%82%8b%e3%81%a4%e3%81%84%e3%81%a7%e3%81%ab5.6%e3%81%ab%e3%81%97%e3%81%9f - https%3a%2f%2fonigra.github.io%2fblog%2f2013%2f05%2f13%2fmysql-cleanup-and-upgrade%2f" title="Tweet this" target=_blank><span class="fa fa-twitter fa-2x"></span></a></div></div></section><section class=section><div class="container has-text-centered"><p>&copy; 2017 | <a href=https://twitter.com/onigra_ target=_blank>Onigra</a> | Powerd by <a href=https://github.com/mgjohansen/hucore target=_blank>Hucore theme</a> & <a href=http://gohugo.io target=_blank>Hugo</a></p></div></section><script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin=anonymous></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js></script><script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script><script>hljs.initHighlightingOnLoad();</script><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;ga('create','trackingcode','auto');ga('send','pageview');}</script><script async src=https://www.google-analytics.com/analytics.js></script>
