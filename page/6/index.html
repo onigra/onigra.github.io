@@ -1,0 +1,64 @@
+<!doctype html><html lang=ja><head><meta name=generator content="Hugo 0.119.0"><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta content="keyword 1,keyword 2,keyword 3" name=keywords><meta content="Yudai Suzuki" name=author><meta property="og:title" content="onigra.github.io"><meta property="og:url" content="https://onigra.github.io/"><meta property="og:description" content="Your description here"><meta property="og:type" content="website"><title>onigra.github.io</title><script type=text/x-mathjax-config>
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script><link rel=stylesheet href=https://onigra.github.io/css/style.css><link rel="shortcut icon" href=https://onigra.github.io/favicon.ico><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin=anonymous><link rel=stylesheet href=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css></head><section class=section><div class=container><nav class=nav><div class=nav-left><a class=nav-item href=https://onigra.github.io><h1 class="title is-4">onigra.github.io</h1></a><nav class="nav-item level is-mobile"><a class=level-item href=/about/>About</a>
+<a class=level-item href=/post/>Archives</a></nav></div><div class=nav-right><nav class="nav-item level is-mobile"><a class=level-item href=https://github.com/onigra target=_blank><span class=icon><i class="fa fa-github"></i></span></a>
+<a class=level-item href=https://twitter.com/onigra_ target=_blank><span class=icon><i class="fa fa-twitter"></i></span></a>
+<a class=level-item href=/index.xml target=_blank><span class=icon><i class="fa fa-rss"></i></span></a></nav></div></nav></div></section><section class=section><div class=container><article><h1 class=title><a href=https://onigra.github.io/blog/2015/04/26/stella-nova-miki-takahashi/>SIRENの屍人、闇人の生みの親である高橋美貴さんが参加するグループ展stella novaに行ってきた</a></h1><h2 class="subtitle is-5">April 26, 2015</h2><div class=content>みんなのトラウマである恩田美奈(閲覧注意)や太田ともえ(閲覧注意)を生み出したデザイナー、高梨美貴さんが出展するstella novaというグ
+...<a class="button is-link" href=https://onigra.github.io/blog/2015/04/26/stella-nova-miki-takahashi/ style=height:28px>
+Read more
+<span class="icon is-small"><i class="fa fa-angle-double-right"></i></span></a></div></article><article><h1 class=title><a href=https://onigra.github.io/blog/2015/03/19/shibuyarb-20150318/>渋谷.rbでCircleCI、Docker、Serverspec、Ansibleあたりの話をしてきた #shibuyarb</a></h1><h2 class="subtitle is-5">March 19, 2015</h2><div class=content>渋谷.rb[:20150318]の資料です。 本当はAzusaColors使おうとしたんですけど、普通のAzusa使うよりもセンスいるなと思っ
+...<a class="button is-link" href=https://onigra.github.io/blog/2015/03/19/shibuyarb-20150318/ style=height:28px>
+Read more
+<span class="icon is-small"><i class="fa fa-angle-double-right"></i></span></a></div></article><article><h1 class=title><a href=https://onigra.github.io/blog/2015/01/13/auto-deploy-settings/>コーポレートサイトを自動デプロイするようにした</a></h1><h2 class="subtitle is-5">January 13, 2015</h2><div class=content>このコーポレートサイトはCIにwercker使ってて、この間自動デプロイするようにした。
+http://www.exvisionz.jp/
+関連記事
+年末ハッカソンしてコーポレートサイトをAWS + Nginx + Unicorn + Sinatra構成でリニューアルした コーポレートサイトのNginxの設定をチューニングも兼ねていじった ざっくり概要 デプロイツールはcapistano3を使用 デプロイ先のipはdeploy/production.rbでaws-sdkを使って取得 プライベートリポジトリからのソースの取得はSSH Agent Forwadingで行っている デプロイ開始時、終了時にslackに通知 capistano-slackifyを使用 masterのテストが通ったらでwercker.ymlに記述したデプロイタスクが動くようにしてある 基本的な話はこのあたりが参考になる 要は、werckerがCI用に立てたUbuntuのインスタンスからcapistranoを叩くようにすればいい
+...<a class="button is-link" href=https://onigra.github.io/blog/2015/01/13/auto-deploy-settings/ style=height:28px>
+Read more
+<span class="icon is-small"><i class="fa fa-angle-double-right"></i></span></a></div></article><article><h1 class=title><a href=https://onigra.github.io/blog/2015/01/07/corporate-site-tuning-with-nginx/>コーポレートサイトのNginxの設定をチューニングも兼ねていじった</a></h1><h2 class="subtitle is-5">January 7, 2015</h2><div class=content>年末にリニューアルしたコーポレートサイトのNginxの設定をチューニングも兼ねていじった。
+年末ハッカソンしてコーポレートサイトをAWS + Nginx + Unicorn + Sinatra構成でリニューアルした
+構成 Amazon EC2 t2.small 1台 Amazon Linux ELB無し Public Subnetのみ EC2インスタンスにEIP割り当てて、DNSのAレコード設定してるだけ Nginx 1.7.7 Ruby 2.2.0 Sinatra 基本的に分割したhtmlをpartialでマージしてindex.htmlを返してるだけ Unicorn worker 4 最終的なnginx.confとビルド時のコマンド https://gist.github.com/onigra/ff92467d1107a5b868e1
+やったこと httpサーバの設定を本格的にいじったのが初めてなので、インフラ専門の人から見て特に目新しいことはしてないと思う。
+チューニング worker_processesをautoにする worker_rlimit_nofileとworker_connectionsの数値をいじる use epoll 静的コンテンツをgzipで返す設定 proxy cacheを使う 静的コンテンツはNginxに返させる セキュリティ server_tokens off DDos対策 趣味 GeoIPの情報をログに出す
+...<a class="button is-link" href=https://onigra.github.io/blog/2015/01/07/corporate-site-tuning-with-nginx/ style=height:28px>
+Read more
+<span class="icon is-small"><i class="fa fa-angle-double-right"></i></span></a></div></article><article><h1 class=title><a href=https://onigra.github.io/blog/2015/01/05/webapi-versioning/>例えば、アプリケーションでWebAPIのバージョニングをしない</a></h1><h2 class="subtitle is-5">January 5, 2015</h2><div class=content>注意 AWSの前提で話をしています 実際にこの構成を試したわけではありません 識者のご意見お待ちしております 年末にWebAPIのバージョニングについて考えてて、2014年にその話題で盛り上がった時の記事読みあさったり、Web API: The Good parts読んだりしたんだけど、発端になった@kennさんの記事のブコメでmod_rewriteでやるべきっていうのを見てなるほど、と思ったのと同時にそもそもバージョニングをアプリケーションにやらせない方が幸せになれるんじゃないかと思って、思いついたのが下記の方法。
+...<a class="button is-link" href=https://onigra.github.io/blog/2015/01/05/webapi-versioning/ style=height:28px>
+Read more
+<span class="icon is-small"><i class="fa fa-angle-double-right"></i></span></a></div></article><article><h1 class=title><a href=https://onigra.github.io/blog/2015/01/02/read-scheme-in-ruby/>「つくって学ぶプログラミング言語 RubyによるScheme処理系の実装」を読んだ</a></h1><h2 class="subtitle is-5">January 2, 2015</h2><div class=content>つくって学ぶプログラミング言語 RubyによるScheme処理系の実装 今年はもう少しプログラミングについて深く理解したいと思ったので、手始めに
+...<a class="button is-link" href=https://onigra.github.io/blog/2015/01/02/read-scheme-in-ruby/ style=height:28px>
+Read more
+<span class="icon is-small"><i class="fa fa-angle-double-right"></i></span></a></div></article><article><h1 class=title><a href=https://onigra.github.io/blog/2014/12/30/the-year-end-hackathon/>年末ハッカソンしてコーポレートサイトをAWS + Nginx + Unicorn + Sinatra構成でリニューアルした</a></h1><h2 class="subtitle is-5">December 30, 2014</h2><div class=content>弊社コーポレートサイトのデザインが非常に味わい深く、以前から作り直そうという話題が出てたものの、なかなか実施されなかったので、年末全社員（5名）集まってハッカソン形式で1日で作り直すことにした。
+自分が言い出しっぺなのでオーガナイザーをやった。
+Before
+...<a class="button is-link" href=https://onigra.github.io/blog/2014/12/30/the-year-end-hackathon/ style=height:28px>
+Read more
+<span class="icon is-small"><i class="fa fa-angle-double-right"></i></span></a></div></article><article><h1 class=title><a href=https://onigra.github.io/blog/2014/12/25/the-best-of-music-2014/>今年よく聞いた音楽2014</a></h1><h2 class="subtitle is-5">December 25, 2014</h2><div class=content>Meine Meinung(マイネマイヌク) 一昨年ストリートライブで見てファンになって、今年もよく聞いた。特にゲームミュージック好きの人には聞いてほしい。
+「クロノトリガー」から「時の回廊」 「ICO」から「You Were There」
+...<a class="button is-link" href=https://onigra.github.io/blog/2014/12/25/the-best-of-music-2014/ style=height:28px>
+Read more
+<span class="icon is-small"><i class="fa fa-angle-double-right"></i></span></a></div></article><article><h1 class=title><a href=https://onigra.github.io/blog/2014/12/11/ansible-extra-and-alternatives-module/>Ansible Extraとalternativesモジュールの話 | Ansible Advent Calendar2014</a></h1><h2 class="subtitle is-5">December 11, 2014</h2><div class=content>この記事はAnsible Advent Calendar 2014 16日目の記事です。 前日は、piohoさんのAnsible Galaxy にロールを登録してバージョン管理してみる(Aerospike構築Roleで)でした。
+本エントリーでは、先日Ansible Extraのalternativesモジュールを使おうとして、最終的にやめた話について書きます。
+Ansible Extraとは？ This repo contains a subset of ansible-modules with slightly lower use or priority than &ldquo;core&rdquo; modules.
+All new modules should be submitted here, and have a chance to be promoted to core over time.
+ansible/ansible-modules-extrasリポジトリのREADMEより引用
+v1.8でCoreとExtraに分割されました。 Coreが優先的にメンテナンスされます。 新しいモジュールはExtraにまず登録され、使用頻度・必要性などによりCoreに昇格されます。
+AdventCalendar1日目、volanjaさんの今年1年間でAnsible界隈ではどのような変化が起こったのか。より引用。
+...<a class="button is-link" href=https://onigra.github.io/blog/2014/12/11/ansible-extra-and-alternatives-module/ style=height:28px>
+Read more
+<span class="icon is-small"><i class="fa fa-angle-double-right"></i></span></a></div></article><article><h1 class=title><a href=https://onigra.github.io/blog/2014/12/03/uchino-neko-2014/>あかね | うちの猫 Advent Calendar 2014</a></h1><h2 class="subtitle is-5">December 3, 2014</h2><div class=content>うちの猫 Advent Calendar 2014、10日目はうちの『あかね』を紹介させていただきます。
+...<a class="button is-link" href=https://onigra.github.io/blog/2014/12/03/uchino-neko-2014/ style=height:28px>
+Read more
+<span class="icon is-small"><i class="fa fa-angle-double-right"></i></span></a></div></article></div></section><section class=section><div class=container><nav class="level is-mobile"><div class=level-left><div class=level-item><a class=button href=/page/5/><span class="icon is-small is-marginless"><i class="fa fa-angle-left"></i></span>
+Newer</a></div></div><div class="level-right is-marginless"><div class=level-item><a class=button href=/page/7/>Older
+<span class="icon is-small is-marginless"><i class="fa fa-angle-right"></i></span></a></div></div></nav></div></section><section class=section><div class="container has-text-centered"><p>&copy; 2017 | <a href=https://twitter.com/onigra_ target=_blank>Onigra</a> | Powerd by <a href=https://github.com/mgjohansen/hucore target=_blank>Hucore theme</a> & <a href=http://gohugo.io target=_blank>Hugo</a></p></div></section><script src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin=anonymous></script>
+<script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/go.min.js></script>
+<script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script>
+<script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/dockerfile.min.js></script>
+<script type=text/javascript src=//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js></script>
+<script>hljs.initHighlightingOnLoad()</script><script type=application/javascript>var doNotTrack=!1;doNotTrack||(window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)},ga.l=+new Date,ga("create","trackingcode","auto"),ga("send","pageview"))</script><script async src=https://www.google-analytics.com/analytics.js></script>

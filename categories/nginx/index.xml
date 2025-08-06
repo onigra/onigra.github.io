@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nginx on onigra.github.io</title><link>https://onigra.github.io/categories/nginx/</link><description>Recent content in Nginx on onigra.github.io</description><generator>Hugo -- gohugo.io</generator><language>ja</language><copyright>&amp;copy; 2017 | &lt;a href="https://twitter.com/onigra_" target="_blank">Onigra&lt;/a> | Powerd by &lt;a href="https://github.com/mgjohansen/hucore" target="_blank">Hucore theme&lt;/a> &amp; &lt;a href="http://gohugo.io" target="_blank">Hugo&lt;/a></copyright><lastBuildDate>Wed, 07 Jan 2015 23:52:08 +0000</lastBuildDate><atom:link href="https://onigra.github.io/categories/nginx/index.xml" rel="self" type="application/rss+xml"/><item><title>コーポレートサイトのNginxの設定をチューニングも兼ねていじった</title><link>https://onigra.github.io/blog/2015/01/07/corporate-site-tuning-with-nginx/</link><pubDate>Wed, 07 Jan 2015 23:52:08 +0000</pubDate><guid>https://onigra.github.io/blog/2015/01/07/corporate-site-tuning-with-nginx/</guid><description>&lt;p>年末にリニューアルしたコーポレートサイトのNginxの設定をチューニングも兼ねていじった。&lt;/p>
+&lt;p>&lt;a href="http://onigra.github.io/blog/2015/01/03/the-year-end-hackathon/">年末ハッカソンしてコーポレートサイトをAWS + Nginx + Unicorn + Sinatra構成でリニューアルした&lt;/a>&lt;/p>
+&lt;h1 id="構成">構成&lt;/h1>
+&lt;ul>
+&lt;li>Amazon EC2 t2.small 1台
+&lt;ul>
+&lt;li>Amazon Linux&lt;/li>
+&lt;li>ELB無し&lt;/li>
+&lt;li>Public Subnetのみ&lt;/li>
+&lt;li>EC2インスタンスにEIP割り当てて、DNSのAレコード設定してるだけ&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Nginx 1.7.7&lt;/li>
+&lt;li>Ruby 2.2.0
+&lt;ul>
+&lt;li>Sinatra
+&lt;ul>
+&lt;li>基本的に分割したhtmlをpartialでマージしてindex.htmlを返してるだけ&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Unicorn
+&lt;ul>
+&lt;li>worker 4&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="最終的なnginxconfとビルド時のコマンド">最終的なnginx.confとビルド時のコマンド&lt;/h3>
+&lt;p>&lt;a href="https://gist.github.com/onigra/ff92467d1107a5b868e1">https://gist.github.com/onigra/ff92467d1107a5b868e1&lt;/a>&lt;/p>
+&lt;h1 id="やったこと">やったこと&lt;/h1>
+&lt;p>httpサーバの設定を本格的にいじったのが初めてなので、インフラ専門の人から見て特に目新しいことはしてないと思う。&lt;/p>
+&lt;ul>
+&lt;li>チューニング
+&lt;ul>
+&lt;li>worker_processesをautoにする&lt;/li>
+&lt;li>worker_rlimit_nofileとworker_connectionsの数値をいじる&lt;/li>
+&lt;li>use epoll&lt;/li>
+&lt;li>静的コンテンツをgzipで返す設定&lt;/li>
+&lt;li>proxy cacheを使う&lt;/li>
+&lt;li>静的コンテンツはNginxに返させる&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>セキュリティ
+&lt;ul>
+&lt;li>server_tokens off&lt;/li>
+&lt;li>DDos対策&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>趣味
+&lt;ul>
+&lt;li>GeoIPの情報をログに出す&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul></description></item></channel></rss>
