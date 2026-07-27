@@ -1,10 +1,7 @@
 ---
-categories: null
-comments: true
-slug: office-chair
-date: 2014-04-23T10:46:37Z
-title: 2万円以内のオフィスチェア選び
-
+title: "2万円以内のオフィスチェア選び"
+slug: "office-chair"
+date: "2014-04-23T10:46:37Z"
 ---
 
 {% img /images/chairs.jpg %}

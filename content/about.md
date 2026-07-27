@@ -1,13 +1,11 @@
 ---
-categories: null
-comments: false
-title: About me
-url: /about/
+title: "About me"
+url: "/about/"
 ---
 
 ## Onigra(Yudai Suzuki, 旧nekogeruge_987)
 
-{{< figure src="/images/yapc_lt.jpg" >}}
+![/images/yapc_lt.jpg](/images/yapc_lt.jpg)
 
 Photo From [YAPC::Asia 2014 | 写真共有・保存サービス 30days Album](http://30d.jp/yapcasia/7)
 

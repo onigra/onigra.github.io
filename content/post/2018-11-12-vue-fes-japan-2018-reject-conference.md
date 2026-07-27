@@ -1,9 +1,9 @@
 ---
 title: "Vue Fes Japan 2018 Reject Conferenceで発表してきた #vuefes_reject"
-comments: true
-slug: vue-fes-japan-2018-reject-conference
-categories: Vue.js
-date: 2018-11-12T21:51:41+09:00
+slug: "vue-fes-japan-2018-reject-conference"
+categories:
+- Vue.js
+date: "2018-11-12T21:51:41+09:00"
 ---
 
 [Vue Fes Japan 2018 Reject Conference](https://vuejs-meetup.connpass.com/event/97557/)にて、Keycloak と Nuxt.js で Keycloak を使う話をしてきました。

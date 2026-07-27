@@ -1,9 +1,9 @@
 ---
 title: "解法がいくつかある先送りにしてる問題について、考えてることを共有するタイミングと粒度が難しい話"
-comments: true
-slug: kyouyu-ryudo-timing-muzui
-categories: muzui
-date: 2020-08-13T00:00:00+09:00
+slug: "kyouyu-ryudo-timing-muzui"
+categories:
+- muzui
+date: "2020-08-13T00:00:00+09:00"
 ---
 
 仕事してる中で、「ちょっと微妙だな」とか「後々こういう時に困るかも」とは思ってるけど、解法が3~4個あってメリットデメリット検証しなくちゃいけなくて、割と手間がかかるけど今やらなくても死なないから、雑にissueにdumpしてあるような問題ってあるじゃないですか。

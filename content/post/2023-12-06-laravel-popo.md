@@ -1,9 +1,9 @@
 ---
 title: "LaravelでPOPO(Plain Old Php Object)を追加する"
-comments: true
-slug: laravel-popo
-categories: laravel php
-date: 2023-12-06T00:00:00+09:00
+slug: "laravel-popo"
+categories:
+- laravel php
+date: "2023-12-06T00:00:00+09:00"
 ---
 
 ## 背景

@@ -1,10 +1,9 @@
 ---
-categories: ruby
-comments: true
-slug: slice-by-indexes
-date: 2014-08-01T21:48:55Z
-title: Array#slice_by_indexesというgemを作った
-
+title: "Array#slice_by_indexesというgemを作った"
+slug: "slice-by-indexes"
+categories:
+- ruby
+date: "2014-08-01T21:48:55Z"
 ---
 
 ### 2014/8/5 修正 名前変えた

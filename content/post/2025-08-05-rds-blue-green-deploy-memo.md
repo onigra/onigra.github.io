@@ -1,9 +1,9 @@
 ---
-categories: AWS
-comments: false
-slug: rds-blue-green-deploy-memo
-date: 2025-08-05T00:00:00Z
-title: RDS Blue Green Deployを使う時に気を付けるポイント
+title: "RDS Blue Green Deployを使う時に気を付けるポイント"
+slug: "rds-blue-green-deploy-memo"
+categories:
+- AWS
+date: "2025-08-05T00:00:00Z"
 ---
 
 ## 全体通して

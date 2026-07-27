@@ -1,10 +1,9 @@
 ---
-categories: git github
-comments: true
-slug: git-and-github-workshop
-date: 2014-06-02T20:03:28Z
-title: gitとgithubについて初心者に教える時にやってるやり方
-
+title: "gitとgithubについて初心者に教える時にやってるやり方"
+slug: "git-and-github-workshop"
+categories:
+- git github
+date: "2014-06-02T20:03:28Z"
 ---
 
 2度ほどgit&github初心者(gitは多少使えて、githubは使えない、あるいはほとんど使っていないエンジニア及びデザイナー)に対して使い方を教えるのをワークショップ形式でやったことがあるんですが、  

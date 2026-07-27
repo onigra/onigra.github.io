@@ -1,9 +1,9 @@
 ---
 title: "Netlifyが仕事で使えるか試す（追記あり）"
-comments: true
-slug: try-netlify-on-buisiness
-categories: Netlify
-date: 2018-03-28T23:47:36+09:00
+slug: "try-netlify-on-buisiness"
+categories:
+- Netlify
+date: "2018-03-28T23:47:36+09:00"
 ---
 
 [Netlify](https://www.netlify.com/)がすごく便利なので仕事で使えそうか検証した結果のメモ。  

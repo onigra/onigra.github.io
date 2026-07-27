@@ -1,10 +1,7 @@
 ---
-categories: null
-comments: true
-slug: read-scheme-in-ruby
-date: 2015-01-02T20:59:50Z
-title: 「つくって学ぶプログラミング言語 RubyによるScheme処理系の実装」を読んだ
-
+title: "「つくって学ぶプログラミング言語 RubyによるScheme処理系の実装」を読んだ"
+slug: "read-scheme-in-ruby"
+date: "2015-01-02T20:59:50Z"
 ---
 
 [つくって学ぶプログラミング言語 RubyによるScheme処理系の実装](http://tatsu-zine.com/books/scheme-in-ruby)

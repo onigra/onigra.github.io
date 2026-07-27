@@ -1,9 +1,9 @@
 ---
 title: "最低限の監視"
-comments: true
-slug: minimum-monitoring
-categories: monitoring
-date: 2020-07-13T00:00:00+09:00
+slug: "minimum-monitoring"
+categories:
+- monitoring
+date: "2020-07-13T00:00:00+09:00"
 ---
 
 ## 何を監視したいか

@@ -1,10 +1,9 @@
 ---
-categories: design
-comments: true
-slug: non-designers-design-practice
-date: 2014-07-03T10:58:15Z
-title: ノンデザイナーのデザイン練習 フライヤー編
-
+title: "ノンデザイナーのデザイン練習 フライヤー編"
+slug: "non-designers-design-practice"
+categories:
+- design
+date: "2014-07-03T10:58:15Z"
 ---
 
 ![完成版](/images/flyer7.jpg)

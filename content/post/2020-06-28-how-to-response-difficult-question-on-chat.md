@@ -1,9 +1,9 @@
 ---
 title: "チャットで即答しづらい質問に回答するコツ"
-comments: true
-slug: how-to-response-difficult-question-on-chat
-categories: communication
-date: 2020-06-28T00:00:00+09:00
+slug: "how-to-response-difficult-question-on-chat"
+categories:
+- communication
+date: "2020-06-28T00:00:00+09:00"
 ---
 
 ## はじめに: 個人の見解です

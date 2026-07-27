@@ -1,9 +1,9 @@
 ---
 title: "Q: 御社はスクラム開発、アジャイル開発を導入してますか？"
-comments: true
-slug: scrum-agile-yattemasuka
-categories: agile
-date: 2024-02-28T00:00:00+09:00
+slug: "scrum-agile-yattemasuka"
+categories:
+- agile
+date: "2024-02-28T00:00:00+09:00"
 ---
 
 ## A

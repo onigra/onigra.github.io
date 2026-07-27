@@ -1,10 +1,9 @@
 ---
-categories: MySQL, MySQLCasualTalk
-comments: true
-slug: mysql-hiden-source
-date: 2013-12-08T00:00:00Z
-title: '俺のMySQL秘伝スクリプトが火を噴くぜ #mysqlcasual'
-
+title: "俺のMySQL秘伝スクリプトが火を噴くぜ #mysqlcasual"
+slug: "mysql-hiden-source"
+categories:
+- MySQL, MySQLCasualTalk
+date: "2013-12-08T00:00:00Z"
 ---
 
 このエントリーは[MySQL Casual Advent Calendar 2013](http://www.zusaar.com/event/1847003) 8日目の記事です。

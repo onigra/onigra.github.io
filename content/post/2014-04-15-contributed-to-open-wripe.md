@@ -1,10 +1,7 @@
 ---
-categories: null
-comments: true
-slug: contributed-to-open-wripe
-date: 2014-04-15T10:54:47Z
-title: open-wripeが動かなかったのでプルリクしてマージされた
-
+title: "open-wripeが動かなかったのでプルリクしてマージされた"
+slug: "contributed-to-open-wripe"
+date: "2014-04-15T10:54:47Z"
 ---
 
 [@masuidrive](https://twitter.com/masuidrive)さんのメモアプリ、[wri.pe](https://wri.pe/)がオープンソースになったので触ってみた。

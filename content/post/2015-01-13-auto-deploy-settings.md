@@ -1,10 +1,7 @@
 ---
-categories: null
-comments: true
-slug: auto-deploy-settings
-date: 2015-01-13T19:37:36Z
-title: コーポレートサイトを自動デプロイするようにした
-
+title: "コーポレートサイトを自動デプロイするようにした"
+slug: "auto-deploy-settings"
+date: "2015-01-13T19:37:36Z"
 ---
 
 このコーポレートサイトはCIに[wercker](http://wercker.com/)使ってて、この間自動デプロイするようにした。

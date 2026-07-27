@@ -1,10 +1,7 @@
 ---
-categories: null
-comments: true
-slug: review-ees-mental
-date: 2014-04-11T10:11:32Z
-title: コードを公開することと「だまって嗤われる勇気」
-
+title: "コードを公開することと「だまって嗤われる勇気」"
+slug: "review-ees-mental"
+date: "2014-04-11T10:11:32Z"
 ---
 
 アプレッソの小野さんのコードレビューについての記事を読みました。私もレビュアーになる際は気をつけます。

@@ -1,9 +1,9 @@
 ---
-categories: keycloak nodejs
-comments: true
-slug: keycloak-nodejs-connect-with-bearer-only-client
 title: "keycloak-nodejs-connectを使ってBearer-only clientの認証を行う際の注意点"
-date: 2018-02-25T11:05:15+09:00
+slug: "keycloak-nodejs-connect-with-bearer-only-client"
+categories:
+- keycloak nodejs
+date: "2018-02-25T11:05:15+09:00"
 ---
 
 [前回の続き](https://onigra.github.io/blog/2018/02/25/kc-with-webapi/)

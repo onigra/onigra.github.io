@@ -1,10 +1,9 @@
 ---
-categories: hubot
-comments: true
-slug: gotenyama-trust-bus-api
-date: 2015-05-05T14:42:11Z
-title: 勤務先のオフィスビルのシャトルバスの時刻表APIを作ってHubotで見れるようにした
-
+title: "勤務先のオフィスビルのシャトルバスの時刻表APIを作ってHubotで見れるようにした"
+slug: "gotenyama-trust-bus-api"
+categories:
+- hubot
+date: "2015-05-05T14:42:11Z"
 ---
 
 これ作った。

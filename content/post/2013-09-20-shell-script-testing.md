@@ -1,10 +1,9 @@
 ---
-categories: shell TDD test unit-test shunit2 Bash
-comments: true
-slug: shell-script-testing
-date: 2013-09-20T00:00:00Z
-title: 社内勉強会用にshellでのUnitTestについて資料つくったらぼちぼち見てもらえた
-
+title: "社内勉強会用にshellでのUnitTestについて資料つくったらぼちぼち見てもらえた"
+slug: "shell-script-testing"
+categories:
+- shell TDD test unit-test shunit2 Bash
+date: "2013-09-20T00:00:00Z"
 ---
 
 タイトルの通りなんですが、その社内勉強会を[大人のYAPC](http://peatix.com/event/17621)に出たいのでサボるため、予め作っておいてスライドをUPしておいたら、ぼちぼちはてブついててちょっとびっくりしました。ぶっちゃけ社内だと見られてるかどうか怪しいので嬉しかったですね。

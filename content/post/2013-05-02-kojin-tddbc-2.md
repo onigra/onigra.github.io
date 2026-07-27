@@ -1,10 +1,9 @@
 ---
-categories: ruby ruby-on-rails TDD test unit-test
-comments: true
-slug: kojin-tddbc-2
-date: 2013-05-02T00:00:00Z
-title: 個人TDDBCを開いてもらった その2
-
+title: "個人TDDBCを開いてもらった その2"
+slug: "kojin-tddbc-2"
+categories:
+- ruby ruby-on-rails TDD test unit-test
+date: "2013-05-02T00:00:00Z"
 ---
 
 [前回](http://onigra.github.io/blog/2013/05/01/kojin-tddbc/)の続きです。  

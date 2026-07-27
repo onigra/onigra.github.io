@@ -1,9 +1,9 @@
 ---
-categories: JavaScript Vue.js
-comments: true
-slug: vuex-test-dispatch-action-mock
-date: 2018-02-12T22:15:53+09:00
 title: "Vuex(Store)を使ったComponentのテストでActionをDispatchで書いた時のMockの書き方"
+slug: "vuex-test-dispatch-action-mock"
+categories:
+- JavaScript Vue.js
+date: "2018-02-12T22:15:53+09:00"
 ---
 
 [vue-test-utilsのドキュメントにやり方は書いてあるんだけど](https://vue-test-utils.vuejs.org/ja/guides/using-with-vuex.html)、Storeのアクションを `dispatch` で呼んだ時にどう書くかちょっと悩んだのでメモ。

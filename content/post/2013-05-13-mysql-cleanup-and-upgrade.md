@@ -1,10 +1,9 @@
 ---
-categories: MySQL ruby-on-rails
-comments: true
-slug: mysql-cleanup-and-upgrade
-date: 2013-05-13T00:00:00Z
-title: MacのMySQLがなんかおかしかったので環境整理するついでに5.6にした
-
+title: "MacのMySQLがなんかおかしかったので環境整理するついでに5.6にした"
+slug: "mysql-cleanup-and-upgrade"
+categories:
+- MySQL ruby-on-rails
+date: "2013-05-13T00:00:00Z"
 ---
 
 MySQLのログを[td-agent](https://github.com/treasure-data/td-agent)で集めて[riak](http://basho.com/riak/)に突っ込んで遊ぼうかなーと思って私物のMacに環境構築してたら、

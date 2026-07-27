@@ -1,10 +1,9 @@
 ---
-categories: 健康
-comments: true
-slug: published-my-weight
-date: 2016-05-11T00:19:35Z
-title: 体重を公開しました
-
+title: "体重を公開しました"
+slug: "published-my-weight"
+categories:
+- 健康
+date: "2016-05-11T00:19:35Z"
 ---
 
 ゴールデンウィーク中に体重記録&公開用のアプリをRails作って公開しました

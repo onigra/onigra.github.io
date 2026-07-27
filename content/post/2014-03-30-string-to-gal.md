@@ -1,10 +1,9 @@
 ---
-categories: ruby gem
-comments: true
-slug: string-to-gal
-date: 2014-03-30T01:47:54Z
-title: 文字列をギャル文字に置換するgem、String#to_galを作って（はじめて）rubygems.orgに公開した
-
+title: "文字列をギャル文字に置換するgem、String#to_galを作って（はじめて）rubygems.orgに公開した"
+slug: "string-to-gal"
+categories:
+- ruby gem
+date: "2014-03-30T01:47:54Z"
 ---
 
 <blockquote class="twitter-tweet" lang="ja"><p>ぁゃぴさんのブログを社内チャットでシェアしたらみんなギャル文字で会話しはじめてる</p>&mdash; nekogeruge (@nekogeruge_987) <a href="https://twitter.com/nekogeruge_987/statuses/449031574621675520">2014, 3月 27</a></blockquote>

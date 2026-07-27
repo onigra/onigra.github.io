@@ -1,10 +1,9 @@
 ---
-categories: db sql JackDB
-comments: true
-slug: cloud-jackdb
-date: 2013-12-28T00:00:00Z
-title: SQL入門用の環境としてJackDB（webサービス）が便利
-
+title: "SQL入門用の環境としてJackDB（webサービス）が便利"
+slug: "cloud-jackdb"
+categories:
+- db sql JackDB
+date: "2013-12-28T00:00:00Z"
 ---
 
 職場で非エンジニアからSQLをやってみたいと言われたので、JackDBというサービスを使って教えてみることにしました。  

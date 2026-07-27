@@ -1,10 +1,7 @@
 ---
-categories: null
-comments: true
-slug: webapi-versioning
-date: 2015-01-05T14:36:33Z
-title: 例えば、アプリケーションでWebAPIのバージョニングをしない
-
+title: "例えば、アプリケーションでWebAPIのバージョニングをしない"
+slug: "webapi-versioning"
+date: "2015-01-05T14:36:33Z"
 ---
 
 # 注意

@@ -1,10 +1,9 @@
 ---
-categories: Jenkins
-comments: true
-slug: jenkins-downgrade-with-publish-over-ssh-plugin
-date: 2013-09-09T00:00:00Z
-title: JenkinsのPublish Over SSH Plugin関連でバージョン下げた話
-
+title: "JenkinsのPublish Over SSH Plugin関連でバージョン下げた話"
+slug: "jenkins-downgrade-with-publish-over-ssh-plugin"
+categories:
+- Jenkins
+date: "2013-09-09T00:00:00Z"
 ---
 
 前回Jenkinsのバージョン上げたんですが、ジョブの設定見たら「ロード中…」が消えず、ジョブのメンテができなくなってしまいました…

@@ -1,9 +1,9 @@
 ---
 title: "ブログのdeploy workflowをWerckerからGitHub Actionsに移行した"
-comments: true
-slug: blog-migrate-deploy-workflow
-categories: wercker gh-actions ci hugo
-date: 2020-12-31T14:00:00+09:00
+slug: "blog-migrate-deploy-workflow"
+categories:
+- wercker gh-actions ci hugo
+date: "2020-12-31T14:00:00+09:00"
 ---
 
 ## 概要

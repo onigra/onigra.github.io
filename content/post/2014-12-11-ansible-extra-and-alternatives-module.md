@@ -1,10 +1,7 @@
 ---
-categories: null
-comments: true
-slug: ansible-extra-and-alternatives-module
-date: 2014-12-11T19:17:43Z
-title: Ansible Extraとalternativesモジュールの話 | Ansible Advent Calendar2014
-
+title: "Ansible Extraとalternativesモジュールの話 | Ansible Advent Calendar2014"
+slug: "ansible-extra-and-alternatives-module"
+date: "2014-12-11T19:17:43Z"
 ---
 
 この記事は[Ansible Advent Calendar 2014](http://qiita.com/advent-calendar/2014/ansible) 16日目の記事です。

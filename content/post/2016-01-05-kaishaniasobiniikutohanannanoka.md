@@ -1,10 +1,9 @@
 ---
-categories: 採用
-comments: true
-slug: kaishaniasobiniikutohanannanoka
-date: 2016-01-05T23:25:01Z
-title: 「会社に遊びに行く」と具体的に何をして遊んでもらえるのか知りたかったので会社に遊びに行ってきた
-
+title: "「会社に遊びに行く」と具体的に何をして遊んでもらえるのか知りたかったので会社に遊びに行ってきた"
+slug: "kaishaniasobiniikutohanannanoka"
+categories:
+- 採用
+date: "2016-01-05T23:25:01Z"
 ---
 
 最近よく「会社に遊びに行く」というのをよく聞くようになったけど、具体的に何をして遊ぶのかよく考えたらわからなかったので、「会社に遊びに行く」という風潮を作った（と自分は思ってる）[Wantedly](https://www.wantedly.com/)さんに遊びに行ってきた。Wantedly経由で。

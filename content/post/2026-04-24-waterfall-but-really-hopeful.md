@@ -1,8 +1,9 @@
 ---
-title: Rebuild Podcast ep 424 Waterfall But Really Fast (obra) が良かった
-slug: waterfall-but-really-hopeful
-categories: 感想
-date: 2026-04-24T00:00:00+09:00
+title: "Rebuild Podcast ep 424 Waterfall But Really Fast (obra) が良かった"
+slug: "waterfall-but-really-hopeful"
+categories:
+- 感想
+date: "2026-04-24T00:00:00+09:00"
 ---
 
 - [424: Waterfall But Really Fast (obra)](https://rebuild.fm/424/)

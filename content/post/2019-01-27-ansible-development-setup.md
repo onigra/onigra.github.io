@@ -1,9 +1,9 @@
 ---
 title: "Pythonあまり知らない人がMacでAnsibleリポジトリの最低限の開発環境をつくる"
-comments: true
-slug: ansible-development-setup
-categories: Ansible
-date: 2019-01-27T20:17:41+09:00
+slug: "ansible-development-setup"
+categories:
+- Ansible
+date: "2019-01-27T20:17:41+09:00"
 ---
 
 Ansibleに[プルリク](https://github.com/ansible/ansible/pull/51366)出すのに調べた。基本的にこれの通りにやればいい。

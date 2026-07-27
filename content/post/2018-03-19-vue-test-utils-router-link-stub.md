@@ -1,9 +1,9 @@
 ---
-categories: JavaScript Vue.js Nuxt.js
-comments: true
-slug: vue-test-utils-router-link-stub
 title: "Vue.jsでrouter-link(nuxt-link)のテストを書く時にRouterLinkStubが便利"
-date: 2018-03-19T23:42:57+09:00
+slug: "vue-test-utils-router-link-stub"
+categories:
+- JavaScript Vue.js Nuxt.js
+date: "2018-03-19T23:42:57+09:00"
 ---
 
 # 環境

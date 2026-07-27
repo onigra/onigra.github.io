@@ -1,10 +1,9 @@
 ---
-categories: builderscon
-comments: true
-slug: builderscon-tokyo-2016
-date: 2016-12-03T21:15:51Z
-title: builderscon tokyo 2016に行ってきた
-
+title: "builderscon tokyo 2016に行ってきた"
+slug: "builderscon-tokyo-2016"
+categories:
+- builderscon
+date: "2016-12-03T21:15:51Z"
 ---
 
 # 聞いた発表

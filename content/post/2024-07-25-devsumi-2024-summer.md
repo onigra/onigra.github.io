@@ -1,9 +1,9 @@
 ---
 title: "Developers Summit 2024 Summerで登壇してきた"
-comments: true
-slug: devsumi-2024-summer
-categories: devsumi
-date: 2024-07-25T00:00:00+09:00
+slug: "devsumi-2024-summer"
+categories:
+- devsumi
+date: "2024-07-25T00:00:00+09:00"
 ---
 
 https://event.shoeisha.jp/devsumi/20240723 で、「オーナーシップは誰のものか」というタイトルで登壇&参加してきた。  

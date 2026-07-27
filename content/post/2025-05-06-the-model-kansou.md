@@ -1,8 +1,9 @@
 ---
-title: THE MODELを読んだ
-slug: the-model-kansou
-categories: blog
-date: 2025-05-06T00:00:00+09:00
+title: "THE MODELを読んだ"
+slug: "the-model-kansou"
+categories:
+- blog
+date: "2025-05-06T00:00:00+09:00"
 ---
 
 営業のプロセスに最近関心が強いので、最近のスタンダードになっていそうな [THE MODEL](https://www.amazon.co.jp/dp/479815816X) を読んだ。

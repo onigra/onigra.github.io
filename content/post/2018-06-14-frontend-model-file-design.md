@@ -1,9 +1,9 @@
 ---
 title: "今やってるプロジェクトでのフロントエンドにおけるモデル層のファイル構成の指針"
-comments: true
-slug: frontend-model-file-design
-categories: JavaScript
-date: 2018-06-14T23:05:41+09:00
+slug: "frontend-model-file-design"
+categories:
+- JavaScript
+date: "2018-06-14T23:05:41+09:00"
 ---
 
 # 経緯

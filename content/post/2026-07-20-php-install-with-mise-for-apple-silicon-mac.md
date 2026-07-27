@@ -1,8 +1,9 @@
 ---
-title: Apple Silicon搭載MacにPHPをmise(with vfox)でインストールする（2026年7月版）
-slug: php-install-with-mise-for-apple-silicon-mac
-categories: php
-date: 2026-07-20T00:00:00+09:00
+title: "Apple Silicon搭載MacにPHPをmise(with vfox)でインストールする（2026年7月版）"
+slug: "php-install-with-mise-for-apple-silicon-mac"
+categories:
+- php
+date: "2026-07-20T00:00:00+09:00"
 ---
 
 ## 結論: `mise-plugins/vfox-php` を使う

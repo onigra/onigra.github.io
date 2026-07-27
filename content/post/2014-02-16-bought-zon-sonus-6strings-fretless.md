@@ -1,10 +1,9 @@
 ---
-categories: Music, Bass
-comments: true
-slug: bought-zon-sonus-6strings-fretless
-date: 2014-02-16T16:18:41Z
-title: zon sonus 6弦フレットレスモデルを買った
-
+title: "zon sonus 6弦フレットレスモデルを買った"
+slug: "bought-zon-sonus-6strings-fretless"
+categories:
+- Music, Bass
+date: "2014-02-16T16:18:41Z"
 ---
 
 突然だが、趣味でベースを弾いている。  
