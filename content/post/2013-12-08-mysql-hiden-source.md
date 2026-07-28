@@ -2,7 +2,8 @@
 title: "俺のMySQL秘伝スクリプトが火を噴くぜ #mysqlcasual"
 slug: "mysql-hiden-source"
 categories:
-- MySQL, MySQLCasualTalk
+- MySQL
+- MySQLCasualTalk
 date: "2013-12-08T00:00:00Z"
 ---
 

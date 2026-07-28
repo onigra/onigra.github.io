@@ -2,7 +2,8 @@
 title: "zon sonus 6弦フレットレスモデルを買った"
 slug: "bought-zon-sonus-6strings-fretless"
 categories:
-- Music, Bass
+- Music
+- Bass
 date: "2014-02-16T16:18:41Z"
 ---
 
