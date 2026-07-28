@@ -1,8 +1,0 @@
-{{ "<!-- ENTERING layouts/_default/li.html -->" | safeHTML }}
-<article>
-<li>
-  <h3><a href="{{ .Permalink }}">{{ .Title }}</a>{{ if .Draft }} ::Draft{{ end }}</h3>
-  <h4 class="is-5">{{ .Date.Format "January 2, 2006" }}</h4>
-  <br />
-</li>
-{{ "<!-- LEAVING layouts/_default/li.html -->" | safeHTML }}
