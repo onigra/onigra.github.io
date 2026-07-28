@@ -1,19 +1,13 @@
 <%= render_partial "header" %>
 <%= render_partial "nav" %>
+
 <section class="section">
   <div class="container">
     <% @pages.each do |entry| %>
-    <article>
-      <h1 class="title"><a href="<%= entry[:url] %>"><%= entry[:title] %></a></h1>
-      <% if entry[:date] %>
-      <h2 class="subtitle is-5"><%= entry[:date].strftime("%B %-d, %Y") %></h2>
-      <% end %>
-      <div class="content">
-        <%= entry[:summary] %>
-      </div>
-    </article>
+      <%= render_partial("post_excerpt", entry: entry) %>
     <% end %>
   </div>
 </section>
+
 <%= render_partial "pager" %>
 <%= render_partial "footer" %>
