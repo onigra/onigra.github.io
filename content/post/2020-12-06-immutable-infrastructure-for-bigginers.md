@@ -1,9 +1,9 @@
 ---
 title: "2020年に初めて学ぶImmutable Infrastructure"
-comments: true
-slug: immutable-infrastructure-for-bigginers
-categories: infra architecture
-date: 2020-12-06T00:00:00+09:00
+slug: "immutable-infrastructure-for-bigginers"
+categories:
+- infra architecture
+date: "2020-12-06T00:00:00+09:00"
 ---
 
 この記事は[Classi Advent Calendar 2020](https://qiita.com/advent-calendar/2020/classi) 6 日目の記事です。  

@@ -1,10 +1,9 @@
 ---
-categories: RubyKaigi2015 Ruby
-comments: true
-slug: we-became-a-silver-sponsor-of-rubykaigi2015
-date: 2015-12-10T07:41:04Z
-title: '所属会社にRubyKaigi2015のSilver Sponsorになってもらいました #rubykaigi'
-
+title: "所属会社にRubyKaigi2015のSilver Sponsorになってもらいました #rubykaigi"
+slug: "we-became-a-silver-sponsor-of-rubykaigi2015"
+categories:
+- RubyKaigi2015 Ruby
+date: "2015-12-10T07:41:04Z"
 ---
 
 - [Rubykaigi2015](http://rubykaigi.org/2015/)

@@ -1,9 +1,9 @@
 ---
 title: "プロジェクト及びチームに秩序をもたらすために初手やっていること"
-comments: true
-slug: wip-limits
-categories: projectmanagement
-date: 2022-12-04T00:00:00+09:00
+slug: "wip-limits"
+categories:
+- projectmanagement
+date: "2022-12-04T00:00:00+09:00"
 ---
 
 ![chatgpt](/images/chatgpt.jpg)

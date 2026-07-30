@@ -1,9 +1,9 @@
 ---
 title: "書籍「組織デザイン」読書メモ"
-comments: true
-slug: soshiki-design-dokusho-memo
-categories: blog
-date: 2021-05-17T00:00:00+09:00
+slug: "soshiki-design-dokusho-memo"
+categories:
+- blog
+date: "2021-05-17T00:00:00+09:00"
 ---
 
 タイムラインで見かけて読んでみたら、思った以上にいい本だった  

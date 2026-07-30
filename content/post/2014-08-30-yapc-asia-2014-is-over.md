@@ -1,10 +1,9 @@
 ---
-categories: yapcasia
-comments: true
-slug: yapc-asia-2014-is-over
-date: 2014-08-30T23:09:51Z
-title: 'YAPC::Asia 2014 ボランティアスタッフとLTを終えて #yapcasia'
-
+title: "YAPC::Asia 2014 ボランティアスタッフとLTを終えて #yapcasia"
+slug: "yapc-asia-2014-is-over"
+categories:
+- yapcasia
+date: "2014-08-30T23:09:51Z"
 ---
 
 YAPC::Asia 2014、特別大きなトラブルは無く無事に終えることができました。  

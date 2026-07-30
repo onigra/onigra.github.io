@@ -1,10 +1,7 @@
 ---
-categories: null
-comments: true
-slug: giron-chuduri
-date: 2014-08-25T12:26:32Z
-title: 議論を収束する気が無いのに議論を宙に浮かせる行為
-
+title: "議論を収束する気が無いのに議論を宙に浮かせる行為"
+slug: "giron-chuduri"
+date: "2014-08-25T12:26:32Z"
 ---
 
 ##### ※一部時系列を改変しています

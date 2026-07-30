@@ -1,9 +1,9 @@
 ---
 title: "AMIからアプリケーションの環境ごとの固有の設定をなくし、サーバ起動時に動的に取得することにより、StagingとProductionで同じAMIを使う"
-comments: true
-slug: remove-environment-settings-from-ami
-categories: AWS
-date: 2018-08-18T18:03:41+09:00
+slug: "remove-environment-settings-from-ami"
+categories:
+- AWS
+date: "2018-08-18T18:03:41+09:00"
 ---
 
 # はじめに

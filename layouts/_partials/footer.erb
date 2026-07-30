@@ -1,0 +1,14 @@
+<section class="section">
+  <div class="container has-text-centered">
+    <p><%= @site[:params]["copyright"] %></p>
+  </div>
+</section>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js" integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin="anonymous"></script>
+<% Array(@site[:params].dig("highlight", "languages")).each do |lang| %>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/<%= lang %>.min.js"></script>
+<% end %>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

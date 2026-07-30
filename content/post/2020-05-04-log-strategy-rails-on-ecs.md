@@ -1,9 +1,9 @@
 ---
 title: "RailsをECSで動かす時のログをどうするか考える"
-comments: true
-slug: log-strategy-rails-on-ecs
-categories: rails docker ecs log
-date: 2020-05-04T00:00:00+09:00
+slug: "log-strategy-rails-on-ecs"
+categories:
+- rails docker ecs log
+date: "2020-05-04T00:00:00+09:00"
 ---
 
 ## 実験リポジトリ

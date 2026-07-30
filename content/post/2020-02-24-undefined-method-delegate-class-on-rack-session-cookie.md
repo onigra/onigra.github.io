@@ -1,9 +1,9 @@
 ---
 title: "undefined method `DelegateClass' for Rack::Session::Cookie:Class"
-comments: true
-slug: undefined-method-delegate-class-on-rack-session-cookie
-categories: ruby rack
-date: 2020-02-24T00:00:00+09:00
+slug: "undefined-method-delegate-class-on-rack-session-cookie"
+categories:
+- ruby rack
+date: "2020-02-24T00:00:00+09:00"
 ---
 
 ## 2020-02-25 09:25 JST 追記

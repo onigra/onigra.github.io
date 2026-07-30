@@ -1,10 +1,9 @@
 ---
-categories: ruby-on-rails ruby ginzarb
-comments: true
-slug: ginzarb-action-mailer-preview-code-reading
-date: 2014-06-18T10:46:26Z
-title: 'Ginza.rbのRails Action Mailer Previewのコードリーディングに行ってきた #ginzarb'
-
+title: "Ginza.rbのRails Action Mailer Previewのコードリーディングに行ってきた #ginzarb"
+slug: "ginzarb-action-mailer-preview-code-reading"
+categories:
+- ruby-on-rails ruby ginzarb
+date: "2014-06-18T10:46:26Z"
 ---
 
 [これ](http://ginzarb.doorkeeper.jp/events/12380?utm_campaign=event_12380_8395&utm_medium=email&utm_source=registered_message)に行ってきた。  

@@ -1,10 +1,9 @@
 ---
-categories: mariadb mysql
-comments: true
-slug: komono-engineer-no-kai
-date: 2013-06-29T00:00:00Z
-title: '小物エンジニアの会にてMariaDBの話をしてきました #MariaDB #小物エンジニアの会'
-
+title: "小物エンジニアの会にてMariaDBの話をしてきました #MariaDB #小物エンジニアの会"
+slug: "komono-engineer-no-kai"
+categories:
+- mariadb mysql
+date: "2013-06-29T00:00:00Z"
 ---
 
 [小物エンジニアの会](http://atnd.org/events/40593)という会があったので、最近よくさわっているMariaDBについて話をしてきました。割とウケて嬉しかったです。

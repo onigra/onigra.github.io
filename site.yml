@@ -1,0 +1,37 @@
+---
+base_url: https://onigra.github.io
+title: onigra.github.io
+language: ja
+author: Yudai Suzuki
+paginate: 10
+permalinks:
+  post: "/blog/:year/:month/:day/:slug/"
+taxonomies:
+  category: categories
+params:
+  description: Your description here
+  keywords:
+  - keyword 1
+  - keyword 2
+  - keyword 3
+  sharingicons: true
+  highlight:
+    style: github
+    languages:
+    - go
+    - dockerfile
+  copyright: '&copy; 2017 | <a href="https://twitter.com/onigra_" target="_blank">Onigra</a>
+    | Powerd by <a href="https://github.com/mgjohansen/hucore" target="_blank">Hucore
+    theme</a> & <a href="https://github.com/onigra/rakuda" target="_blank">rakuda</a> '
+  menu:
+  - url: "/about/"
+    title: About
+  - url: "/post/"
+    title: Archives
+  social:
+  - url: https://github.com/onigra
+    fa_icon: fa-github
+  - url: https://twitter.com/onigra_
+    fa_icon: fa-twitter
+  - url: "/index.xml"
+    fa_icon: fa-rss

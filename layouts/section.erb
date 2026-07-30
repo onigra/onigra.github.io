@@ -1,0 +1,21 @@
+<%= render_partial "header" %>
+<%= render_partial "nav" %>
+<section class="section">
+  <div class="container">
+  <% @grouped_by_year.each do |year, entries| %>
+    <h1 class="title"><%= year %></h1>
+    <ul>
+      <% entries.each do |entry| %>
+      <li>
+        <h3><a href="<%= entry[:url] %>"><%= entry[:title] %></a></h3>
+        <% if entry[:date] %>
+        <h4 class="is-5"><%= entry[:date].strftime("%B %-d, %Y") %></h4>
+        <% end %>
+        <br />
+      </li>
+      <% end %>
+    </ul>
+  <% end %>
+  </div>
+</section>
+<%= render_partial "footer" %>

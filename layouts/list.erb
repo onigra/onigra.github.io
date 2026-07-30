@@ -1,0 +1,13 @@
+<%= render_partial "header" %>
+<%= render_partial "nav" %>
+
+<section class="section">
+  <div class="container">
+    <% @pages.each do |entry| %>
+      <%= render_partial("post_excerpt", entry: entry) %>
+    <% end %>
+  </div>
+</section>
+
+<%= render_partial "pager" %>
+<%= render_partial "footer" %>

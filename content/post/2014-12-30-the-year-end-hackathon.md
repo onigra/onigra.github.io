@@ -1,10 +1,7 @@
 ---
-categories: null
-comments: true
-slug: the-year-end-hackathon
-date: 2014-12-30T12:02:55Z
-title: 年末ハッカソンしてコーポレートサイトをAWS + Nginx + Unicorn + Sinatra構成でリニューアルした
-
+title: "年末ハッカソンしてコーポレートサイトをAWS + Nginx + Unicorn + Sinatra構成でリニューアルした"
+slug: "the-year-end-hackathon"
+date: "2014-12-30T12:02:55Z"
 ---
 
 弊社コーポレートサイトのデザインが非常に味わい深く、以前から作り直そうという話題が出てたものの、なかなか実施されなかったので、年末全社員（5名）集まってハッカソン形式で1日で作り直すことにした。  

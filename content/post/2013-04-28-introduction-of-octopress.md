@@ -1,10 +1,9 @@
 ---
-categories: octopress ruby
-comments: true
-slug: introduction-of-octopress
-date: 2013-04-28T00:00:00Z
-title: 【何番煎じ】OctopressとGitHub Pagesを使用したブログの構築手順
-
+title: "【何番煎じ】OctopressとGitHub Pagesを使用したブログの構築手順"
+slug: "introduction-of-octopress"
+categories:
+- octopress ruby
+date: "2013-04-28T00:00:00Z"
 ---
 
 [UT Startup Gym](http://ut-gym.jp/)の第3期成果発表会も終わった事ですし、  

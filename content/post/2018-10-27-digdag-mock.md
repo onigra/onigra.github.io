@@ -1,9 +1,9 @@
 ---
 title: "Digdagで実行するRubyのTaskのテスト書きたい時に使うDigdagのMock"
-comments: true
-slug: digdag-mock
-categories: Digdag Ruby
-date: 2018-10-27T10:43:41+09:00
+slug: "digdag-mock"
+categories:
+- Digdag Ruby
+date: "2018-10-27T10:43:41+09:00"
 ---
 
 ```ruby

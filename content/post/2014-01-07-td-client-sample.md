@@ -1,10 +1,9 @@
 ---
-categories: TreasureData
-comments: true
-slug: td-client-sample
-date: 2014-01-07T00:00:00Z
-title: td-client-rubyを使ってみたのでサンプルスクリプト晒す
-
+title: "td-client-rubyを使ってみたのでサンプルスクリプト晒す"
+slug: "td-client-sample"
+categories:
+- TreasureData
+date: "2014-01-07T00:00:00Z"
 ---
 
 最近仕事でTreasureDataを扱うことが多く、td-client-rubyを使って色々やってみてる。  

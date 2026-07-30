@@ -1,10 +1,9 @@
 ---
-categories: ruby ruby-on-rails TDD test unit-test
-comments: true
-slug: kojin-tddbc
-date: 2013-05-01T00:00:00Z
-title: 個人TDDBCを開いてもらった その1
-
+title: "個人TDDBCを開いてもらった その1"
+slug: "kojin-tddbc"
+categories:
+- ruby ruby-on-rails TDD test unit-test
+date: "2013-05-01T00:00:00Z"
 ---
 
 以前に[t_wadaさん](https://twitter.com/t_wada)の[RSpec入門記事](http://d.hatena.ne.jp/t-wada/20100228)を写経し、なんとなくユニットテストの書き方とTDDのプロセスは理解したものの、より深くテストについて理解したかったため[sunaotさん](https://twitter.com/sunaot)に個人TDDBCをやってもらいました。  

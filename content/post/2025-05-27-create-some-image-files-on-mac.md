@@ -1,9 +1,9 @@
 ---
-categories: command
-comments: false
-slug: create-some-image-files-on-mac
-date: 2025-05-27T00:00:00Z
-title: Macで適当な画像ファイルをファイルサイズ指定して作成する
+title: "Macで適当な画像ファイルをファイルサイズ指定して作成する"
+slug: "create-some-image-files-on-mac"
+categories:
+- command
+date: "2025-05-27T00:00:00Z"
 ---
 
 ```sh

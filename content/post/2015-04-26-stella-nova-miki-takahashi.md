@@ -1,10 +1,7 @@
 ---
-categories: null
-comments: true
-slug: stella-nova-miki-takahashi
-date: 2015-04-26T22:27:30Z
-title: SIRENの屍人、闇人の生みの親である高橋美貴さんが参加するグループ展stella novaに行ってきた
-
+title: "SIRENの屍人、闇人の生みの親である高橋美貴さんが参加するグループ展stella novaに行ってきた"
+slug: "stella-nova-miki-takahashi"
+date: "2015-04-26T22:27:30Z"
 ---
 
 みんなのトラウマである[恩田美奈(閲覧注意)](https://www.google.co.jp/search?q=恩田美奈&tbm=isch)や[太田ともえ(閲覧注意)](https://www.google.co.jp/search?q=太田ともえ&tbm=isch)を生み出したデザイナー、高梨美貴さんが出展するstella novaというグループ展に行ってきた。

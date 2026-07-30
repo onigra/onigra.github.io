@@ -1,9 +1,9 @@
 ---
 title: "コンテナに対してルーティングするリバースプロキシを何でやるか"
-comments: true
-slug: container-reverse-proxy-idea
-categories: infra container
-date: 2020-12-31T00:00:00+09:00
+slug: "container-reverse-proxy-idea"
+categories:
+- infra container
+date: "2020-12-31T00:00:00+09:00"
 ---
 
 ## お題

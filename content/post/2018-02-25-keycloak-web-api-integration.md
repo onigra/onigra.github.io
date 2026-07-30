@@ -1,9 +1,9 @@
 ---
-categories: keycloak
-comments: true
-slug: kc-with-webapi
-date: 2018-02-25T03:19:15+09:00
 title: "Keycloakを使ってWeb APIに対してアクセストークンを使ったリクエストを行う"
+slug: "kc-with-webapi"
+categories:
+- keycloak
+date: "2018-02-25T03:19:15+09:00"
 ---
 
 Web API の認証を[Keycloak](http://www.keycloak.org/)で行いたい場合の設定と構成の話。

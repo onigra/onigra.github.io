@@ -1,10 +1,9 @@
 ---
-categories: Nginx
-comments: true
-slug: corporate-site-tuning-with-nginx
-date: 2015-01-07T23:52:08Z
-title: コーポレートサイトのNginxの設定をチューニングも兼ねていじった
-
+title: "コーポレートサイトのNginxの設定をチューニングも兼ねていじった"
+slug: "corporate-site-tuning-with-nginx"
+categories:
+- Nginx
+date: "2015-01-07T23:52:08Z"
 ---
 
 年末にリニューアルしたコーポレートサイトのNginxの設定をチューニングも兼ねていじった。

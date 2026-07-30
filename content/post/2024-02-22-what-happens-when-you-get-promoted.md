@@ -1,9 +1,9 @@
 ---
 title: "昇進するとありがちなこと: 自分がやってた仕事をする人がいなくなる"
-comments: true
-slug: what-happens-when-you-get-promoted
-categories: management what-happens-when-you-get-promoted
-date: 2024-02-22T00:00:00+09:00
+slug: "what-happens-when-you-get-promoted"
+categories:
+- management what-happens-when-you-get-promoted
+date: "2024-02-22T00:00:00+09:00"
 ---
 
 ## 概要

@@ -1,9 +1,9 @@
 ---
 title: "fluent-bitをdockerのlog driverとして試す"
-comments: true
-slug: try-fluent-bit-on-docker
-categories: fluent-bit docker
-date: 2020-05-02T00:00:00+09:00
+slug: "try-fluent-bit-on-docker"
+categories:
+- fluent-bit docker
+date: "2020-05-02T00:00:00+09:00"
 ---
 
 ## 結論

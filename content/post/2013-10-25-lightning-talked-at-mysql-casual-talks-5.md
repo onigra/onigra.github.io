@@ -1,10 +1,9 @@
 ---
-categories: MySQL MySQLCasualTalk
-comments: true
-slug: lightning-talked-at-mysql-casual-talks-5
-date: 2013-10-25T00:00:00Z
-title: 'MySQL Casual Talks vol.5でLTしてきました #mysqlcasual'
-
+title: "MySQL Casual Talks vol.5でLTしてきました #mysqlcasual"
+slug: "lightning-talked-at-mysql-casual-talks-5"
+categories:
+- MySQL MySQLCasualTalk
+date: "2013-10-25T00:00:00Z"
 ---
 
 [MySQL Casual Talks vol.5](http://www.zusaar.com/event/1086003)でLTしてきました。  

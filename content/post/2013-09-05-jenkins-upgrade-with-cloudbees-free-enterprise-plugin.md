@@ -1,10 +1,9 @@
 ---
-categories: Jenkins
-comments: true
-slug: jenkins-upgrade-with-cloudbees-free-enterprise-plugin
-date: 2013-09-05T00:00:00Z
-title: JenkinsのアップデートしたらCloudbees Free Enterprise Plugins関連で焦った話
-
+title: "JenkinsのアップデートしたらCloudbees Free Enterprise Plugins関連で焦った話"
+slug: "jenkins-upgrade-with-cloudbees-free-enterprise-plugin"
+categories:
+- Jenkins
+date: "2013-09-05T00:00:00Z"
 ---
 
 日本語の記事がほとんど見当たらなかったので書きます。  

@@ -1,10 +1,9 @@
 ---
-categories: redis ruby
-comments: true
-slug: introduction-to-redis-semaphore
-date: 2014-06-30T19:59:20Z
-title: rubyの排他制御ライブラリ(redis-semaphoreの紹介)
-
+title: "rubyの排他制御ライブラリ(redis-semaphoreの紹介)"
+slug: "introduction-to-redis-semaphore"
+categories:
+- redis ruby
+date: "2014-06-30T19:59:20Z"
 ---
 
 最近仕事でよく知らなかった排他制御について調べたり勉強する機会があって、セマフォを実現するのによさげなライブラリがあったので書く。

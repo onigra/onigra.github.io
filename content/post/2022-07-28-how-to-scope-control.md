@@ -1,9 +1,9 @@
 ---
 title: "何を知ってるとアジャイルにおける「スコープの調整」ができるようになるのか？"
-comments: true
-slug: how-to-scope-control
-categories: agile
-date: 2022-07-28T00:00:00+09:00
+slug: "how-to-scope-control"
+categories:
+- agile
+date: "2022-07-28T00:00:00+09:00"
 ---
 
 https://twitter.com/onigra_/status/1552299260460564480

@@ -1,9 +1,9 @@
 ---
 title: "ワンライナーでお手軽にhttpサーバを立てるcliを作った"
-comments: true
-slug: one-liner-http-server-cli-wasataro
-categories: wasataro
-date: 2021-01-02T15:00:00+09:00
+slug: "one-liner-http-server-cli-wasataro"
+categories:
+- wasataro
+date: "2021-01-02T15:00:00+09:00"
 ---
 
 [nginxのリバプロの設定をスモークテストしたい](https://onigra.github.io/blog/2021/01/01/nginx-reverse-proxy-smoke-test/) と思った時に、ワンコマンドでhttpサーバで起動できるお手軽なcliと、それが使えるコンテナイメージが欲しいなと思って、せっかくなので作った。

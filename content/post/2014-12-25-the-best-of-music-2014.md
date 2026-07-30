@@ -1,10 +1,7 @@
 ---
-categories: null
-comments: true
-slug: the-best-of-music-2014
-date: 2014-12-25T09:35:39Z
-title: 今年よく聞いた音楽2014
-
+title: "今年よく聞いた音楽2014"
+slug: "the-best-of-music-2014"
+date: "2014-12-25T09:35:39Z"
 ---
 
 # [Meine Meinung(マイネマイヌク)](http://mainemainuku.tumblr.com/)

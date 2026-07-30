@@ -1,9 +1,9 @@
 ---
-categories: blog
-comments: false
-slug: organize-before-articulate
-date: 2025-09-27T00:00:00Z
-title: 言語化・文章化がうまくできない時は、その手前の整理・理解できていないかもしれない
+title: "言語化・文章化がうまくできない時は、その手前の整理・理解できていないかもしれない"
+slug: "organize-before-articulate"
+categories:
+- blog
+date: "2025-09-27T00:00:00Z"
 ---
 
 ## はじめに
