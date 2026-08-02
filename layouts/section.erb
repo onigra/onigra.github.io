@@ -1,21 +1,20 @@
 <%= render_partial "header" %>
 <%= render_partial "nav" %>
-<section class="section">
-  <div class="container">
-  <% @grouped_by_year.each do |year, entries| %>
-    <h1 class="title"><%= year %></h1>
-    <ul>
-      <% entries.each do |entry| %>
-      <li>
-        <h3><a href="<%= entry[:url] %>"><%= entry[:title] %></a></h3>
-        <% if entry[:date] %>
-        <h4 class="is-5"><%= entry[:date].strftime("%B %-d, %Y") %></h4>
+<main class="site-main">
+  <div class="content-wrap archive">
+    <% @grouped_by_year.each do |year, entries| %>
+      <h2 class="archive__year"><%= year %></h2>
+      <ul class="archive__list">
+        <% entries.each do |entry| %>
+        <li class="archive__item">
+          <a class="archive__link" href="<%= entry[:url] %>"><%= entry[:title] %></a>
+          <% if entry[:date] %>
+          <span class="post-meta"><%= entry[:date].strftime("%B %-d, %Y") %></span>
+          <% end %>
+        </li>
         <% end %>
-        <br />
-      </li>
-      <% end %>
-    </ul>
-  <% end %>
+      </ul>
+    <% end %>
   </div>
-</section>
+</main>
 <%= render_partial "footer" %>
