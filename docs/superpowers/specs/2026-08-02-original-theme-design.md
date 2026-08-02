@@ -1,51 +1,51 @@
-# Original Theme Design Spec
+# オリジナルテーマ 設計仕様
 
-Replace the Hucore/Bulma-based theme with an original, maintainable CSS foundation and a minimal/editorial visual design.
+Hucore/Bulma ベースのテーマを、保守しやすいオリジナルの CSS 基盤とミニマル/エディトリアルなビジュアルデザインに置き換える。
 
-## Goals
+## 目的
 
-1. **Phase B (first):** Remove Bulma/Hucore dependency; replace with plain CSS and custom properties.
-2. **Phase A (second):** Apply a minimal/editorial visual design on top of the new foundation.
+1. **Phase B（先行）:** Bulma/Hucore 依存を除去し、プレーン CSS + カスタムプロパティに置き換える。
+2. **Phase A（後続）:** 新しい基盤の上にミニマル/エディトリアルなビジュアルデザインを適用する。
 
-## Current State
+## 現状
 
-- **SSG:** [rakuda](https://github.com/onigra/rakuda) (migrated from Hugo)
-- **Templates:** 10 ERB files under `layouts/`
-- **CSS:** `static/css/style.css` (~100KB, Bulma + Hucore)
-- **External deps:** Font Awesome 4.7, highlight.js, MathJax
-- **Pages:** home (post list + pagination), single post, about, archives, RSS
+- **SSG:** [rakuda](https://github.com/onigra/rakuda)（Hugo から移行済み）
+- **テンプレート:** `layouts/` 配下の ERB 10 ファイル
+- **CSS:** `static/css/style.css`（約 100KB、Bulma + Hucore）
+- **外部依存:** Font Awesome 4.7、highlight.js、MathJax
+- **ページ:** トップ（記事一覧 + ページネーション）、記事詳細、About、アーカイブ、RSS
 
-## Decisions
+## 決定事項
 
-| Topic | Decision |
-|-------|----------|
-| CSS approach | Plain CSS + CSS custom properties (no framework) |
-| Phase B appearance | Minimum viable — readable and functional; polish deferred to Phase A |
-| Phase A aesthetic | Minimal / editorial — typography-first, generous whitespace |
-| Keep | highlight.js, Font Awesome, sharing buttons |
-| Remove | MathJax, Bulma/Hucore CSS, "Powered by Hucore theme" footer text |
-| Migration strategy | Big-bang rewrite with design tokens defined upfront (Approach 1) |
+| 項目 | 決定内容 |
+|------|----------|
+| CSS 方針 | プレーン CSS + CSS カスタムプロパティ（フレームワーク不使用） |
+| Phase B の見た目 | 最低限 — 読める・使える状態。仕上げは Phase A に委ねる |
+| Phase A の方向性 | ミニマル / エディトリアル — タイポグラフィ重視、余白多め |
+| 維持 | highlight.js、Font Awesome、シェアボタン |
+| 削除 | MathJax、Bulma/Hucore CSS、フッターの "Powered by Hucore theme" |
+| 移行戦略 | デザイントークン先行の一括リライト（アプローチ 1） |
 
-## Phase B: Technical Foundation
+## Phase B: 技術基盤の刷新
 
-### CSS Architecture
+### CSS 構成
 
 ```
 static/css/
-  tokens.css       # CSS custom properties (colors, fonts, spacing)
-  reset.css        # Minimal reset
-  base.css         # body, links, typography
-  layout.css       # header, nav, main, footer
-  components.css   # post-excerpt, pager, sharing, code blocks
-  style.css        # @import aggregator
+  tokens.css       # CSS カスタムプロパティ（色・フォント・余白）
+  reset.css        # 最小限のリセット
+  base.css         # body、リンク、タイポグラフィ
+  layout.css       # ヘッダー、ナビ、メイン、フッター
+  components.css   # 記事一覧、ページネーション、シェア、コードブロック
+  style.css        # @import で上記を結合
 ```
 
-Target size: ~5KB total (down from ~100KB).
+目標サイズ: 合計約 5KB（現状約 100KB から削減）。
 
-### Template Class Migration
+### テンプレートのクラス置換
 
-| Current (Bulma/Hucore) | New (semantic) |
-|------------------------|----------------|
+| 現在（Bulma/Hucore） | 新クラス（セマンティック） |
+|----------------------|---------------------------|
 | `.section .container` | `.site-main`, `.content-wrap` |
 | `.nav .nav-left` / `.nav-right` | `.site-header`, `.site-nav`, `.site-nav__social` |
 | `.title` | `.post-title` |
@@ -53,162 +53,162 @@ Target size: ~5KB total (down from ~100KB).
 | `.content` | `.post-body` |
 | `.level-item` | `.nav-link`, `.social-link` |
 
-All ERB templates under `layouts/` will be updated in Phase B.
+Phase B で `layouts/` 配下の全 ERB テンプレートを更新する。
 
-### Removals
+### 削除するもの
 
-- MathJax scripts from `layouts/_partials/header.erb` and `footer.erb`
-- Entire Bulma/Hucore CSS in `static/css/style.css`
-- Footer text: "Powered by Hucore theme" (keep "Powered by rakuda")
+- `layouts/_partials/header.erb` と `footer.erb` から MathJax スクリプト
+- `static/css/style.css` の Bulma/Hucore CSS 全体
+- フッターテキスト: "Powered by Hucore theme"（"Powered by rakuda" は残す）
 
-### Preserved Behavior
+### 維持する動作
 
-- highlight.js syntax highlighting (CDN, github theme)
-- Font Awesome 4.7 social icons
-- Sharing partial (`layouts/_partials/sharing.erb`)
-- Pagination, RSS feed
+- highlight.js によるシンタックスハイライト（CDN、github テーマ）
+- Font Awesome 4.7 ソーシャルアイコン
+- シェア partial（`layouts/_partials/sharing.erb`）
+- ページネーション、RSS フィード
 
-### Phase B Completion Criteria
+### Phase B 完了条件
 
-- [ ] No Bulma/Hucore class names remain in templates
-- [ ] CSS is split into token-based modules (~5KB)
-- [ ] MathJax removed
-- [ ] Site builds and deploys via existing GitHub Actions workflow
-- [ ] All pages render correctly: home, single post, about, archives
-- [ ] Mobile-responsive layout works
-- [ ] Syntax highlighting works on code blocks
-- [ ] Visual appearance is functional but unpolished (placeholder token values acceptable)
+- [ ] テンプレートに Bulma/Hucore のクラス名が残っていない
+- [ ] CSS がトークンベースのモジュールに分割されている（約 5KB）
+- [ ] MathJax が削除されている
+- [ ] 既存の GitHub Actions ワークフローでビルド・デプロイできる
+- [ ] 全ページが正しく表示される: トップ、記事詳細、About、アーカイブ
+- [ ] モバイル対応レイアウトが動作する
+- [ ] コードブロックのシンタックスハイライトが動作する
+- [ ] 見た目は機能的だが未完成でよい（プレースホルダーのトークン値で可）
 
-## Phase A: Minimal / Editorial Design
+## Phase A: ミニマル / エディトリアル デザイン
 
-### Design Concept
+### デザインコンセプト
 
-A reading-focused blog. Typography and whitespace carry the design; decoration is minimal. Optimized for long-form technical articles spanning 2013–present.
+「読むこと」に集中できるブログ。装飾よりタイポグラフィと余白で情報を整理する。2013 年からの技術記事アーカイブとして、長文でも読みやすい体裁を目指す。
 
-### Color Tokens
+### カラートークン
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--color-bg` | `#fafafa` | Page background |
-| `--color-surface` | `#ffffff` | Header / surface areas |
-| `--color-text` | `#1a1a1a` | Body text |
-| `--color-text-muted` | `#6b7280` | Dates, meta info |
-| `--color-accent` | `#2563eb` | Links, accents |
-| `--color-accent-hover` | `#1d4ed8` | Link hover |
-| `--color-border` | `#e5e7eb` | Dividers |
-| `--color-code-bg` | `#f3f4f6` | Inline code background |
+| トークン | 値 | 用途 |
+|---------|-----|------|
+| `--color-bg` | `#fafafa` | ページ背景 |
+| `--color-surface` | `#ffffff` | ヘッダー / サーフェス |
+| `--color-text` | `#1a1a1a` | 本文 |
+| `--color-text-muted` | `#6b7280` | 日付・メタ情報 |
+| `--color-accent` | `#2563eb` | リンク・アクセント |
+| `--color-accent-hover` | `#1d4ed8` | リンク hover |
+| `--color-border` | `#e5e7eb` | 区切り線 |
+| `--color-code-bg` | `#f3f4f6` | インラインコード背景 |
 
-Palette: near-white background, near-black text, single restrained blue accent.
+配色: ほぼ白の背景、ほぼ黒のテキスト、控えめな青のアクセント 1 色のみ。
 
-### Typography
+### タイポグラフィ
 
-| Element | Setting |
-|---------|---------|
-| Body font | `"游ゴシック", YuGothic, "Hiragino Sans", sans-serif` |
-| Code font | `"Source Code Pro", "SF Mono", monospace` |
-| Body size | `17px`, line-height `1.8` |
-| Article title | `28px`, weight `600` |
-| List title | `22px`, weight `600` |
-| Meta info | `14px`, `--color-text-muted` |
+| 要素 | 設定 |
+|------|------|
+| 本文フォント | `"游ゴシック", YuGothic, "Hiragino Sans", sans-serif` |
+| コードフォント | `"Source Code Pro", "SF Mono", monospace` |
+| 本文サイズ | `17px`、行間 `1.8` |
+| 記事タイトル | `28px`、weight `600` |
+| 一覧タイトル | `22px`、weight `600` |
+| メタ情報 | `14px`、`--color-text-muted` |
 
-### Layout
+### レイアウト
 
-- Content max-width: `680px`, centered
-- Page padding: `48px` vertical, `24px` horizontal (mobile: `16px`)
-- Article spacing: `64px` between entries
-- Header: single row, no shadow, not sticky
-- Post list: title + date + summary only — no card decoration
+- コンテンツ最大幅: `680px`、中央寄せ
+- ページ余白: 上下 `48px`、左右 `24px`（モバイル: `16px`）
+- 記事間隔: エントリ間 `64px`
+- ヘッダー: 1 行、影なし、固定なし
+- 記事一覧: タイトル + 日付 + 概要のみ（カード装飾なし）
 
 ```
 ┌─────────────────────────────────────────┐
 │  onigra.github.io    About  Archives  🐙 🐦 📡 │
 ├─────────────────────────────────────────┤
 │         ┌─────────────────┐           │
-│         │   Post title       │           │  max-width: 680px
-│         │   Date             │           │  centered
-│         │   Body text...     │           │
+│         │   記事タイトル      │           │  max-width: 680px
+│         │   日付             │           │  中央寄せ
+│         │   本文テキスト...   │           │
 │         └─────────────────┘           │
 ├─────────────────────────────────────────┤
 │         © 2017 | Onigra | rakuda        │
 └─────────────────────────────────────────┘
 ```
 
-### Component Details
+### コンポーネント詳細
 
-**Header / Nav**
-- Site name (left) + menu links + social icons (right)
-- Bottom border only (`--color-border`)
-- Mobile: wrap layout (no hamburger menu in Phase A)
+**ヘッダー / ナビ**
+- サイト名（左）+ メニューリンク + ソーシャルアイコン（右）
+- 下線のみ（`--color-border`）
+- モバイル: 折り返し表示（Phase A ではハンバーガーメニューは作らない）
 
-**Post list (post-excerpt)**
-- Title (link) → date → summary → "Read more"
-- Separator: `border-bottom` only
+**記事一覧（post-excerpt）**
+- タイトル（リンク）→ 日付 → 概要 → "Read more"
+- 区切り: `border-bottom` のみ
 
-**Single post**
-- Title → date/author → body → share buttons
-- Headings h2/h3: top margin `48px`, bottom margin `16px`
-- Code blocks: border-radius `6px`, padding `16px`
+**記事詳細**
+- タイトル → 日付/著者 → 本文 → シェアボタン
+- 見出し h2/h3: 上余白 `48px`、下余白 `16px`
+- コードブロック: 角丸 `6px`、padding `16px`
 
-**Pagination**
-- Centered "← Prev / Next →" text links
+**ページネーション**
+- 中央寄せの "← Prev / Next →" テキストリンク
 
-**Footer**
-- Centered, small text
-- "Powered by rakuda" only
+**フッター**
+- 中央寄せ、小さめテキスト
+- "Powered by rakuda" のみ
 
-### Responsive
+### レスポンシブ
 
-| Breakpoint | Behavior |
-|------------|----------|
-| `< 768px` | Full-width content, `16px` horizontal padding, header wraps |
-| `≥ 768px` | `680px` max-width, centered |
+| ブレークポイント | 挙動 |
+|----------------|------|
+| `< 768px` | コンテンツ全幅、左右 padding `16px`、ヘッダー折り返し |
+| `≥ 768px` | max-width `680px`、中央寄せ |
 
-Dark mode is out of scope for Phase A. Future support possible by adding alternate `--color-*` token sets.
+ダークモードは Phase A の対象外。将来は `--color-*` トークンの追加で対応可能。
 
-### Out of Scope (Phase A)
+### Phase A のスコープ外
 
-- Dark mode
-- Hamburger menu
-- Animations / transitions
-- Font Awesome replacement (SVG icons)
-- highlight.js replacement
-- Category / tag page design (if no template exists)
-- Search functionality
+- ダークモード
+- ハンバーガーメニュー
+- アニメーション / トランジション
+- Font Awesome の代替（SVG アイコン化）
+- highlight.js の代替
+- カテゴリ / タグページのデザイン（テンプレートがなければ対象外）
+- 検索機能
 
-## Phase A Completion Criteria
+## Phase A 完了条件
 
-- [ ] All color/spacing/typography tokens set to editorial values
-- [ ] Layout matches spec (680px content, spacing, header/footer)
-- [ ] Post list and single post visually polished
-- [ ] Mobile layout verified
-- [ ] No visual remnants of Hucore/Bulma
+- [ ] 色・余白・タイポグラフィのトークンがエディトリアルな値に設定されている
+- [ ] レイアウトが仕様通り（680px コンテンツ、余白、ヘッダー/フッター）
+- [ ] 記事一覧・記事詳細の見た目が仕上がっている
+- [ ] モバイルレイアウトを確認済み
+- [ ] Hucore/Bulma の視覚的な名残がない
 
-## Files to Change
+## 変更対象ファイル
 
 ### Phase B
 
-- `layouts/_partials/header.erb` — remove MathJax, update classes
-- `layouts/_partials/footer.erb` — remove MathJax, update copyright, update classes
-- `layouts/_partials/nav.erb` — semantic class names
-- `layouts/_partials/post_excerpt.erb` — semantic class names
-- `layouts/_partials/pager.erb` — semantic class names
-- `layouts/_partials/sharing.erb` — semantic class names
-- `layouts/single.erb` — semantic class names
-- `layouts/list.erb` — semantic class names
-- `layouts/section.erb` — semantic class names
-- `static/css/` — replace monolithic `style.css` with modular files
-- `site.yml` — update copyright (remove Hucore reference)
+- `layouts/_partials/header.erb` — MathJax 削除、クラス更新
+- `layouts/_partials/footer.erb` — MathJax 削除、copyright 更新、クラス更新
+- `layouts/_partials/nav.erb` — セマンティックなクラス名
+- `layouts/_partials/post_excerpt.erb` — セマンティックなクラス名
+- `layouts/_partials/pager.erb` — セマンティックなクラス名
+- `layouts/_partials/sharing.erb` — セマンティックなクラス名
+- `layouts/single.erb` — セマンティックなクラス名
+- `layouts/list.erb` — セマンティックなクラス名
+- `layouts/section.erb` — セマンティックなクラス名
+- `static/css/` — モノリシックな `style.css` をモジュール構成に置き換え
+- `site.yml` — copyright 更新（Hucore 表記を削除）
 
 ### Phase A
 
-- `static/css/tokens.css` — set final color/typography/spacing values
-- `static/css/base.css`, `layout.css`, `components.css` — apply editorial polish
+- `static/css/tokens.css` — 最終的な色・タイポグラフィ・余白の値を設定
+- `static/css/base.css`、`layout.css`、`components.css` — エディトリアルな仕上げを適用
 
-## Testing
+## テスト
 
-1. Run `rkd build --source . --destination public` locally
-2. Verify pages: `/`, `/post/`, `/about/`, a sample post URL
-3. Check mobile viewport (`< 768px`)
-4. Confirm code blocks highlight correctly
-5. Confirm social icons and share buttons render
-6. Confirm RSS feed still generates
+1. ローカルで `rkd build --source . --destination public` を実行
+2. 各ページを確認: `/`、`/post/`、`/about/`、サンプル記事 URL
+3. モバイル viewport（`< 768px`）を確認
+4. コードブロックのハイライトが動作することを確認
+5. ソーシャルアイコンとシェアボタンが表示されることを確認
+6. RSS フィードが生成されることを確認
