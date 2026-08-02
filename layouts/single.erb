@@ -1,17 +1,23 @@
 <%= render_partial "header" %>
 <%= render_partial "nav" %>
-<section class="section">
-  <div class="container">
-    <h1 class="title"><%= @page[:title] %></h1>
-    <% if @page[:date] %>
-    <h2 class="subtitle is-5"><%= @page[:date].strftime("%B %-d, %Y") %> by <%= @site[:author] %></h2>
-    <% end %>
-    <div class="content">
+<main class="site-main">
+  <article class="content-wrap post">
+    <a class="post-back" href="/post/">&larr; &nbsp;Archives</a>
+    <header class="post-header">
+      <% if @page[:date] %>
+      <p class="post-meta"><%= @page[:date].strftime("%Y.%m.%d") %></p>
+      <% end %>
+      <h1 class="post-title"><%= @page[:title] %></h1>
+    </header>
+    <hr class="post-divider">
+    <div class="post-body">
       <%= @page[:content] %>
     </div>
     <% if @site[:params]["sharingicons"] %>
     <%= render_partial "sharing" %>
     <% end %>
-  </div>
-</section>
+    <hr class="post-divider post-divider--bottom">
+    <%= render_partial "post_nav" %>
+  </article>
+</main>
 <%= render_partial "footer" %>

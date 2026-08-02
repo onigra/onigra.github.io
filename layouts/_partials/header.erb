@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<script src="/js/theme-init.js"></script>
 <meta content="<%= Array(@site[:params]["keywords"]).join(", ") %>" name="keywords">
 <meta content="<%= @site[:author] %>" name="author">
 <meta property="og:title" content="<%= @page[:title] %><% unless @page[:is_home] %> - <%= @site[:title] %><% end %>">
@@ -10,22 +12,12 @@
 <meta property="og:description" content="<%= @site[:params]["description"] %>">
 <meta property="og:type" content="website" />
 <title><%= @page[:title] %><% unless @page[:is_home] %> | <%= @site[:title] %><% end %></title>
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500&family=Zen+Kaku+Gothic+New:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css">
 <link rel="shortcut icon" href="/favicon.ico">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
-<% highlight_style = @site[:params].dig("highlight", "style") %>
-<% if highlight_style %>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/<%= highlight_style %>.min.css">
-<% else %>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
-<% end %>
+<link id="hljs-light" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+<link id="hljs-dark" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/atom-one-dark.min.css" disabled>
+<script src="/js/hljs-theme-init.js"></script>
 </head>
 <body>

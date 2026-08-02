@@ -1,25 +1,21 @@
-<section class="section">
-  <div class="container">
-    <nav class="nav">
-      <div class="nav-left">
-        <a class="nav-item" href="<%= @site[:base_url] %>/"><h1 class="title is-4"><%= @site[:title] %></h1></a>
-        <nav class="nav-item level is-mobile">
-          <% Array(@site[:params]["menu"]).each do |item| %>
-          <a class="level-item" href="<%= item["url"] %>"><%= item["title"] %></a>
-          <% end %>
-        </nav>
-      </div>
-      <div class="nav-right">
-        <nav class="nav-item level is-mobile">
-          <% Array(@site[:params]["social"]).each do |item| %>
-          <a class="level-item" href="<%= item["url"] %>" target="_blank">
-            <span class="icon">
-              <i class="fa <%= item["fa_icon"] %>"></i>
-            </span>
-          </a>
-          <% end %>
-        </nav>
-      </div>
+<header class="site-header">
+  <div class="content-wrap site-header__inner">
+    <a class="site-header__brand" href="<%= @site[:base_url] %>/"><%= @site[:title] %></a>
+    <nav class="site-nav" aria-label="Main">
+      <% Array(@site[:params]["menu"]).each do |item| %>
+      <a class="nav-link" href="<%= item["url"] %>"><%= item["title"] %></a>
+      <% end %>
+    </nav>
+    <nav class="site-nav site-nav__social" aria-label="Social">
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="ダークモードに切り替え" aria-pressed="false">
+        <span class="theme-toggle__icon theme-toggle__icon--dark" aria-hidden="true"><i class="fa fa-moon-o"></i></span>
+        <span class="theme-toggle__icon theme-toggle__icon--light" aria-hidden="true" hidden><i class="fa fa-sun-o"></i></span>
+      </button>
+      <% Array(@site[:params]["social"]).each do |item| %>
+      <a class="social-link" href="<%= item["url"] %>" target="_blank" rel="noopener noreferrer">
+        <i class="fa <%= item["fa_icon"] %>" aria-hidden="true"></i>
+      </a>
+      <% end %>
     </nav>
   </div>
-</section>
+</header>

@@ -1,0 +1,71 @@
+:root {
+  --color-bg: #F0EDE6;
+  --color-text: #221F1B;
+  --color-text-body: #252219;
+  --color-text-muted: #7A756C;
+  --color-text-quote: #5C5A54;
+  --color-border: #D9D4CA;
+  --color-border-quote: #B8B5AB;
+  --color-accent: #4B5A45;
+  --color-link: #3A6B52;
+  --color-link-hover: #2F5544;
+  --color-code-bg: #E6E2DA;
+
+  --font-heading: "Zen Old Mincho", serif;
+  --font-body: "Zen Kaku Gothic New", sans-serif;
+  --font-code: "Source Code Pro", "SF Mono", monospace;
+
+  --font-size-brand: 20px;
+  --font-size-nav: 13px;
+  --font-size-meta-sm: 12px;
+  --font-size-meta: 13px;
+  --font-size-list-title: 19px;
+  --font-size-list-excerpt: 14px;
+  --font-size-post-title: 28px;
+  --font-size-body: 15.5px;
+  --font-size-h2: 18px;
+  --font-size-quote: 16px;
+  --font-size-nav-post-title: 14px;
+  --font-size-footer: 12px;
+
+  --line-height-body: 2.05;
+  --line-height-list-excerpt: 1.9;
+  --line-height-heading: 1.65;
+  --line-height-h2: 1.8;
+
+  --letter-spacing-meta: 0.08em;
+  --letter-spacing-nav: 0.04em;
+
+  --space-page-y: 56px;
+  --space-page-x: 24px;
+  --space-list-top: 96px;
+  --space-excerpt-y: 36px;
+  --space-section: 48px;
+  --space-paragraph: 28px;
+  --space-post-nav-top: 56px;
+  --excerpt-max-width: 800px;
+  --content-max-width: 960px;
+
+  --hairline: 0.5px solid var(--color-border);
+  --transition-title: 0.6s ease;
+}
+
+[data-theme="dark"] {
+  --color-bg: #1C1B18;
+  --color-text: #F0EDE6;
+  --color-text-body: #E5E1D9;
+  --color-text-muted: #9A958A;
+  --color-text-quote: #B8B4AA;
+  --color-border: #3A3833;
+  --color-border-quote: #5C5850;
+  --color-accent: #8BA888;
+  --color-link: #7CB896;
+  --color-link-hover: #95D4AD;
+  --color-code-bg: #2A2824;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --space-page-x: 24px;
+  }
+}
