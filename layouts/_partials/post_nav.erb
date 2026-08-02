@@ -1,0 +1,14 @@
+<nav class="post-nav" aria-label="Post navigation">
+  <div class="post-nav__col">
+    <% if @prev_post %>
+    <div class="post-nav__label">&larr; &nbsp;Prev</div>
+    <a class="post-nav__title" href="<%= @prev_post[:url] %>"><%= @prev_post[:title] %></a>
+    <% end %>
+  </div>
+  <div class="post-nav__col post-nav__col--next">
+    <% if @next_post %>
+    <div class="post-nav__label">Next &nbsp;&rarr;</div>
+    <a class="post-nav__title" href="<%= @next_post[:url] %>"><%= @next_post[:title] %></a>
+    <% end %>
+  </div>
+</nav>

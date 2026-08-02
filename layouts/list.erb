@@ -1,6 +1,6 @@
 <%= render_partial "header" %>
 <%= render_partial "nav" %>
-<main class="site-main">
+<main class="site-main site-main--list">
   <div class="content-wrap">
     <% @pages.each do |entry| %>
       <%= render_partial("post_excerpt", entry: entry) %>

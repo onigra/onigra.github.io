@@ -9,7 +9,7 @@
         <li class="archive__item">
           <a class="archive__link" href="<%= entry[:url] %>"><%= entry[:title] %></a>
           <% if entry[:date] %>
-          <span class="post-meta"><%= entry[:date].strftime("%B %-d, %Y") %></span>
+          <span class="post-meta"><%= entry[:date].strftime("%Y.%m.%d") %></span>
           <% end %>
         </li>
         <% end %>
