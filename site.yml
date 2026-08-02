@@ -20,9 +20,7 @@ params:
     languages:
     - go
     - dockerfile
-  copyright: '&copy; 2017 | <a href="https://twitter.com/onigra_" target="_blank">Onigra</a>
-    | Powerd by <a href="https://github.com/mgjohansen/hucore" target="_blank">Hucore
-    theme</a> & <a href="https://github.com/onigra/rakuda" target="_blank">rakuda</a> '
+  copyright: '&copy; 2013 | <a href="https://twitter.com/onigra_" target="_blank">Onigra</a> | Powered by <a href="https://github.com/onigra/rakuda" target="_blank">rakuda</a>'
   menu:
   - url: "/about/"
     title: About
