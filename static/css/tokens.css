@@ -1,0 +1,24 @@
+:root {
+  --color-bg: #ffffff;
+  --color-surface: #ffffff;
+  --color-text: #111111;
+  --color-text-muted: #666666;
+  --color-accent: #0066cc;
+  --color-accent-hover: #004499;
+  --color-border: #dddddd;
+  --color-code-bg: #f4f4f4;
+
+  --font-body: "游ゴシック", YuGothic, "Hiragino Sans", sans-serif;
+  --font-code: "Source Code Pro", "SF Mono", monospace;
+
+  --font-size-body: 16px;
+  --line-height-body: 1.6;
+  --font-size-post-title: 24px;
+  --font-size-list-title: 20px;
+  --font-size-meta: 14px;
+
+  --space-page-y: 24px;
+  --space-page-x: 16px;
+  --space-article: 32px;
+  --content-max-width: 680px;
+}

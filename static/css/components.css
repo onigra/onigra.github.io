@@ -1,0 +1,137 @@
+.nav-link {
+  color: var(--color-text);
+  font-size: var(--font-size-meta);
+}
+
+.nav-link:hover {
+  color: var(--color-accent);
+}
+
+.social-link {
+  color: var(--color-text-muted);
+  font-size: 21px;
+}
+
+.social-link:hover {
+  color: var(--color-accent);
+}
+
+.post-title {
+  font-size: var(--font-size-post-title);
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+.post-title a {
+  color: var(--color-text);
+}
+
+.post-title a:hover {
+  color: var(--color-accent);
+}
+
+.post-title--list {
+  font-size: var(--font-size-list-title);
+}
+
+.post-meta {
+  font-size: var(--font-size-meta);
+  color: var(--color-text-muted);
+  margin-bottom: 16px;
+}
+
+.post-excerpt {
+  margin-bottom: var(--space-article);
+  padding-bottom: var(--space-article);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.post-excerpt:last-child {
+  border-bottom: none;
+}
+
+.post-excerpt__summary {
+  margin-bottom: 8px;
+}
+
+.read-more {
+  font-size: var(--font-size-meta);
+}
+
+.post-body h1,
+.post-body h2,
+.post-body h3,
+.post-body h4,
+.post-body h5,
+.post-body h6 {
+  line-height: 1.25;
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+.post-body p,
+.post-body ul,
+.post-body ol,
+.post-body blockquote {
+  margin-bottom: 1em;
+}
+
+.post-body ul,
+.post-body ol {
+  list-style: disc;
+  margin-left: 1.5em;
+}
+
+.pager {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0;
+  padding-bottom: var(--space-page-y);
+}
+
+.pager__link {
+  font-size: var(--font-size-meta);
+}
+
+.sharing {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+.sharing__link {
+  color: var(--color-text-muted);
+}
+
+.sharing__link:hover {
+  color: var(--color-accent);
+}
+
+.archive__year {
+  font-size: var(--font-size-list-title);
+  font-weight: 600;
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+.archive__year:first-child {
+  margin-top: 0;
+}
+
+.archive__list {
+  list-style: none;
+  margin-left: 0;
+}
+
+.archive__item {
+  margin-bottom: 12px;
+}
+
+.archive__link {
+  color: var(--color-text);
+}
+
+.archive__link:hover {
+  color: var(--color-accent);
+}

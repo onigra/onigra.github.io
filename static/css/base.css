@@ -1,0 +1,43 @@
+html {
+  background-color: var(--color-bg);
+}
+
+body {
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+code, pre {
+  font-family: var(--font-code);
+}
+
+.post-body code {
+  background-color: var(--color-code-bg);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+.post-body pre {
+  background-color: var(--color-code-bg);
+  padding: 16px;
+  overflow-x: auto;
+  border-radius: 4px;
+  margin-bottom: 1.5em;
+}
+
+.post-body pre code {
+  background: none;
+  padding: 0;
+}
