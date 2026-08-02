@@ -1,12 +1,10 @@
 <article class="post-excerpt">
-  <h1 class="title"><a href="<%= @entry[:url] %>"><%= @entry[:title] %></a></h1>
-
+  <h2 class="post-title post-title--list"><a href="<%= @entry[:url] %>"><%= @entry[:title] %></a></h2>
   <% if @entry[:date] %>
-  <h2 class="subtitle is-5"><%= @entry[:date].strftime("%B %-d, %Y") %></h2>
+  <p class="post-meta"><%= @entry[:date].strftime("%B %-d, %Y") %></p>
   <% end %>
-
-  <p class="summary"><%= @entry[:summary] %></p>
+  <p class="post-excerpt__summary"><%= @entry[:summary] %></p>
   <% if @entry[:has_more] %>
-    <p><a href="<%= @entry[:url] %>" class="read-more">Read more</a></p>
+  <p><a href="<%= @entry[:url] %>" class="read-more">Read more</a></p>
   <% end %>
 </article>

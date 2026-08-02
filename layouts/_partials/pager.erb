@@ -1,30 +1,10 @@
-<section class="section">
-  <div class="container">
-    <nav class="level is-mobile">
-      <div class="level-left">
-        <div class="level-item">
-          <% if @paginator[:prev] %>
-          <a class="button" href="<%= @paginator[:prev] %>">
-            <span class="icon is-small is-marginless">
-              <i class="fa fa-angle-left"></i>
-            </span>
-            Newer
-          </a>
-          <% end %>
-        </div>
-      </div>
-      <div class="level-right is-marginless">
-        <div class="level-item">
-          <% if @paginator[:next] %>
-          <a class="button" href="<%= @paginator[:next] %>">
-            Older
-            <span class="icon is-small is-marginless">
-              <i class="fa fa-angle-right"></i>
-            </span>
-          </a>
-          <% end %>
-        </div>
-      </div>
-    </nav>
-  </div>
-</section>
+<nav class="pager content-wrap" aria-label="Pagination">
+  <% if @paginator[:prev] %>
+  <a class="pager__link pager__link--prev" href="<%= @paginator[:prev] %>">← Newer</a>
+  <% else %>
+  <span></span>
+  <% end %>
+  <% if @paginator[:next] %>
+  <a class="pager__link pager__link--next" href="<%= @paginator[:next] %>">Older →</a>
+  <% end %>
+</nav>
