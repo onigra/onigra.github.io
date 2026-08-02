@@ -1,24 +1,30 @@
 :root {
-  --color-bg: #ffffff;
+  --color-bg: #fafafa;
   --color-surface: #ffffff;
-  --color-text: #111111;
-  --color-text-muted: #666666;
-  --color-accent: #0066cc;
-  --color-accent-hover: #004499;
-  --color-border: #dddddd;
-  --color-code-bg: #f4f4f4;
+  --color-text: #1a1a1a;
+  --color-text-muted: #6b7280;
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
+  --color-border: #e5e7eb;
+  --color-code-bg: #f3f4f6;
 
   --font-body: "游ゴシック", YuGothic, "Hiragino Sans", sans-serif;
   --font-code: "Source Code Pro", "SF Mono", monospace;
 
-  --font-size-body: 16px;
-  --line-height-body: 1.6;
-  --font-size-post-title: 24px;
-  --font-size-list-title: 20px;
+  --font-size-body: 17px;
+  --line-height-body: 1.8;
+  --font-size-post-title: 28px;
+  --font-size-list-title: 22px;
   --font-size-meta: 14px;
 
-  --space-page-y: 24px;
-  --space-page-x: 16px;
-  --space-article: 32px;
+  --space-page-y: 48px;
+  --space-page-x: 24px;
+  --space-article: 64px;
   --content-max-width: 680px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --space-page-x: 16px;
+  }
 }
