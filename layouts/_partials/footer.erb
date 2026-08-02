@@ -8,7 +8,6 @@
 <% Array(@site[:params].dig("highlight", "languages")).each do |lang| %>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/<%= lang %>.min.js"></script>
 <% end %>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 </body>
 </html>
