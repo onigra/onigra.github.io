@@ -50,6 +50,20 @@
   --transition-title: 0.6s ease;
 }
 
+[data-theme="dark"] {
+  --color-bg: #1C1B18;
+  --color-text: #F0EDE6;
+  --color-text-body: #E5E1D9;
+  --color-text-muted: #9A958A;
+  --color-text-quote: #B8B4AA;
+  --color-border: #3A3833;
+  --color-border-quote: #5C5850;
+  --color-accent: #8BA888;
+  --color-link: #7CB896;
+  --color-link-hover: #95D4AD;
+  --color-code-bg: #2A2824;
+}
+
 @media (max-width: 767px) {
   :root {
     --space-page-x: 24px;
