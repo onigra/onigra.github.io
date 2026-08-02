@@ -7,6 +7,10 @@
       <% end %>
     </nav>
     <nav class="site-nav site-nav__social" aria-label="Social">
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="ダークモードに切り替え" aria-pressed="false">
+        <span class="theme-toggle__icon theme-toggle__icon--dark" aria-hidden="true"><i class="fa fa-moon-o"></i></span>
+        <span class="theme-toggle__icon theme-toggle__icon--light" aria-hidden="true" hidden><i class="fa fa-sun-o"></i></span>
+      </button>
       <% Array(@site[:params]["social"]).each do |item| %>
       <a class="social-link" href="<%= item["url"] %>" target="_blank" rel="noopener noreferrer">
         <i class="fa <%= item["fa_icon"] %>" aria-hidden="true"></i>
