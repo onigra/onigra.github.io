@@ -5,7 +5,7 @@ html {
 body {
   color: var(--color-text-body);
   font-family: var(--font-body);
-  font-weight: 300;
+  font-weight: 400;
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
 }

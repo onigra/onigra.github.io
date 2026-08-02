@@ -1,13 +1,13 @@
 :root {
-  --color-bg: #FAF9F6;
+  --color-bg: #F0EDE6;
   --color-text: #221F1B;
-  --color-text-body: #2E2C27;
-  --color-text-muted: #95928A;
+  --color-text-body: #252219;
+  --color-text-muted: #7A756C;
   --color-text-quote: #5C5A54;
-  --color-border: #E7E4DC;
+  --color-border: #D9D4CA;
   --color-border-quote: #B8B5AB;
   --color-accent: #4B5A45;
-  --color-code-bg: #F0EFEB;
+  --color-code-bg: #E6E2DA;
 
   --font-heading: "Zen Old Mincho", serif;
   --font-body: "Zen Kaku Gothic New", sans-serif;
