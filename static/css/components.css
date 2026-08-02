@@ -133,10 +133,13 @@
 
 .post-body a {
   color: var(--color-link);
+  text-decoration: none;
 }
 
 .post-body a:hover {
   color: var(--color-link-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .post-body a:focus-visible {
