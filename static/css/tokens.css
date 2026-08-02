@@ -41,8 +41,8 @@
   --space-section: 48px;
   --space-paragraph: 28px;
   --space-post-nav-top: 56px;
-  --excerpt-max-width: 520px;
-  --content-max-width: 640px;
+  --excerpt-max-width: 800px;
+  --content-max-width: 960px;
 
   --hairline: 0.5px solid var(--color-border);
   --transition-title: 0.6s ease;
