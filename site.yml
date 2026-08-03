@@ -9,7 +9,7 @@ permalinks:
 taxonomies:
   category: categories
 params:
-  description: Your description here
+  description: onigra's blog
   keywords:
   - keyword 1
   - keyword 2
