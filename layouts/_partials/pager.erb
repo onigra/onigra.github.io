@@ -1,10 +1,10 @@
-<nav class="pager content-wrap" aria-label="Pagination">
+<nav class="content pager" aria-label="Pagination">
   <% if @paginator[:prev] %>
-  <a class="pager__link pager__link--prev" href="<%= @paginator[:prev] %>">← Newer</a>
+  <a href="<%= @paginator[:prev] %>">← Newer</a>
   <% else %>
   <span></span>
   <% end %>
   <% if @paginator[:next] %>
-  <a class="pager__link pager__link--next" href="<%= @paginator[:next] %>">Older →</a>
+  <a href="<%= @paginator[:next] %>">Older →</a>
   <% end %>
 </nav>

@@ -1,15 +1,14 @@
 <%= render_partial "header" %>
-<%= render_partial "nav" %>
-<main class="site-main">
-  <div class="content-wrap archive">
+<main>
+  <div class="content">
     <% @grouped_by_year.each do |year, entries| %>
-      <h2 class="archive__year"><%= year %></h2>
-      <ul class="archive__list">
+      <h2><%= year %></h2>
+      <ul>
         <% entries.each do |entry| %>
-        <li class="archive__item">
-          <a class="archive__link" href="<%= entry[:url] %>"><%= entry[:title] %></a>
+        <li>
+          <a href="<%= entry[:url] %>"><%= entry[:title] %></a>
           <% if entry[:date] %>
-          <span class="post-meta"><%= entry[:date].strftime("%Y.%m.%d") %></span>
+          <%= entry[:date].strftime("%Y.%m.%d") %>
           <% end %>
         </li>
         <% end %>
