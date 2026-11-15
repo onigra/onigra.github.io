@@ -17,7 +17,7 @@ date: "2023-12-06T00:00:00+09:00"
 
 ## 具体
 
-```app/Models/Hello.php
+```php
 <?php
 
 namespace App\Models;
@@ -31,7 +31,7 @@ class Unko
 }
 ```
 
-```
+```sh
 # php artisan tinker
 
 Psy Shell v0.11.22 (PHP 8.0.29 — cli) by Justin Hileman
@@ -39,7 +39,7 @@ Psy Shell v0.11.22 (PHP 8.0.29 — cli) by Justin Hileman
 = "Hello, world"
 ```
 
-```tests/Unit/UnkoTest.php
+```php
 <?php
 
 namespace Tests\Unit;
