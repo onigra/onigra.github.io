@@ -16,10 +16,13 @@ params:
   - keyword 3
   sharingicons: true
   highlight:
-    style: github
+    version: 11.9.0
+    style: github-dark
     languages:
-    - go
-    - dockerfile
+      - go
+      - dockerfile
+      - ruby
+      - php
   copyright: '&copy; 2013 | <a href="https://twitter.com/onigra_" target="_blank">Onigra</a> | Powered by <a href="https://github.com/onigra/rakuda" target="_blank">rakuda</a>'
   menu:
   - url: "/about/"

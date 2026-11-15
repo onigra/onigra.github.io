@@ -4,10 +4,11 @@
   </div>
 </footer>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js" integrity="sha256-+bhVTaRmJ/c07eV80nU8gD2cBBF0rYkf1txqXlrbvb0=" crossorigin="anonymous"></script>
+<% hljs_version = @site[:params].dig("highlight", "version") %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/<%= hljs_version %>/highlight.min.js" crossorigin="anonymous"></script>
 <% Array(@site[:params].dig("highlight", "languages")).each do |lang| %>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/languages/<%= lang %>.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/<%= hljs_version %>/languages/<%= lang %>.min.js" crossorigin="anonymous"></script>
 <% end %>
-<script>hljs.initHighlightingOnLoad();</script>
+<script>hljs.highlightAll();</script>
 </body>
 </html>
