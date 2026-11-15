@@ -1,6 +1,8 @@
 # ミニマル・ブログ デザイン仕様
 
-onigra.github.io の現行デザイン仕様。2026-08-02 時点の実装（`static/css/`、`layouts/`）を反映している。
+> **Superseded:** [2026-11-15-ua-default-blog-design.md](./2026-11-15-ua-default-blog-design.md)（2026-11-15 以降はそちらが正）
+
+onigra.github.io の旧デザイン仕様。2026-08-02 時点の実装（`static/css/`、`layouts/`）を反映している。
 
 ## コンセプト
 
