@@ -1,5 +1,12 @@
+<%
+  share_url = "#{@site[:base_url]}#{@page[:url]}"
+  share_text = @page[:title].to_s
+  intent = "https://twitter.com/intent/tweet?" \
+    "text=#{ERB::Util.url_encode(share_text)}&" \
+    "url=#{ERB::Util.url_encode(share_url)}"
+%>
 <p>
-  <a href="https://twitter.com/home?status=<%= ERB::Util.url_encode("#{@page[:title]} - #{@site[:base_url]}#{@page[:url]}") %>" target="_blank" rel="noopener noreferrer">
+  <a href="<%= intent %>" target="_blank" rel="noopener noreferrer" aria-label="X でシェア">
     <span class="fa fa-twitter fa-2x" aria-hidden="true"></span>
   </a>
 </p>
