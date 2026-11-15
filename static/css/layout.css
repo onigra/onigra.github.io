@@ -5,6 +5,8 @@
   --space-block: 3.75rem;
   --line-height: 2.05;
   --space-flow: 1.75rem;
+  --font-sans: system-ui, -apple-system, "Segoe UI", "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN", "Yu Gothic UI", Meiryo, sans-serif;
 }
 
 .content {
@@ -26,8 +28,19 @@ header nav {
   gap: 1rem;
 }
 
+body {
+  font-family: var(--font-sans);
+}
+
 main {
   line-height: var(--line-height);
+}
+
+pre,
+code,
+kbd,
+samp {
+  font-family: monospace;
 }
 
 article > * + *,
