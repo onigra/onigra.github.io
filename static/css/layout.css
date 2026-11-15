@@ -1,8 +1,10 @@
 :root {
   --content-max: 48rem;
   --space-x: 1.5rem;
-  --space-y: 1.5rem;
-  --space-block: 2rem;
+  --space-y: 2rem;
+  --space-block: 3.75rem;
+  --line-height: 2.05;
+  --space-flow: 1.75rem;
 }
 
 .content {
@@ -22,6 +24,23 @@ header nav {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+}
+
+main {
+  line-height: var(--line-height);
+}
+
+article > * + *,
+article > div > * + * {
+  margin-block-start: var(--space-flow);
+}
+
+article :is(h1, h2, h3, h4, h5, h6) + * {
+  margin-block-start: calc(var(--space-flow) * 0.65);
+}
+
+article * + :is(h2, h3, h4) {
+  margin-block-start: calc(var(--space-flow) * 1.35);
 }
 
 main article + article {
